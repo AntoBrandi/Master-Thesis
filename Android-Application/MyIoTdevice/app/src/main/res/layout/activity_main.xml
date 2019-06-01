@@ -6,13 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10:00:01"
+                android:id="@+id/MainTime"
+                android:textColor="@color/colorTextOnPrimary"
+                android:textSize="@dimen/MainHeaderTop"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/MarginBottom"
+                android:layout_marginTop="@dimen/MarginTop"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOnPrimary"
+                android:id="@+id/MainDate"
+                tools:text="01/06/2019"
+                android:layout_marginLeft="@dimen/MarginLeft"
+                android:layout_marginBottom="@dimen/MarginBottom"
+                android:textSize="@dimen/MainHeaderCenter"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOnPrimary"
+                android:id="@+id/MainPosition"
+                android:textSize="@dimen/MainHeaderBottom"
+                android:textAllCaps="true"
+                android:layout_marginLeft="@dimen/MarginLeft"
+                android:layout_marginBottom="@dimen/MarginBottom"
+                tools:text="Bitonto, Italia"/>
+
+
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/MainListView">
+
+        </ListView>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

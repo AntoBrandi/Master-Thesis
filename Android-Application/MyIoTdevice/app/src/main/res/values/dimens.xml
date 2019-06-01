@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="MainHeaderTop">34sp</dimen>
+    <dimen name="MainHeaderCenter">16sp</dimen>
+    <dimen name="MainHeaderBottom">14sp</dimen>
+    <dimen name="MarginLeft">16dp</dimen>
+    <dimen name="MarginRight">16dp</dimen>
+    <dimen name="MarginTop">12dp</dimen>
+    <dimen name="MarginBottom">12dp</dimen>
+    <dimen name="ItemHeader">24dp</dimen>
+    <dimen name="ItemText">16dp</dimen>
+    <dimen name="ItemValue">20dp</dimen>
+    <dimen name="ItemValueLeft">160dp</dimen>
+</resources>
