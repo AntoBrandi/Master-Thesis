@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
     public double gyroscopeY;
     public double gyroscopeZ;
 
+    // costanti che contengono l'ordine in cui saranno mostrati i sensori nella listView
+    private static final int POSITION_INDEX =0;
+    private static final int ACCELERATION_INDEX =1;
+    private static final int PRESSUTE_ALTITUDE_INDEX =2;
+    private static final int TEMPERATURE_LIGHT_INDEX =3;
+    private static final int ORIENTATION_INDEX =4;
+    private static final int GYROSCOPE_INDEX =5;
+
 
     // ---- GPS AND ADDRESS VARIABLES ---------------
 
@@ -95,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         // ---- POPULATING THE LIST VIEW WITH SENSORS DATA ----
         sensors = new ArrayList<Sensors>();
 
-        //sensors.add(new Sensors(null,null,null,null,null,null,null,"Pressione","Altitudine","1000kPa","110m"));
-
         sensorsAdapter = new SensorsAdapter(this,sensors);
         sensors.add(new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
         sensors.add(new Sensors("Accelerazione","X","Y","Z",String.valueOf(accelerationX),String.valueOf(accelerationY),String.valueOf(accelerationZ),null,null,null,null));
@@ -104,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         sensors.add(new Sensors(null,null,null,null,null,null,null,"Temperatura","Luce",String.valueOf(temperature),String.valueOf(light)));
         sensors.add(new Sensors("Orientamento","Pitch","Roll","Azimuth",String.valueOf(pitch),String.valueOf(roll),String.valueOf(azimuth),null,null,null,null));
         sensors.add(new Sensors("Giroscopio","X","Y","Z",String.valueOf(gyroscopeX),String.valueOf(gyroscopeY),String.valueOf(gyroscopeZ),null,null,null,null));
-
 
 
         ListView mainListView = (ListView) findViewById(R.id.MainListView);
@@ -150,16 +155,14 @@ public class MainActivity extends AppCompatActivity {
     private void updateGUI(Location location){
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        updateText(R.id.latitude,String.valueOf(latitude));
-        updateText(R.id.longitude,String.valueOf(longitude));
         new AddressSolver(this).execute(location);
         TextView MainPosition = (TextView) findViewById(R.id.MainPosition);
         address=MainPosition.getText().toString();
 
 
         // Update the list View
-        // TODO Aggiungo tutti gli elementi dell'arraylist in una prima istanza e tengo traccia delle loro posizioni nell'ordine. Nel momento in cui c'è una modifica aggiorno soltanto gli elementi dell'array list
-
+        sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
+        sensorsAdapter.notifyDataSetChanged();
     }
 
     private void updateText(int id,String text){

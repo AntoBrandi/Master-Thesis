@@ -50,24 +50,15 @@
                 android:layout_marginBottom="@dimen/MarginBottom"
                 tools:text="Bitonto, Italia"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/latitude"
-                tools:text="Latitudine"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/longitude"
-                tools:text="Longitudine"/>
-
 
         </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/MainListView">
+            android:id="@+id/MainListView"
+            android:divider="@null"
+            android:dividerHeight="0dp">
 
         </ListView>
     </LinearLayout>
