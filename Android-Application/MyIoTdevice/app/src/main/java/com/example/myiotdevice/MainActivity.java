@@ -12,11 +12,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    public  ArrayList<Sensors> sensors;
 
     // ---- GPS AND ADDRESS VARIABLES ---------------
 
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager = null;
     private static final int MIN_DIST = 20;
     private static final int MIN_PERIOD = 30000;
+
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -67,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
         Runnable myRunnableThread = new CountDownRunner(this);
         timeThread = new Thread(myRunnableThread);
         timeThread.start();
+
+        // ---- POPULATING THE LIST VIEW WITH SENSORS DATA ----
+        sensors = new ArrayList<Sensors>();
+
+        sensors.add(new Sensors(null,null,null,null,null,null,null,"Pressione","Altitudine","1000kPa","110m"));
+        sensors.add(new Sensors("Posizione","Latitudine","Longitudine","Indirizzo","Value1","Value2","Value3",null,null,null,null));
+
+        SensorsAdapter sensorsAdapter = new SensorsAdapter(this,sensors);
+
+        ListView mainListView = (ListView) findViewById(R.id.MainListView);
+        mainListView.setAdapter(sensorsAdapter);
     }
 
     @Override
@@ -83,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             if (location != null)
                 updateGUI(location);
             if (locationManager != null && locationManager.isProviderEnabled(providerId))
-                updateText(R.id.MainPosition, "GPS ENBLED");
+                updateText(R.id.MainPosition, "GPS ENABLED");
             else
                 updateText(R.id.MainPosition, "GPS DISABLED");
             locationManager.requestLocationUpdates(providerId, MIN_PERIOD, MIN_DIST, locationListener);

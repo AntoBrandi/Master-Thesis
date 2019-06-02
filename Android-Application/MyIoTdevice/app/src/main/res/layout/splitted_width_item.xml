@@ -29,19 +29,19 @@
                 android:layout_marginLeft="@dimen/MarginLeft"
                 android:layout_marginRight="@dimen/MarginRight"
                 android:textColor="@color/colorSecondaryDark"
-                android:id="@+id/item_splitted_header_2"
+                android:id="@+id/item_splitted_header_1"
                 android:textAllCaps="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_splitted_header_2"
+                android:layout_below="@id/item_splitted_header_1"
                 android:textSize="@dimen/ItemValue"
                 tools:text="999,76 hPa"
                 android:textColor="@color/colorTextOnPrimary"
                 android:layout_marginLeft="@dimen/MarginLeft"
                 android:layout_marginTop="@dimen/MarginTop"
                 android:layout_centerInParent="true"
-                android:id="@+id/item_splitted_value_2"
+                android:id="@+id/item_splitted_value_1"
                 android:layout_marginBottom="@dimen/MarginBottom" />
 
         </RelativeLayout>
@@ -65,19 +65,19 @@
                 android:layout_marginLeft="@dimen/MarginLeft"
                 android:layout_marginRight="@dimen/MarginRight"
                 android:textColor="@color/colorSecondaryDark"
-                android:id="@+id/item_splitted_header_3"
+                android:id="@+id/item_splitted_header_2"
                 android:textAllCaps="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_splitted_header_3"
+                android:layout_below="@id/item_splitted_header_2"
                 android:textSize="@dimen/ItemValue"
                 tools:text="115 m"
                 android:textColor="@color/colorTextOnPrimary"
                 android:layout_marginLeft="@dimen/MarginLeft"
                 android:layout_marginTop="@dimen/MarginTop"
                 android:layout_centerInParent="true"
-                android:id="@+id/item_splitted_value_3"
+                android:id="@+id/item_splitted_value_2"
                 android:layout_marginBottom="@dimen/MarginBottom" />
 
         </RelativeLayout>
