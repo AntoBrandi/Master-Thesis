@@ -10,5 +10,5 @@
     <dimen name="ItemHeader">24dp</dimen>
     <dimen name="ItemText">16dp</dimen>
     <dimen name="ItemValue">20dp</dimen>
-    <dimen name="ItemValueLeft">160dp</dimen>
+    <dimen name="ItemValueLeft">140dp</dimen>
 </resources>
