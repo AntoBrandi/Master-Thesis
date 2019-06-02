@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public float roll;
     public float pitch;
     public float azimuth;
-    public double gyroscopeX;
-    public double gyroscopeY;
-    public double gyroscopeZ;
+    public float gyroscopeX;
+    public float gyroscopeY;
+    public float gyroscopeZ;
 
     // costanti che contengono l'ordine in cui saranno mostrati i sensori nella listView
     private static final int POSITION_INDEX =0;
@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Sensor senOrientation;
     // ---- END OF ORIENTATION VARIABLES -----------------------
 
-    // ---- GYROSCOPE VARIABLES ------------------------------
+    // ---- GYROSCOPE VARIABLES --------------------------------
     private Sensor senGyroscope;
-    // ---- END OF GYROSCOPE VARIABLES -----------------------
+    // ---- END OF GYROSCOPE VARIABLES -------------------------
 
 
 
