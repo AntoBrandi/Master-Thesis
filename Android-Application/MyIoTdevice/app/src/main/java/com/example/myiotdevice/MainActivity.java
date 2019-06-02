@@ -3,12 +3,9 @@ package com.example.myiotdevice;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -18,18 +15,11 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
 
 public class MainActivity extends AppCompatActivity {
 
     // ---- GPS AND ADDRESS VARIABLES ---------------
 
-    private Geocoder geo = null;
     private String providerId = LocationManager.GPS_PROVIDER;
     private LocationManager locationManager = null;
     private static final int MIN_DIST = 20;
@@ -74,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ---- DATE AND TIME ----
         Thread timeThread = null;
-        Runnable myRunnableThread = new CountDownRunner();
+        Runnable myRunnableThread = new CountDownRunner(this);
         timeThread = new Thread(myRunnableThread);
         timeThread.start();
     }
@@ -88,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
             return  ;
         }
         try {
-            geo = new Geocoder(this, Locale.getDefault());
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location != null)
@@ -113,49 +102,6 @@ public class MainActivity extends AppCompatActivity {
             locationManager.removeUpdates(locationListener);
     }
 
-
-
-
-
-
-    // --------- DATE AND TIME SECTION--------------------------------------------------------------
-    class CountDownRunner implements Runnable {
-
-        @Override
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    updateTime();
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception e) {
-                }
-            }
-        }
-
-        public void updateTime(){
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        TextView time = (TextView) findViewById(R.id.MainTime);
-                        TextView data = (TextView) findViewById(R.id.MainDate);
-                        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-                        int year = calendar.get(Calendar.YEAR);
-                        int month = calendar.get(Calendar.MONTH)+1;
-                        int day = calendar.get(Calendar.DAY_OF_MONTH);
-                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                        int minute = calendar.get(Calendar.MINUTE);
-                        int second = calendar.get(Calendar.SECOND);
-                        time.setText(hour+":"+minute+":"+second);
-                        data.setText(day + " / " + month + " / " + year);
-                    }catch (Exception e) {}
-                }
-            });
-        }
-    }
-    // ------ END OF DATE AND TIME SECTION ---------------------------------------------------------
 
 
     // ------ GPS AND ADDRESS SECTION --------------------------------------------------------------
