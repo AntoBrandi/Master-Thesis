@@ -29,22 +29,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public  ArrayList<Sensors> sensors;
     public SensorsAdapter sensorsAdapter;
 
-    public double longitude;
-    public double latitude;
-    public String address;
-    public float accelerationX;
-    public float accelerationY;
-    public float accelerationZ;
-    public float altitude;
-    public float pressure;
-    public float temperature;
-    public float light;
-    public float roll;
-    public float pitch;
-    public float azimuth;
-    public float gyroscopeX;
-    public float gyroscopeY;
-    public float gyroscopeZ;
+
 
     // costanti che contengono l'ordine in cui saranno mostrati i sensori nella listView
     private static final int POSITION_INDEX =0;
