@@ -2,15 +2,28 @@ package com.example.myiotdevice;
 
 
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Message;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -25,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private HandlerThread mAccelerometerThread,mPressureThread,mTemperatureThread,mLightThread,mOrientationThread,mGyroscopeThread;
     private Handler mAccelerometerHandler,mPressureHandler,mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
     public MySensorListener msl;
+    private static final int POSITION_INDEX =0;
+    AppLocationService appLocationService;
 
 
 
@@ -32,6 +47,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ASK FOR PERMISSIONS
+        // GPS access
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+        // INTERNET access
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.INTERNET}, 1);
+            return;
+        }
+
 
         // Parameters shared by all the sensors
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -44,6 +72,24 @@ public class MainActivity extends AppCompatActivity {
 
         ListView mainListView = (ListView) findViewById(R.id.MainListView);
         mainListView.setAdapter(sensorsAdapter);
+
+        // GPS and ADDRESS MANAGEMENT
+        appLocationService = new AppLocationService(MainActivity.this);
+        Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+        if (gpsLocation != null) {
+            double latitude = gpsLocation.getLatitude();
+            double longitude = gpsLocation.getLongitude();
+            GeocoderHandler geoHandler = new GeocoderHandler();
+            LocationAddress locationAddress = new LocationAddress();
+            locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), geoHandler);
+            String address = geoHandler.getAddress();
+            sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
+
+        } else {
+            showSettingsAlert();
+        }
+
+
 
 
 
@@ -136,4 +182,48 @@ public class MainActivity extends AppCompatActivity {
         sensors.add(new Sensors("Giroscopio","X","Y","Z","","","",null,null,null,null));
         return sensors;
     }
+
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                MainActivity.this);
+        alertDialog.setTitle("SETTINGS");
+        alertDialog.setMessage("Enable Location Provider! Go to settings menu?");
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        MainActivity.this.startActivity(intent);
+                    }
+                });
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public class GeocoderHandler extends Handler {
+
+        public String locationAddress;
+        @Override
+        public void handleMessage(Message message) {
+
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+        }
+
+        public String getAddress(){
+            return locationAddress;
+        }
+    }
+
 }
