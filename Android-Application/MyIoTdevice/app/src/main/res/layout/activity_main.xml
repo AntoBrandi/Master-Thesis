@@ -49,20 +49,6 @@
                 android:layout_marginLeft="@dimen/MarginLeft"
                 android:layout_marginBottom="@dimen/MarginBottom"
                 tools:text="Bitonto, Italia"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/x_prova"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/y_prova"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/z_prova"/>
-
-
 
         </LinearLayout>
 

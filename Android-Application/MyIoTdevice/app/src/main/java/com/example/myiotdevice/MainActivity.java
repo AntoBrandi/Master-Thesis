@@ -20,13 +20,11 @@ public class MainActivity extends AppCompatActivity {
     public  ArrayList<Sensors> sensors;
     public SensorsAdapter sensorsAdapter;
     public SensorManager senSensorManager;
-    public Sensor senAccelerometer;
+    public Sensor senAccelerometer,senPressure,senTemperature,senLight,senOrientation,senGyroscope;
     public Thread timeThread;
-
-    private HandlerThread mAccelerometerThread;
-    private Handler mAccelerometerHandler;
+    private HandlerThread mAccelerometerThread,mPressureThread,mTemperatureThread,mLightThread,mOrientationThread,mGyroscopeThread;
+    private Handler mAccelerometerHandler,mPressureHandler,mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
     public MySensorListener msl;
-
 
 
 
@@ -34,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Parameters shared by all the sensors
+        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        msl = new MySensorListener(this);
 
         // ---- POPULATING THE LIST VIEW WITH SENSORS DATA ----
         sensors = new ArrayList<Sensors>();
@@ -44,33 +46,84 @@ public class MainActivity extends AppCompatActivity {
         mainListView.setAdapter(sensorsAdapter);
 
 
+
+
+        // SENSORS AND TIME THREAD MANAGEMENT
         // ---- DATE AND TIME THREAD----
         Runnable myRunnableThread = new CountDownRunner(this);
         timeThread = new Thread(myRunnableThread);
         timeThread.start();
 
 
-        // ---- SENSOR THREAD ----
+        // ---- ACCELEROMETER SENSOR THREAD ----
         // Thread that will be in charge of read the status of sensors and update the view
-        senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        msl = new MySensorListener(this);
         mAccelerometerThread = new HandlerThread("Accelerometer Thread",Thread.NORM_PRIORITY);
         mAccelerometerThread.start();
         mAccelerometerHandler = new Handler(mAccelerometerThread.getLooper());
         senSensorManager.registerListener(msl,senAccelerometer,SensorManager.SENSOR_DELAY_NORMAL,mAccelerometerHandler);
+
+        // ---- PRESSURE AND ALTITUDE SENSOR THREAD ----
+        // Thread that will be in charge of read the status of the pressure sensor and update it
+        senPressure = senSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        mPressureThread = new HandlerThread("Pressure Thread",Thread.NORM_PRIORITY);
+        mPressureThread.start();
+        mPressureHandler = new Handler(mPressureThread.getLooper());
+        senSensorManager.registerListener(msl,senPressure,SensorManager.SENSOR_DELAY_NORMAL,mPressureHandler);
+
+        // ---- TEMPERATURE AND LIGHT SENSOR THREAD ----
+        // Thread that will be in charge of read the status of the temperature and light sensor and update it
+        senTemperature = senSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        mTemperatureThread = new HandlerThread("Temperature Thread",Thread.NORM_PRIORITY);
+        mTemperatureThread.start();
+        mTemperatureHandler = new Handler(mTemperatureThread.getLooper());
+        senSensorManager.registerListener(msl,senTemperature,SensorManager.SENSOR_DELAY_NORMAL,mTemperatureHandler);
+
+        senLight = senSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        mLightThread = new HandlerThread("Light Thread",Thread.NORM_PRIORITY);
+        mLightThread.start();
+        mLightHandler = new Handler(mLightThread.getLooper());
+        senSensorManager.registerListener(msl,senLight,SensorManager.SENSOR_DELAY_NORMAL,mLightHandler);
+
+
+        // ---- ORIENTATION SENSOR THREAD ----
+        // Thread that will be in charge of read the status of the orientation sensor and update it
+        senOrientation = senSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        mOrientationThread = new HandlerThread("Orientation Thread",Thread.NORM_PRIORITY);
+        mOrientationThread.start();
+        mOrientationHandler = new Handler(mOrientationThread.getLooper());
+        senSensorManager.registerListener(msl,senOrientation,SensorManager.SENSOR_DELAY_NORMAL,mOrientationHandler);
+
+        // ---- GYROSCOPE SENSOR THREAD ----
+        // Thread that will be in charge of read the status of the gyroscope sensor and update it
+        senGyroscope = senSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        mGyroscopeThread = new HandlerThread("Gyroscope Thread",Thread.NORM_PRIORITY);
+        mGyroscopeThread.start();
+        mGyroscopeHandler = new Handler(mGyroscopeThread.getLooper());
+        senSensorManager.registerListener(msl,senGyroscope,SensorManager.SENSOR_DELAY_NORMAL,mGyroscopeHandler);
+
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         senSensorManager.registerListener(msl,senAccelerometer,SensorManager.SENSOR_DELAY_NORMAL,mAccelerometerHandler);
+        senSensorManager.registerListener(msl,senPressure,SensorManager.SENSOR_DELAY_NORMAL,mPressureHandler);
+        senSensorManager.registerListener(msl,senTemperature,SensorManager.SENSOR_DELAY_NORMAL,mTemperatureHandler);
+        senSensorManager.registerListener(msl,senLight,SensorManager.SENSOR_DELAY_NORMAL,mLightHandler);
+        senSensorManager.registerListener(msl,senOrientation,SensorManager.SENSOR_DELAY_NORMAL,mOrientationHandler);
+        senSensorManager.registerListener(msl,senGyroscope,SensorManager.SENSOR_DELAY_NORMAL,mGyroscopeHandler);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         mAccelerometerThread.quitSafely();
+        mPressureThread.quitSafely();
+        mTemperatureThread.quitSafely();
+        mLightThread.quitSafely();
+        mOrientationThread.quitSafely();
+        mGyroscopeThread.quitSafely();
     }
 
 
@@ -83,5 +136,4 @@ public class MainActivity extends AppCompatActivity {
         sensors.add(new Sensors("Giroscopio","X","Y","Z","","","",null,null,null,null));
         return sensors;
     }
-
 }
