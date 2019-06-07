@@ -4,7 +4,10 @@ package com.example.myiotdevice;
 
 import android.content.Context;
 import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -18,8 +21,11 @@ public class MainActivity extends AppCompatActivity {
     public SensorsAdapter sensorsAdapter;
     public SensorManager senSensorManager;
     public Sensor senAccelerometer;
-    public Thread accelerationThread;
     public Thread timeThread;
+
+    private HandlerThread mAccelerometerThread;
+    private Handler mAccelerometerHandler;
+    public MySensorListener msl;
 
 
 
@@ -48,24 +54,25 @@ public class MainActivity extends AppCompatActivity {
         // Thread that will be in charge of read the status of sensors and update the view
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         senAccelerometer = senSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        Runnable myAccelerationThread = new AccelerationRunner(this,senSensorManager,senAccelerometer);
-        accelerationThread = new Thread(myAccelerationThread);
-        accelerationThread.start();
-
+        msl = new MySensorListener(this);
+        mAccelerometerThread = new HandlerThread("Accelerometer Thread",Thread.NORM_PRIORITY);
+        mAccelerometerThread.start();
+        mAccelerometerHandler = new Handler(mAccelerometerThread.getLooper());
+        senSensorManager.registerListener(msl,senAccelerometer,SensorManager.SENSOR_DELAY_NORMAL,mAccelerometerHandler);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        //senSensorManager.registerListener(this,senAccelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        senSensorManager.registerListener(msl,senAccelerometer,SensorManager.SENSOR_DELAY_NORMAL,mAccelerometerHandler);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-
+        mAccelerometerThread.quitSafely();
     }
+
 
     public ArrayList<Sensors> assignDefaultParameters(ArrayList<Sensors> sensors){
         sensors.add(new Sensors("Posizione","Latitudine","Longitudine","Indirizzo","","","",null,null,null,null));
