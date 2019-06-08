@@ -95,6 +95,16 @@
                 android:layout_marginLeft="@dimen/ItemValueLeft"
                 android:layout_alignBaseline="@id/item_text_3"/>
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorSecondaryDark"
+                android:layout_alignBaseline="@id/item_header"
+                android:layout_alignParentRight="true"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:clickable="true"
+                android:layout_marginRight="@dimen/MarginRight"/>
+
 
 
         </RelativeLayout>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:id="@+id/below_this"
             android:background="@color/colorPrimary">
 
             <TextView
@@ -49,17 +50,31 @@
                 android:layout_marginLeft="@dimen/MarginLeft"
                 android:layout_marginBottom="@dimen/MarginBottom"
                 tools:text="Bitonto, Italia"/>
-
         </LinearLayout>
+
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/MainListView"
             android:divider="@null"
-            android:dividerHeight="0dp">
+            android:dividerHeight="0dp"
+            android:layout_below="@id/below_this">
 
         </ListView>
-    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:backgroundTint="@color/colorSecondary"
+            android:clickable="true"
+            android:src="@drawable/baseline_send_white_36" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
