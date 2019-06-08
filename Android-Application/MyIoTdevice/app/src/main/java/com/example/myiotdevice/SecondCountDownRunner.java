@@ -5,12 +5,12 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class CountDownRunner implements Runnable {
+public class SecondCountDownRunner implements Runnable {
 
-    public MainActivity mainActivity;
+    public SecondActivity secondActivity;
 
-    public CountDownRunner(MainActivity _activity){
-        this.mainActivity=_activity;
+    public SecondCountDownRunner(SecondActivity _activity){
+        this.secondActivity=_activity;
     }
 
     @Override
@@ -27,12 +27,12 @@ public class CountDownRunner implements Runnable {
     }
 
     public void updateTime(){
-        this.mainActivity.runOnUiThread(new Runnable() {
+        this.secondActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    TextView time = (TextView) mainActivity.findViewById(R.id.MainTime);
-                    TextView data = (TextView) mainActivity.findViewById(R.id.MainDate);
+                    TextView time = (TextView) secondActivity.findViewById(R.id.MainTime);
+                    TextView data = (TextView) secondActivity.findViewById(R.id.MainDate);
                     Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
                     int year = calendar.get(Calendar.YEAR);
                     int month = calendar.get(Calendar.MONTH)+1;

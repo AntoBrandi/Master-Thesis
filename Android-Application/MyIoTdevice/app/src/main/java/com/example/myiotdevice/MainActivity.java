@@ -23,42 +23,40 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public  ArrayList<Sensors> sensors;
-    public SensorsAdapter sensorsAdapter;
     public SensorManager senSensorManager;
-    public Sensor senAccelerometer,senPressure,senTemperature,senLight,senOrientation,senGyroscope;
+    public Sensor senAccelerometer,senPressure;
     public Thread timeThread;
-    private HandlerThread mAccelerometerThread,mPressureThread,mTemperatureThread,mLightThread,mOrientationThread,mGyroscopeThread;
-    private Handler mAccelerometerHandler,mPressureHandler,mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
+    private HandlerThread mAccelerometerThread,mPressureThread;
+    private Handler mAccelerometerHandler,mPressureHandler;
     public MySensorListener msl;
     public double latitude;
     public double longitude;
     public String address;
     public TextView tvAddress;
+    public TextView position_latitude;
+    public TextView position_longitude;
+    public TextView position_address;
+    public TextView acceleration_coordinateX;
+    public TextView acceleration_coordinateY;
+    public TextView acceleration_coordinateZ;
+    public TextView pressure_view;
+    public TextView altitude_view;
 
-    public boolean freeze;
-    public SparseBooleanArray checkboxStatus;
+    public CheckBox position_cb;
+    public CheckBox acceleration_cb;
+    public CheckBox pressure_cb;
+    public CheckBox altitude_cb;
 
-    private static final int POSITION_INDEX = 0;
-    private static final int ACCELERATION_INDEX =1;
-    private static final int PRESSURE_ALTITUDE_INDEX =2;
-    private static final int TEMPERATURE_LIGHT_INDEX =3;
-    private static final int ORIENTATION_INDEX =4;
-    private static final int GYROSCOPE_INDEX =5;
+    public FloatingActionButton fab;
 
 
     // GPS VARIABLES
@@ -95,8 +93,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        freeze = false;
-        checkboxStatus = new SparseBooleanArray();
+        tvAddress = (TextView) findViewById(R.id.MainPosition);
+        position_latitude = (TextView) findViewById(R.id.item_value_1_position);
+        position_longitude =(TextView) findViewById(R.id.item_value_2_position);
+        position_address = (TextView) findViewById(R.id.item_value_3_position);
+        acceleration_coordinateX = (TextView) findViewById(R.id.item_value_1_acceleration);
+        acceleration_coordinateY = (TextView) findViewById(R.id.item_value_2_acceleration);
+        acceleration_coordinateZ = (TextView) findViewById(R.id.item_value_3_acceleration);
+        pressure_view = (TextView) findViewById(R.id.item_splitted_value_1_pressure);
+        altitude_view = (TextView) findViewById(R.id.item_splitted_value_2_altitude);
+
+        position_cb = (CheckBox) findViewById(R.id.checkbox_position);
+        acceleration_cb = (CheckBox) findViewById(R.id.checkbox_acceleration);
+        altitude_cb=(CheckBox) findViewById(R.id.checkbox_altitude);
+        pressure_cb = (CheckBox) findViewById(R.id.checkbox_pressure);
 
         // ASK FOR PERMISSIONS
         // GPS access
@@ -111,48 +121,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // SEND DATA
-        final Button fab =(Button) findViewById(R.id.continue_fab);
+        fab =findViewById(R.id.continue_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Record r = createRecord();
-                Intent i = new Intent(MainActivity.this,SendEventActivity.class);
+                Intent i = new Intent(MainActivity.this,SecondActivity.class);
                 i.putExtra("Record",r);
+                i.putExtra("Address",address);
                 startActivity(i);
             }
         });
 
-        tvAddress = (TextView) findViewById(R.id.MainPosition);
+
 
         // Parameters shared by all the sensors
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         msl = new MySensorListener(this);
-
-        // ---- POPULATING THE LIST VIEW WITH SENSORS DATA ----
-        sensors = new ArrayList<Sensors>();
-        sensors=assignDefaultParameters(sensors);
-        sensorsAdapter = new SensorsAdapter(this,sensors,checkboxStatus);
-
-        ListView mainListView = (ListView) findViewById(R.id.MainListView);
-        mainListView.setAdapter(sensorsAdapter);
-
-        // Manage List view Item Click
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CheckBox box = (CheckBox) view.findViewById(R.id.checkbox);
-                if(!checkboxStatus.get(position,false)){
-                    freeze = true;
-                    box.setChecked(true);
-                    checkboxStatus.put(position,true);
-                }
-                else{
-                    box.setChecked(false);
-                    freeze=false;
-                    checkboxStatus.put(position,false);
-                }
-            }
-        });
 
 
 
@@ -178,38 +163,6 @@ public class MainActivity extends AppCompatActivity {
         mPressureThread.start();
         mPressureHandler = new Handler(mPressureThread.getLooper());
         senSensorManager.registerListener(msl,senPressure,SensorManager.SENSOR_DELAY_NORMAL,mPressureHandler);
-
-        // ---- TEMPERATURE AND LIGHT SENSOR THREAD ----
-        // Thread that will be in charge of read the status of the temperature and light sensor and update it
-        senTemperature = senSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
-        mTemperatureThread = new HandlerThread("Temperature Thread",Thread.NORM_PRIORITY);
-        mTemperatureThread.start();
-        mTemperatureHandler = new Handler(mTemperatureThread.getLooper());
-        senSensorManager.registerListener(msl,senTemperature,SensorManager.SENSOR_DELAY_NORMAL,mTemperatureHandler);
-
-        senLight = senSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        mLightThread = new HandlerThread("Light Thread",Thread.NORM_PRIORITY);
-        mLightThread.start();
-        mLightHandler = new Handler(mLightThread.getLooper());
-        senSensorManager.registerListener(msl,senLight,SensorManager.SENSOR_DELAY_NORMAL,mLightHandler);
-
-
-        // ---- ORIENTATION SENSOR THREAD ----
-        // Thread that will be in charge of read the status of the orientation sensor and update it
-        senOrientation = senSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        mOrientationThread = new HandlerThread("Orientation Thread",Thread.NORM_PRIORITY);
-        mOrientationThread.start();
-        mOrientationHandler = new Handler(mOrientationThread.getLooper());
-        senSensorManager.registerListener(msl,senOrientation,SensorManager.SENSOR_DELAY_NORMAL,mOrientationHandler);
-
-        // ---- GYROSCOPE SENSOR THREAD ----
-        // Thread that will be in charge of read the status of the gyroscope sensor and update it
-        senGyroscope = senSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        mGyroscopeThread = new HandlerThread("Gyroscope Thread",Thread.NORM_PRIORITY);
-        mGyroscopeThread.start();
-        mGyroscopeHandler = new Handler(mGyroscopeThread.getLooper());
-        senSensorManager.registerListener(msl,senGyroscope,SensorManager.SENSOR_DELAY_NORMAL,mGyroscopeHandler);
-
     }
 
     @Override
@@ -217,10 +170,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         senSensorManager.registerListener(msl,senAccelerometer,SensorManager.SENSOR_DELAY_NORMAL,mAccelerometerHandler);
         senSensorManager.registerListener(msl,senPressure,SensorManager.SENSOR_DELAY_NORMAL,mPressureHandler);
-        senSensorManager.registerListener(msl,senTemperature,SensorManager.SENSOR_DELAY_NORMAL,mTemperatureHandler);
-        senSensorManager.registerListener(msl,senLight,SensorManager.SENSOR_DELAY_NORMAL,mLightHandler);
-        senSensorManager.registerListener(msl,senOrientation,SensorManager.SENSOR_DELAY_NORMAL,mOrientationHandler);
-        senSensorManager.registerListener(msl,senGyroscope,SensorManager.SENSOR_DELAY_NORMAL,mGyroscopeHandler);
 
         // GPS
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -246,25 +195,11 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         mAccelerometerThread.quitSafely();
         mPressureThread.quitSafely();
-        mTemperatureThread.quitSafely();
-        mLightThread.quitSafely();
-        mOrientationThread.quitSafely();
-        mGyroscopeThread.quitSafely();
 
         if (locationManager!=null && locationManager.isProviderEnabled(providerId))
             locationManager.removeUpdates(locationListener);
     }
 
-
-    public ArrayList<Sensors> assignDefaultParameters(ArrayList<Sensors> sensors){
-        sensors.add(new Sensors("Posizione","Latitudine","Longitudine","Indirizzo","","","",null,null,null,null));
-        sensors.add(new Sensors("Accelerazione","X","Y","Z","","","",null,null,null,null));
-        sensors.add(new Sensors(null,null,null,null,null,null,null,"Pressione","Altitudine","",""));
-        sensors.add(new Sensors(null,null,null,null,null,null,null,"Temperatura","Luce","",""));
-        sensors.add(new Sensors("Orientamento","Pitch","Roll","Azimuth","","","",null,null,null,null));
-        sensors.add(new Sensors("Giroscopio","X","Y","Z","","","",null,null,null,null));
-        return sensors;
-    }
 
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
@@ -294,49 +229,31 @@ public class MainActivity extends AppCompatActivity {
         longitude = location.getLongitude();
         LocationAddress locationAddress = new LocationAddress();
         locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
-        sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
-        if (freeze==false) {
-            sensorsAdapter.notifyDataSetChanged();
-        }
+        position_latitude.setText(String.valueOf(latitude));
+        position_longitude.setText(String.valueOf(longitude));
     }
 
     public Record createRecord(){
         Record r = new Record(Calendar.getInstance(TimeZone.getDefault()));
-        Sensors tempSensor;
-        if(checkboxStatus.get(POSITION_INDEX,true)){
-            r.longitude=longitude;
+        if(position_cb.isChecked()){
             r.latitude=latitude;
+            r.longitude=longitude;
             r.address=address;
         }
-        if (checkboxStatus.get(ACCELERATION_INDEX,true)){
-            tempSensor = sensors.get(ACCELERATION_INDEX);
-            r.accelerationX=tempSensor.itemValue1;
-            r.accelerationY=tempSensor.itemValue2;
-            r.accelerationZ=tempSensor.itemValue3;
-        }
-        if(checkboxStatus.get(PRESSURE_ALTITUDE_INDEX,true)){
-            tempSensor=sensors.get(PRESSURE_ALTITUDE_INDEX);
-            r.pressure=tempSensor.splittedItemValue1;
-            r.altitude=tempSensor.splittedItemValue2;
-        }
-        if(checkboxStatus.get(TEMPERATURE_LIGHT_INDEX,true)){
-            tempSensor=sensors.get(TEMPERATURE_LIGHT_INDEX);
-            r.temperature=tempSensor.splittedItemValue1;
-            r.light = tempSensor.splittedItemValue2;
-        }
-        if(checkboxStatus.get(ORIENTATION_INDEX,true)){
-            tempSensor=sensors.get(ORIENTATION_INDEX);
-            r.pitch=tempSensor.itemValue1;
-            r.roll=tempSensor.itemValue2;
-            r.azimuth=tempSensor.itemValue3;
-        }
-        if(checkboxStatus.get(GYROSCOPE_INDEX,true)){
-            tempSensor=sensors.get(GYROSCOPE_INDEX);
-            r.gyroscopeX=tempSensor.itemValue1;
-            r.gyroscopeY=tempSensor.itemValue2;
-            r.gyroscopeZ=tempSensor.itemValue3;
+
+        if(acceleration_cb.isChecked()){
+            r.accelerationX=acceleration_coordinateX.getText().toString();
+            r.accelerationY=acceleration_coordinateY.getText().toString();
+            r.accelerationZ=acceleration_coordinateZ.getText().toString();
         }
 
+        if(pressure_cb.isChecked()){
+            r.pressure=pressure_view.getText().toString();
+        }
+
+        if(altitude_cb.isChecked()){
+            r.altitude=altitude_view.getText().toString();
+        }
 
         return r;
     }
@@ -357,10 +274,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             tvAddress.setText(address);
-            sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
-            if (freeze==false) {
-                sensorsAdapter.notifyDataSetChanged();
-            }
+            position_address.setText(address);
         }
 
     }

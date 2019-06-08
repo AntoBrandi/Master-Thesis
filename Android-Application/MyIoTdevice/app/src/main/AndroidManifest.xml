@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SendEventActivity"></activity>
+        <activity android:name=".SecondActivity"></activity>
 
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
