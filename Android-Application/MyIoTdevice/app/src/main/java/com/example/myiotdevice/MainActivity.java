@@ -12,12 +12,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,12 +42,38 @@ public class MainActivity extends AppCompatActivity {
     private Handler mAccelerometerHandler,mPressureHandler,mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
     public MySensorListener msl;
     private static final int POSITION_INDEX =0;
-    public AppLocationService appLocationService;
     public double latitude;
     public double longitude;
     public String address;
     public TextView tvAddress;
-    public GeocoderHandler geoHandler;
+
+
+    // GPS VARIABLES
+    private String providerId = LocationManager.GPS_PROVIDER;
+    private LocationManager locationManager=null;
+    private static final int MIN_DIST=20;
+    private static final int MIN_PERIOD=30000;
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            updateGUI(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            showSettingsAlert();
+        }
+    };
 
 
 
@@ -79,23 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         ListView mainListView = (ListView) findViewById(R.id.MainListView);
         mainListView.setAdapter(sensorsAdapter);
-
-        // GPS and ADDRESS MANAGEMENT
-        appLocationService = new AppLocationService(MainActivity.this,this);
-        Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
-        geoHandler = new GeocoderHandler();
-        LocationManager lm =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (gpsLocation != null) {
-            latitude = gpsLocation.getLatitude();
-            longitude = gpsLocation.getLongitude();
-            LocationAddress locationAddress = new LocationAddress();
-            locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
-            sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
-            sensorsAdapter.notifyDataSetChanged();
-
-        } else if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            showSettingsAlert();
-        }
 
 
         // SENSORS AND TIME THREAD MANAGEMENT
@@ -163,6 +175,24 @@ public class MainActivity extends AppCompatActivity {
         senSensorManager.registerListener(msl,senLight,SensorManager.SENSOR_DELAY_NORMAL,mLightHandler);
         senSensorManager.registerListener(msl,senOrientation,SensorManager.SENSOR_DELAY_NORMAL,mOrientationHandler);
         senSensorManager.registerListener(msl,senGyroscope,SensorManager.SENSOR_DELAY_NORMAL,mGyroscopeHandler);
+
+        // GPS
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return  ;
+        }
+        try {
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null)
+                updateGUI(location);
+
+            else if (locationManager != null && !locationManager.isProviderEnabled(providerId))
+                showSettingsAlert();
+            locationManager.requestLocationUpdates(providerId, MIN_PERIOD, MIN_DIST, locationListener);
+        }
+        catch(Exception e){}
     }
 
     @Override
@@ -174,6 +204,9 @@ public class MainActivity extends AppCompatActivity {
         mLightThread.quitSafely();
         mOrientationThread.quitSafely();
         mGyroscopeThread.quitSafely();
+
+        if (locationManager!=null && locationManager.isProviderEnabled(providerId))
+            locationManager.removeUpdates(locationListener);
     }
 
 
@@ -207,6 +240,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
+    }
+
+    private void updateGUI(Location location)
+    {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        LocationAddress locationAddress = new LocationAddress();
+        locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
+        sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
+        sensorsAdapter.notifyDataSetChanged();
     }
 
     private class GeocoderHandler extends Handler {
