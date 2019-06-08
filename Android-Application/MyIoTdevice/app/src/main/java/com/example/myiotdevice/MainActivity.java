@@ -39,7 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private Handler mAccelerometerHandler,mPressureHandler,mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
     public MySensorListener msl;
     private static final int POSITION_INDEX =0;
-    AppLocationService appLocationService;
+    public AppLocationService appLocationService;
+    public double latitude;
+    public double longitude;
+    public String address;
+    public TextView tvAddress;
+    public GeocoderHandler geoHandler;
+
 
 
 
@@ -60,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        tvAddress = (TextView) findViewById(R.id.MainPosition);
 
         // Parameters shared by all the sensors
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -74,24 +81,21 @@ public class MainActivity extends AppCompatActivity {
         mainListView.setAdapter(sensorsAdapter);
 
         // GPS and ADDRESS MANAGEMENT
-        appLocationService = new AppLocationService(MainActivity.this);
+        appLocationService = new AppLocationService(MainActivity.this,this);
         Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+        geoHandler = new GeocoderHandler();
+        LocationManager lm =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (gpsLocation != null) {
-            double latitude = gpsLocation.getLatitude();
-            double longitude = gpsLocation.getLongitude();
-            GeocoderHandler geoHandler = new GeocoderHandler();
+            latitude = gpsLocation.getLatitude();
+            longitude = gpsLocation.getLongitude();
             LocationAddress locationAddress = new LocationAddress();
-            locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), geoHandler);
-            String address = geoHandler.getAddress();
+            locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
             sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
+            sensorsAdapter.notifyDataSetChanged();
 
-        } else {
+        } else if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             showSettingsAlert();
         }
-
-
-
-
 
 
         // SENSORS AND TIME THREAD MANAGEMENT
@@ -205,25 +209,26 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public class GeocoderHandler extends Handler {
+    private class GeocoderHandler extends Handler {
 
-        public String locationAddress;
         @Override
         public void handleMessage(Message message) {
+
 
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
+                    address = bundle.getString("address");
                     break;
                 default:
-                    locationAddress = null;
+                    address = null;
             }
+
+            tvAddress.setText(address);
+            sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
+            sensorsAdapter.notifyDataSetChanged();
         }
 
-        public String getAddress(){
-            return locationAddress;
-        }
     }
 
 }

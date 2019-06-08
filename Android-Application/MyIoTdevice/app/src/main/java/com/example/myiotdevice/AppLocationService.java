@@ -9,18 +9,24 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class AppLocationService extends Service implements LocationListener {
 
     protected LocationManager locationManager;
     Location location;
+    public MainActivity mainActivity;
 
     private static final long MIN_DISTANCE_FOR_UPDATE = 10;
     private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 2;
 
-    public AppLocationService(Context context) {
+    public AppLocationService(Context context,MainActivity activity) {
         locationManager = (LocationManager) context
                 .getSystemService(LOCATION_SERVICE);
+        mainActivity = activity;
     }
 
     public Location getLocation(String provider) {
