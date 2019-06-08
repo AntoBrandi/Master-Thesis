@@ -102,7 +102,9 @@
                 android:layout_alignBaseline="@id/item_header"
                 android:layout_alignParentRight="true"
                 android:backgroundTint="@color/colorSecondaryLight"
-                android:clickable="true"
+                android:focusable="false"
+                android:id="@+id/checkbox"
+                android:focusableInTouchMode="false"
                 android:layout_marginRight="@dimen/MarginRight"/>
 
 

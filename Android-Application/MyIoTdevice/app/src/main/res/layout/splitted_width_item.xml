@@ -44,15 +44,6 @@
                 android:id="@+id/item_splitted_value_1"
                 android:layout_marginBottom="@dimen/MarginBottom" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorSecondaryDark"
-                android:layout_alignBaseline="@id/item_splitted_header_1"
-                android:backgroundTint="@color/colorSecondaryLight"
-                android:clickable="true"
-                android:layout_toEndOf="@id/item_splitted_header_1"/>
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -95,7 +86,9 @@
                 android:buttonTint="@color/colorSecondaryDark"
                 android:layout_alignBaseline="@id/item_splitted_header_2"
                 android:backgroundTint="@color/colorSecondaryLight"
-                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/checkbox"
                 android:layout_toEndOf="@id/item_splitted_header_2"/>
 
         </RelativeLayout>

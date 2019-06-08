@@ -25,8 +25,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     public double longitude;
     public String address;
     public TextView tvAddress;
+
+    public boolean freeze;
+    public SparseBooleanArray checkboxStatus;
 
 
     // GPS VARIABLES
@@ -84,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        freeze = false;
+        checkboxStatus = new SparseBooleanArray();
 
         // ASK FOR PERMISSIONS
         // GPS access
@@ -98,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // SEND DATA
-        FloatingActionButton fab = findViewById(R.id.continue_fab);
+        final FloatingActionButton fab = findViewById(R.id.continue_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,10 +125,30 @@ public class MainActivity extends AppCompatActivity {
         // ---- POPULATING THE LIST VIEW WITH SENSORS DATA ----
         sensors = new ArrayList<Sensors>();
         sensors=assignDefaultParameters(sensors);
-        sensorsAdapter = new SensorsAdapter(this,sensors);
+        sensorsAdapter = new SensorsAdapter(this,sensors,checkboxStatus);
 
         ListView mainListView = (ListView) findViewById(R.id.MainListView);
         mainListView.setAdapter(sensorsAdapter);
+
+        // Manage List view Item Click
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CheckBox box = (CheckBox) view.findViewById(R.id.checkbox);
+                if(!checkboxStatus.get(position,false)){
+                    freeze = true;
+                    box.setChecked(true);
+                    checkboxStatus.put(position,true);
+                }
+                else{
+                    box.setChecked(false);
+                    freeze=false;
+                    checkboxStatus.put(position,false);
+                }
+
+            }
+        });
+
 
 
         // SENSORS AND TIME THREAD MANAGEMENT
@@ -262,7 +290,9 @@ public class MainActivity extends AppCompatActivity {
         LocationAddress locationAddress = new LocationAddress();
         locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
         sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
-        sensorsAdapter.notifyDataSetChanged();
+        if (freeze==false) {
+            sensorsAdapter.notifyDataSetChanged();
+        }
     }
 
     private class GeocoderHandler extends Handler {
@@ -282,7 +312,9 @@ public class MainActivity extends AppCompatActivity {
 
             tvAddress.setText(address);
             sensors.set(POSITION_INDEX,new Sensors("Posizione","Latitudine","Longitudine","Indirizzo",String.valueOf(latitude),String.valueOf(longitude),address,null,null,null,null));
-            sensorsAdapter.notifyDataSetChanged();
+            if (freeze==false) {
+                sensorsAdapter.notifyDataSetChanged();
+            }
         }
 
     }
