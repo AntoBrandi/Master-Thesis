@@ -98,11 +98,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // SEND DATA
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.continue_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Do something
+                // TODO: Fullfill the event class to be printed in XML format
+                Intent i = new Intent(MainActivity.this,SendEventActivity.class);
+                startActivity(i);
             }
         });
 
