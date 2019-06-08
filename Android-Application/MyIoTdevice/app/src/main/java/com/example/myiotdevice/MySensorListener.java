@@ -38,60 +38,57 @@ public class MySensorListener implements SensorEventListener {
             public void run() {
                 Sensor mySensor = event.sensor;
                 if (mySensor.getType()==Sensor.TYPE_ACCELEROMETER){
-                    accelerationX = event.values[0];
-                    accelerationY = event.values[1];
-                    accelerationZ = event.values[2];
-                    mainActivity.sensors.set(ACCELERATION_INDEX,new Sensors("Accelerazione","X","Y","Z",String.valueOf(accelerationX),String.valueOf(accelerationY),String.valueOf(accelerationZ),null,null,null,null));
                     if(mainActivity.freeze==false) {
+                        accelerationX = event.values[0];
+                        accelerationY = event.values[1];
+                        accelerationZ = event.values[2];
+                        mainActivity.sensors.set(ACCELERATION_INDEX,new Sensors("Accelerazione","X","Y","Z",String.valueOf(accelerationX),String.valueOf(accelerationY),String.valueOf(accelerationZ),null,null,null,null));
                         mainActivity.sensorsAdapter.notifyDataSetChanged();
                     }
                 }
 
                 if(mySensor.getType()==Sensor.TYPE_PRESSURE){
-                    pressure = event.values[0];
-                    altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE,pressure);
-                    mainActivity.sensors.set(PRESSURE_ALTITUDE_INDEX,new Sensors(null,null,null,null,null,null,null,"Pressione","Altitudine",String.valueOf(pressure),String.valueOf(altitude)));
                     if(mainActivity.freeze==false) {
+                        pressure = event.values[0];
+                        altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE,pressure);
+                        mainActivity.sensors.set(PRESSURE_ALTITUDE_INDEX,new Sensors(null,null,null,null,null,null,null,"Pressione","Altitudine",String.valueOf(pressure),String.valueOf(altitude)));
                         mainActivity.sensorsAdapter.notifyDataSetChanged();
                     }
                 }
 
                 if ((mySensor.getType()==Sensor.TYPE_AMBIENT_TEMPERATURE) || (mySensor.getType()==Sensor.TYPE_LIGHT)){
-                    if(mySensor.getType()==Sensor.TYPE_AMBIENT_TEMPERATURE) {
-                        temperature = event.values[0];
-                    }
-                    else if (mySensor.getType()==Sensor.TYPE_LIGHT){
-                        light = event.values[0];
-                    }
-                    mainActivity.sensors.set(TEMPERATURE_LIGHT_INDEX,new Sensors(null,null,null,null,null,null,null,"Temperatura","Luce",String.valueOf(temperature),String.valueOf(light)));
                     if(mainActivity.freeze==false) {
+                        if(mySensor.getType()==Sensor.TYPE_AMBIENT_TEMPERATURE) {
+                            temperature = event.values[0];
+                        }
+                        else if (mySensor.getType()==Sensor.TYPE_LIGHT){
+                            light = event.values[0];
+                        }
+                        mainActivity.sensors.set(TEMPERATURE_LIGHT_INDEX,new Sensors(null,null,null,null,null,null,null,"Temperatura","Luce",String.valueOf(temperature),String.valueOf(light)));
                         mainActivity.sensorsAdapter.notifyDataSetChanged();
                     }
                 }
 
                 if (mySensor.getType()==Sensor.TYPE_ROTATION_VECTOR){
-                    azimuth = event.values[0];
-                    pitch = event.values[1];
-                    roll = event.values[2];
-                    mainActivity.sensors.set(ORIENTATION_INDEX,new Sensors("Orientamento","Pitch","Roll","Azimuth",String.valueOf(pitch),String.valueOf(roll),String.valueOf(azimuth),null,null,null,null));
                     if(mainActivity.freeze==false) {
+                        azimuth = event.values[0];
+                        pitch = event.values[1];
+                        roll = event.values[2];
+                        mainActivity.sensors.set(ORIENTATION_INDEX,new Sensors("Orientamento","Pitch","Roll","Azimuth",String.valueOf(pitch),String.valueOf(roll),String.valueOf(azimuth),null,null,null,null));
                         mainActivity.sensorsAdapter.notifyDataSetChanged();
                     }
                 }
 
                 if (mySensor.getType()==Sensor.TYPE_GYROSCOPE){
-                    gyroscopeX = event.values[0];
-                    gyroscopeY = event.values[1];
-                    gyroscopeZ = event.values[2];
-                    mainActivity.sensors.set(GYROSCOPE_INDEX,new Sensors("Giroscopio","X","Y","Z",String.valueOf(gyroscopeX),String.valueOf(gyroscopeY),String.valueOf(gyroscopeZ),null,null,null,null));
                     if(mainActivity.freeze==false) {
+                        gyroscopeX = event.values[0];
+                        gyroscopeY = event.values[1];
+                        gyroscopeZ = event.values[2];
+                        mainActivity.sensors.set(GYROSCOPE_INDEX,new Sensors("Giroscopio","X","Y","Z",String.valueOf(gyroscopeX),String.valueOf(gyroscopeY),String.valueOf(gyroscopeZ),null,null,null,null));
                         mainActivity.sensorsAdapter.notifyDataSetChanged();
                     }
                 }
-
-
             }
         });
-
     }
 }

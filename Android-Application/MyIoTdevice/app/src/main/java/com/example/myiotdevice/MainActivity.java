@@ -34,6 +34,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Fullfill the event class to be printed in XML format
+                Record r = createRecord();
                 Intent i = new Intent(MainActivity.this,SendEventActivity.class);
                 startActivity(i);
             }
@@ -293,6 +296,17 @@ public class MainActivity extends AppCompatActivity {
         if (freeze==false) {
             sensorsAdapter.notifyDataSetChanged();
         }
+    }
+
+    public Record createRecord(){
+        Record r = new Record(Calendar.getInstance(TimeZone.getDefault()));
+        if(checkboxStatus.get(0,true)){
+            r.longitude=longitude;
+            r.latitude=latitude;
+            r.address=address;
+        }
+
+        return r;
     }
 
     private class GeocoderHandler extends Handler {
