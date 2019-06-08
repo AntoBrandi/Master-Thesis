@@ -1,17 +1,20 @@
 package com.example.myiotdevice;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class SendEventActivity extends AppCompatActivity {
     public int car_accident_click;
     public int traffic_jam_click;
     public int landslide_click;
     public int snow_click;
+    public Record r;
 
 
     @Override
@@ -23,6 +26,11 @@ public class SendEventActivity extends AppCompatActivity {
         traffic_jam_click=0;
         landslide_click=0;
         snow_click=0;
+
+        // Retrieve the Record object that has been sent over the intent
+        Intent i = getIntent();
+        r = (Record) i.getSerializableExtra("Record");
+
 
         // Button Click manage
         final Button car_accident = (Button) findViewById(R.id.car_accident);
@@ -89,7 +97,21 @@ public class SendEventActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Fill remaining data and send over XML
+                if ((car_accident_click%2)-1==0) {
+                    r.isCarAccident= true;
+                }
+                if((traffic_jam_click%2)-1==0) {
+                    r.isTrafficJam=true;
+                }
+                if((landslide_click%2)-1==0) {
+                    r.isLandSlide=true;
+                }
+                if((snow_click%2)-1==0) {
+                    r.isSnow=true;
+                }
+
+                Toast.makeText(getApplicationContext(),"Data completed, Sending the data...",Toast.LENGTH_SHORT).show();
+
             }
         });
     }

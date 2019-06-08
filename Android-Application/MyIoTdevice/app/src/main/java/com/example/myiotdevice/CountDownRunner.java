@@ -18,7 +18,7 @@ public class CountDownRunner implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 updateTime();
-                Thread.sleep(1000);
+                Thread.sleep(60000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (Exception e) {
@@ -39,8 +39,7 @@ public class CountDownRunner implements Runnable {
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     int hour = calendar.get(Calendar.HOUR_OF_DAY);
                     int minute = calendar.get(Calendar.MINUTE);
-                    int second = calendar.get(Calendar.SECOND);
-                    time.setText(((hour<10)? "0"+hour : hour)+":"+((minute<10)? "0"+minute : minute)+":"+((second<10)? "0"+second : second));
+                    time.setText(((hour<10)? "0"+hour : hour)+":"+((minute<10)? "0"+minute : minute));
                     data.setText(((day<10)? "0"+day : day) + " / " + ((month<10)? "0"+month : month) + " / " + ((year<10)? "0"+year : year));
                 }catch (Exception e) {}
             }

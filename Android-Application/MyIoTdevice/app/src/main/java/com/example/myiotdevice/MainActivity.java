@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,7 +19,6 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +30,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -48,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private HandlerThread mAccelerometerThread,mPressureThread,mTemperatureThread,mLightThread,mOrientationThread,mGyroscopeThread;
     private Handler mAccelerometerHandler,mPressureHandler,mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
     public MySensorListener msl;
-    private static final int POSITION_INDEX =0;
     public double latitude;
     public double longitude;
     public String address;
@@ -56,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean freeze;
     public SparseBooleanArray checkboxStatus;
+
+    private static final int POSITION_INDEX = 0;
+    private static final int ACCELERATION_INDEX =1;
+    private static final int PRESSURE_ALTITUDE_INDEX =2;
+    private static final int TEMPERATURE_LIGHT_INDEX =3;
+    private static final int ORIENTATION_INDEX =4;
+    private static final int GYROSCOPE_INDEX =5;
 
 
     // GPS VARIABLES
@@ -108,13 +111,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // SEND DATA
-        final FloatingActionButton fab = findViewById(R.id.continue_fab);
+        final Button fab =(Button) findViewById(R.id.continue_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Fullfill the event class to be printed in XML format
                 Record r = createRecord();
                 Intent i = new Intent(MainActivity.this,SendEventActivity.class);
+                i.putExtra("Record",r);
                 startActivity(i);
             }
         });
@@ -148,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     freeze=false;
                     checkboxStatus.put(position,false);
                 }
-
             }
         });
 
@@ -300,11 +302,41 @@ public class MainActivity extends AppCompatActivity {
 
     public Record createRecord(){
         Record r = new Record(Calendar.getInstance(TimeZone.getDefault()));
-        if(checkboxStatus.get(0,true)){
+        Sensors tempSensor;
+        if(checkboxStatus.get(POSITION_INDEX,true)){
             r.longitude=longitude;
             r.latitude=latitude;
             r.address=address;
         }
+        if (checkboxStatus.get(ACCELERATION_INDEX,true)){
+            tempSensor = sensors.get(ACCELERATION_INDEX);
+            r.accelerationX=tempSensor.itemValue1;
+            r.accelerationY=tempSensor.itemValue2;
+            r.accelerationZ=tempSensor.itemValue3;
+        }
+        if(checkboxStatus.get(PRESSURE_ALTITUDE_INDEX,true)){
+            tempSensor=sensors.get(PRESSURE_ALTITUDE_INDEX);
+            r.pressure=tempSensor.splittedItemValue1;
+            r.altitude=tempSensor.splittedItemValue2;
+        }
+        if(checkboxStatus.get(TEMPERATURE_LIGHT_INDEX,true)){
+            tempSensor=sensors.get(TEMPERATURE_LIGHT_INDEX);
+            r.temperature=tempSensor.splittedItemValue1;
+            r.light = tempSensor.splittedItemValue2;
+        }
+        if(checkboxStatus.get(ORIENTATION_INDEX,true)){
+            tempSensor=sensors.get(ORIENTATION_INDEX);
+            r.pitch=tempSensor.itemValue1;
+            r.roll=tempSensor.itemValue2;
+            r.azimuth=tempSensor.itemValue3;
+        }
+        if(checkboxStatus.get(GYROSCOPE_INDEX,true)){
+            tempSensor=sensors.get(GYROSCOPE_INDEX);
+            r.gyroscopeX=tempSensor.itemValue1;
+            r.gyroscopeY=tempSensor.itemValue2;
+            r.gyroscopeZ=tempSensor.itemValue3;
+        }
+
 
         return r;
     }

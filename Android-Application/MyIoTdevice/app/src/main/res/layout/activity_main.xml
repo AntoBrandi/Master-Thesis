@@ -60,20 +60,18 @@
             android:divider="@null"
             android:dividerHeight="0dp"
             android:layout_below="@id/below_this">
-
         </ListView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/continue_fab"
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_send_white_24"
+            android:background="@color/colorSecondary"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/MarginBottom"
-            android:layout_marginRight="@dimen/MarginRight"
-            android:backgroundTint="@color/colorSecondary"
-            android:clickable="true"
-            android:src="@drawable/baseline_send_white_36" />
+            android:id="@+id/continue_fab"
+            android:layout_alignParentRight="true"/>
+
+
 
     </RelativeLayout>
 
