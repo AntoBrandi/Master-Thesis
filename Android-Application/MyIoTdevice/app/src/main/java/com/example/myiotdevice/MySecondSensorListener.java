@@ -19,21 +19,21 @@ public class MySecondSensorListener implements SensorEventListener {
             public void run() {
                 Sensor mySensor = event.sensor;
                 if (mySensor.getType()==Sensor.TYPE_ROTATION_VECTOR){
-                    secondActivity.orientation_coordinatePitch.setText(String.valueOf(event.values[0]));
-                    secondActivity.orientation_coordinateRoll.setText(String.valueOf(event.values[1]));
-                    secondActivity.orientation_coordinateAzimuth.setText(String.valueOf(event.values[2]));
+                    secondActivity.orientation_coordinatePitch.setText(String.format("%.2f", event.values[0]));
+                    secondActivity.orientation_coordinateRoll.setText(String.format("%.2f", event.values[1]));
+                    secondActivity.orientation_coordinateAzimuth.setText(String.format("%.2f", event.values[2]));
                 }
                 if (mySensor.getType()==Sensor.TYPE_GYROSCOPE){
-                    secondActivity.gyroscope_coordinateX.setText(String.valueOf(event.values[0]));
-                    secondActivity.gyroscope_coordinateY.setText(String.valueOf(event.values[1]));
-                    secondActivity.gyroscope_coordinateZ.setText(String.valueOf(event.values[2]));
+                    secondActivity.gyroscope_coordinateX.setText(String.format("%.2f", event.values[0])+" rad/s");
+                    secondActivity.gyroscope_coordinateY.setText(String.format("%.2f", event.values[1])+" rad/s");
+                    secondActivity.gyroscope_coordinateZ.setText(String.format("%.2f", event.values[2])+" rad/s");
                 }
 
                 if(mySensor.getType()==Sensor.TYPE_AMBIENT_TEMPERATURE){
-                    secondActivity.temperature_view.setText(String.valueOf(event.values[0]));
+                    secondActivity.temperature_view.setText(String.format("%.2f", event.values[0])+" °C");
                 }
                 if(mySensor.getType()==Sensor.TYPE_LIGHT){
-                    secondActivity.light_view.setText(String.valueOf(event.values[0]));
+                    secondActivity.light_view.setText(String.format("%.2f", event.values[0])+" lx");
                 }
             }
         });

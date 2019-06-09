@@ -21,17 +21,17 @@ public class MySensorListener implements SensorEventListener {
             public void run() {
                 Sensor mySensor = event.sensor;
                 if (mySensor.getType()==Sensor.TYPE_ACCELEROMETER){
-                        mainActivity.acceleration_coordinateX.setText(String.valueOf(event.values[0]));
-                    mainActivity.acceleration_coordinateY.setText(String.valueOf(event.values[1]));
-                    mainActivity.acceleration_coordinateZ.setText(String.valueOf(event.values[2]));
+                    mainActivity.acceleration_coordinateX.setText(String.format("%.2f", event.values[0])+" m/s^2");
+                    mainActivity.acceleration_coordinateY.setText(String.format("%.2f", event.values[1])+" m/s^2");
+                    mainActivity.acceleration_coordinateZ.setText(String.format("%.2f", event.values[2])+" m/s^2");
 
                 }
 
                 if(mySensor.getType()==Sensor.TYPE_PRESSURE){
                         pressure = event.values[0];
                         altitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE,pressure);
-                        mainActivity.pressure_view.setText(String.valueOf(pressure));
-                        mainActivity.altitude_view.setText(String.valueOf(altitude));
+                        mainActivity.pressure_view.setText(String.format("%.2f", pressure)+" hPa");
+                        mainActivity.altitude_view.setText(String.format("%.2f", altitude)+" m");
                 }
             }
         });

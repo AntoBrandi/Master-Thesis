@@ -117,7 +117,7 @@ public class SendEventActivity extends AppCompatActivity {
                     r.isSnow=true;
                 }
 
-                // TODO: Serialize the data in a XML format
+                // TODO: improve the XML data format with the DATEX II standard
                 try {
                     XmlSerializer xmlSerializer = Xml.newSerializer();
                     StringWriter writer = new StringWriter();
@@ -127,7 +127,7 @@ public class SendEventActivity extends AppCompatActivity {
                     xmlSerializer.startDocument("UTF-8", true);
                     xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
 
-                    // Open tag <file>
+                    // Open tag
                     xmlSerializer.startTag("", "record");
                     xmlSerializer.startTag("", "sensor");
                     xmlSerializer.attribute("", "SENSOR_NAME", "GPS");
@@ -150,11 +150,9 @@ public class SendEventActivity extends AppCompatActivity {
                 }
                 catch (Exception e){}
 
-
                 Intent k = new Intent(SendEventActivity.this,XMLPrinter.class);
                 k.putExtra("XML",XML_Document);
                 startActivity(k);
-
             }
         });
     }

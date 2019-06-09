@@ -11,9 +11,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/accident"
+            android:drawableLeft="@drawable/car_accident"
             android:layout_alignParentLeft="true"
-            android:padding="36dp"
+            android:layout_marginTop="@dimen/MarginTop"
+            android:layout_marginLeft="@dimen/MarginLeft"
+            android:padding="@dimen/ButtonPadding"
             android:background="@color/colorSecondaryLight"
             android:id="@+id/car_accident"/>
 
@@ -21,7 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/traffic_jam"
-            android:padding="36dp"
+            android:padding="@dimen/ButtonPadding"
+            android:layout_marginTop="@dimen/MarginTop"
+            android:layout_marginRight="@dimen/MarginRight"
             android:background="@color/colorSecondaryLight"
             android:layout_alignParentRight="true"
             android:id="@+id/traffic_jam"/>
@@ -31,7 +35,8 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/landslide"
             android:id="@+id/landslide"
-            android:padding="36dp"
+            android:padding="@dimen/ButtonPadding"
+            android:layout_marginLeft="@dimen/MarginLeft"
             android:layout_marginTop="@dimen/MarginTop"
             android:background="@color/colorSecondaryLight"
             android:layout_below="@id/car_accident"/>
@@ -39,7 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/traffic_jam"
-            android:padding="36dp"
+            android:padding="@dimen/ButtonPadding"
+            android:layout_marginRight="@dimen/MarginRight"
             android:background="@color/colorSecondaryLight"
             android:layout_marginTop="@dimen/MarginTop"
             android:id="@+id/snow"
