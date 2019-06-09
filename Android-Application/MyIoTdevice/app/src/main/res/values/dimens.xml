@@ -7,8 +7,8 @@
     <dimen name="MarginRight">16dp</dimen>
     <dimen name="MarginTop">12dp</dimen>
     <dimen name="MarginBottom">12dp</dimen>
-    <dimen name="ItemHeader">20dp</dimen>
-    <dimen name="ItemText">16dp</dimen>
-    <dimen name="ItemValue">20dp</dimen>
+    <dimen name="ItemHeader">20sp</dimen>
+    <dimen name="ItemText">16sp</dimen>
+    <dimen name="ItemValue">20sp</dimen>
     <dimen name="ItemValueLeft">140dp</dimen>
 </resources>

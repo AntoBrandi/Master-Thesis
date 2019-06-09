@@ -72,12 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-
         }
 
         @Override
@@ -272,11 +270,8 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     address = null;
             }
-
             tvAddress.setText(address);
             position_address.setText(address);
         }
-
     }
-
 }

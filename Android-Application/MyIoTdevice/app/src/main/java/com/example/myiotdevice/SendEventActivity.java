@@ -5,9 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.FileOutputStream;
+import java.io.StringWriter;
 
 public class SendEventActivity extends AppCompatActivity {
     public int car_accident_click;
@@ -15,6 +21,7 @@ public class SendEventActivity extends AppCompatActivity {
     public int landslide_click;
     public int snow_click;
     public Record r;
+    public String XML_Document;
 
 
     @Override
@@ -110,7 +117,43 @@ public class SendEventActivity extends AppCompatActivity {
                     r.isSnow=true;
                 }
 
-                Toast.makeText(getApplicationContext(),"Data completed, Sending the data...",Toast.LENGTH_SHORT).show();
+                // TODO: Serialize the data in a XML format
+                try {
+                    XmlSerializer xmlSerializer = Xml.newSerializer();
+                    StringWriter writer = new StringWriter();
+
+                    xmlSerializer.setOutput(writer);
+
+                    xmlSerializer.startDocument("UTF-8", true);
+                    xmlSerializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+
+                    // Open tag <file>
+                    xmlSerializer.startTag("", "record");
+                    xmlSerializer.startTag("", "sensor");
+                    xmlSerializer.attribute("", "SENSOR_NAME", "GPS");
+                    xmlSerializer.startTag("", "value");
+                    xmlSerializer.startTag("", "latitude");
+                    xmlSerializer.text(String.valueOf(r.latitude));
+                    xmlSerializer.endTag("", "latitude");
+                    xmlSerializer.startTag("", "longitude");
+                    xmlSerializer.text(String.valueOf(r.longitude));
+                    xmlSerializer.endTag("", "longitude");
+                    xmlSerializer.startTag("", "address");
+                    xmlSerializer.text(String.valueOf(r.address));
+                    xmlSerializer.endTag("", "address");
+                    xmlSerializer.endTag("", "value");
+                    xmlSerializer.endTag("", "sensor");
+                    xmlSerializer.endTag("", "record");
+                    xmlSerializer.endDocument();
+
+                    XML_Document = writer.toString();
+                }
+                catch (Exception e){}
+
+
+                Intent k = new Intent(SendEventActivity.this,XMLPrinter.class);
+                k.putExtra("XML",XML_Document);
+                startActivity(k);
 
             }
         });
