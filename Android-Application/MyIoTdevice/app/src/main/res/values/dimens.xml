@@ -12,4 +12,5 @@
     <dimen name="ItemValue">16sp</dimen>
     <dimen name="ItemValueLeft">140dp</dimen>
     <dimen name="ButtonPadding">34dp</dimen>
+    <dimen name="EditTextBottom">200dp</dimen>
 </resources>

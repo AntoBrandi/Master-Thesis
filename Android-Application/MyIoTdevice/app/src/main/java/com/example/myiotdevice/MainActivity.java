@@ -51,15 +51,20 @@ public class MainActivity extends AppCompatActivity {
     public TextView pressure_view;
     public TextView altitude_view;
 
-    public CheckBox position_cb;
     public CheckBox acceleration_cb;
     public CheckBox pressure_cb;
     public CheckBox altitude_cb;
 
     public String accelerometer_name;
     public String pressure_name;
+    public String accelerometer_resolution;
+    public String accelerometer_vendor;
 
     public FloatingActionButton fab;
+
+    public Record accelerometerRecord;
+    public Record pressureRecord;
+    public Record altimeterRecord;
 
 
     // GPS VARIABLES
@@ -104,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         pressure_view = (TextView) findViewById(R.id.item_splitted_value_1_pressure);
         altitude_view = (TextView) findViewById(R.id.item_splitted_value_2_altitude);
 
-        position_cb = (CheckBox) findViewById(R.id.checkbox_position);
         acceleration_cb = (CheckBox) findViewById(R.id.checkbox_acceleration);
         altitude_cb=(CheckBox) findViewById(R.id.checkbox_altitude);
         pressure_cb = (CheckBox) findViewById(R.id.checkbox_pressure);
@@ -235,18 +239,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Record createRecord(){
-        Record r = new Record(Calendar.getInstance(TimeZone.getDefault()));
-        if(position_cb.isChecked()){
-            r.latitude=latitude;
-            r.longitude=longitude;
-            r.address=address;
-        }
+        //Record r = new Record(Calendar.getInstance(TimeZone.getDefault()));
 
         if(acceleration_cb.isChecked()){
-            r.accelerationX=acceleration_coordinateX.getText().toString();
-            r.accelerationY=acceleration_coordinateY.getText().toString();
-            r.accelerationZ=acceleration_coordinateZ.getText().toString();
-            r.accelerometerName = accelerometer_name;
+            accelerometerRecord=new Record();
+            accelerometerRecord.setSensor_reading_1(acceleration_coordinateX.getText().toString());
+            accelerometerRecord.setSensor_reading_2(acceleration_coordinateY.getText().toString());
+            accelerometerRecord.setSensor_reading_3(acceleration_coordinateZ.getText().toString());
+            accelerometerRecord.setSensor_name(accelerometer_name);
+            accelerometerRecord.setSensor_accuracy(accelerometer_resolution);
+            accelerometerRecord.setSensor_vendor(accelerometer_vendor);
         }
 
         if(pressure_cb.isChecked()){

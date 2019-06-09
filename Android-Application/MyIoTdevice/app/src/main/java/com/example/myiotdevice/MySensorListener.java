@@ -26,6 +26,8 @@ public class MySensorListener implements SensorEventListener {
                     mainActivity.acceleration_coordinateZ.setText(String.format("%.2f", event.values[2])+" m/s^2");
                     // Sensor information and name
                     mainActivity.accelerometer_name= mySensor.getName();
+                    mainActivity.accelerometer_resolution = String.valueOf(mySensor.getResolution());
+                    mainActivity.accelerometer_vendor = mySensor.getVendor();
 
                 }
 

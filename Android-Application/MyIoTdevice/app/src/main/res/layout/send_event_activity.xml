@@ -52,6 +52,14 @@
             android:layout_alignParentRight="true"
             android:drawableLeft="@drawable/snow"/>
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/EditTextBottom"
+            android:hint="Descrizione dell'evento (Facoltativo)"/>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/send_fab"
             android:layout_width="wrap_content"
