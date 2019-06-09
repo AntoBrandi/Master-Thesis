@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     public CheckBox pressure_cb;
     public CheckBox altitude_cb;
 
+    public String accelerometer_name;
+    public String pressure_name;
+
     public FloatingActionButton fab;
 
 
@@ -243,10 +246,12 @@ public class MainActivity extends AppCompatActivity {
             r.accelerationX=acceleration_coordinateX.getText().toString();
             r.accelerationY=acceleration_coordinateY.getText().toString();
             r.accelerationZ=acceleration_coordinateZ.getText().toString();
+            r.accelerometerName = accelerometer_name;
         }
 
         if(pressure_cb.isChecked()){
             r.pressure=pressure_view.getText().toString();
+            r.pressureName = pressure_name;
         }
 
         if(altitude_cb.isChecked()){

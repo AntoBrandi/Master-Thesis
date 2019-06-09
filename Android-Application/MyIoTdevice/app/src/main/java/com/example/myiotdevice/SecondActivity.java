@@ -12,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -34,6 +32,11 @@ public class SecondActivity extends AppCompatActivity {
     private HandlerThread mTemperatureThread,mLightThread,mOrientationThread,mGyroscopeThread;
     private Handler mTemperatureHandler,mLightHandler,mOrientationHandler,mGyroscopeHandler;
     public Sensor senTemperature,senLight,senOrientation,senGyroscope;
+
+    public String orientation_name;
+    public String gyroscope_name;
+    public String temperature_name;
+    public String light_name;
 
     public FloatingActionButton fab;
 
@@ -154,24 +157,26 @@ public class SecondActivity extends AppCompatActivity {
             r.pitch = orientation_coordinatePitch.getText().toString();
             r.azimuth = orientation_coordinateAzimuth.getText().toString();
             r.roll=orientation_coordinateRoll.getText().toString();
+            r.orientationName = orientation_name;
         }
 
         if(gyroscope_cb.isChecked()){
             r.gyroscopeX=gyroscope_coordinateX.getText().toString();
             r.gyroscopeY=gyroscope_coordinateY.getText().toString();
             r.gyroscopeZ=gyroscope_coordinateZ.getText().toString();
+            r.gyroscopeName = gyroscope_name;
         }
 
         if(light_cb.isChecked()){
             r.light=light_view.getText().toString();
+            r.lightName = light_name;
         }
 
         if(temperature_cb.isChecked()){
             r.temperature=temperature_view.getText().toString();
+            r.temperatureName = temperature_name;
         }
 
         return r;
     }
-
-
 }

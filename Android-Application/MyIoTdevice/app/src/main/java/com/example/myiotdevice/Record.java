@@ -11,6 +11,12 @@ public class Record implements Serializable {
     public String accelerationX;
     public String accelerationY;
     public String accelerationZ;
+    public String accelerometerName;
+    public String pressureName;
+    public String temperatureName;
+    public String lightName;
+    public String orientationName;
+    public String gyroscopeName;
     public String pressure;
     public String altitude;
     public String temperature;
