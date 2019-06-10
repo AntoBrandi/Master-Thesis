@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 
@@ -140,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this,SecondActivity.class);
                 i.putExtra("Publication",p);
                 i.putExtra("Address",address);
+                i.putExtra("Latitude",String.valueOf(latitude));
+                i.putExtra("Longitude",String.valueOf(longitude));
                 startActivity(i);
             }
         });
@@ -253,35 +256,45 @@ public class MainActivity extends AppCompatActivity {
             accelerometerRecord.setSensor_reading_2(acceleration_coordinateY.getText().toString());
             accelerometerRecord.setSensor_reading_3(acceleration_coordinateZ.getText().toString());
             accelerometerRecord.setSensor_name(accelerometer_name);
-            accelerometerRecord.setSensor_accuracy(accelerometer_resolution);
+            accelerometerRecord.setSensor_resolution(accelerometer_resolution);
             accelerometerRecord.setSensor_vendor(accelerometer_vendor);
             accelerometerRecord.setSensor_type(accelerometer_type);
+            accelerometerRecord.setSensor_latitude(String.valueOf(latitude));
+            accelerometerRecord.setSensor_longitude(String.valueOf(longitude));
+            accelerometerRecord.setSensor_address(address);
         }
 
         if(pressure_cb.isChecked()){
             pressureRecord = new Record();
             pressureRecord.setSensor_reading_1(pressure_view.getText().toString());
             pressureRecord.setSensor_name(pressure_name);
-            pressureRecord.setSensor_accuracy(pressure_accuracy);
+            pressureRecord.setSensor_resolution(pressure_accuracy);
             pressureRecord.setSensor_vendor(pressure_vendor);
             pressureRecord.setSensor_type(pressure_type);
+            pressureRecord.setSensor_latitude(String.valueOf(latitude));
+            pressureRecord.setSensor_longitude(String.valueOf(longitude));
+            pressureRecord.setSensor_address(address);
         }
 
         if(altitude_cb.isChecked()){
             altimeterRecord = new Record();
             altimeterRecord.setSensor_reading_1(altitude_view.getText().toString());
             altimeterRecord.setSensor_name(pressure_name);
-            altimeterRecord.setSensor_accuracy(pressure_accuracy);
+            altimeterRecord.setSensor_resolution(pressure_accuracy);
             altimeterRecord.setSensor_vendor(pressure_vendor);
             altimeterRecord.setSensor_type(pressure_type);
+            altimeterRecord.setSensor_latitude(String.valueOf(latitude));
+            altimeterRecord.setSensor_longitude(String.valueOf(longitude));
+            altimeterRecord.setSensor_address(address);
         }
 
         publication.records.add(accelerometerRecord);
         publication.records.add(pressureRecord);
         publication.records.add(altimeterRecord);
-        publication.setPublication_latitude(latitude);
-        publication.setPublication_longitude(longitude);
-        publication.setPublication_location(address);
+        publication.setPublication_latitude(String.valueOf(latitude));
+        publication.setPublication_longitude(String.valueOf(longitude));
+        publication.setPublication_location(String.valueOf(address));
+        publication.setStartDate(Calendar.getInstance().getTime());
 
         return publication;
     }

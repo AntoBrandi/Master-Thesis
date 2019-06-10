@@ -2,16 +2,15 @@ package com.example.myiotdevice;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class Publication implements Serializable {
 
     private String publication_location;
-    private double publication_latitude;
-    private double publication_longitude;
-    private String reading_period;
+    private String publication_latitude;
+    private String publication_longitude;
     private double time_precision;
-    private double reading_duration;
+    private long reading_duration;
     private String language;
     private String creator;
     public ArrayList<Record> records;
@@ -19,6 +18,9 @@ public class Publication implements Serializable {
     private boolean isTrafficJam;
     private boolean isLandSlide;
     private boolean isSnow;
+    private Date startDate;
+    private Date endDate;
+
 
     public Publication(){
         this.isCarAccident=false;
@@ -26,6 +28,26 @@ public class Publication implements Serializable {
         this.isSnow=false;
         this.isTrafficJam=false;
         records = new ArrayList<Record>();
+    }
+
+    public void calculateDuration(){
+        this.reading_duration = (startDate.getTime()-endDate.getTime());
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public boolean isCarAccident() {
@@ -68,28 +90,20 @@ public class Publication implements Serializable {
         this.publication_location = publication_location;
     }
 
-    public double getPublication_latitude() {
+    public String getPublication_latitude() {
         return publication_latitude;
     }
 
-    public void setPublication_latitude(double publication_latitude) {
+    public void setPublication_latitude(String publication_latitude) {
         this.publication_latitude = publication_latitude;
     }
 
-    public double getPublication_longitude() {
+    public String getPublication_longitude() {
         return publication_longitude;
     }
 
-    public void setPublication_longitude(double publication_longitude) {
+    public void setPublication_longitude(String publication_longitude) {
         this.publication_longitude = publication_longitude;
-    }
-
-    public String getReading_period() {
-        return reading_period;
-    }
-
-    public void setReading_period(String reading_period) {
-        this.reading_period = reading_period;
     }
 
     public double getTime_precision() {
@@ -104,7 +118,7 @@ public class Publication implements Serializable {
         return reading_duration;
     }
 
-    public void setReading_duration(double reading_duration) {
+    public void setReading_duration(long reading_duration) {
         this.reading_duration = reading_duration;
     }
 

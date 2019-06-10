@@ -21,6 +21,9 @@ public class Record implements Serializable {
     private String sensor_reading_2;
     private String sensor_reading_3;
     private String sensor_vendor;
+    private String sensor_latitude;
+    private String sensor_longitude;
+    private String sensor_address;
 
 
     public Record(){
@@ -139,10 +142,6 @@ public class Record implements Serializable {
         return sensor_resolution;
     }
 
-    public void setSensor_accuracy(String sensor_resolution) {
-        this.sensor_resolution = sensor_resolution;
-    }
-
     public String getSensor_reading_1() {
         return sensor_reading_1;
     }
@@ -173,5 +172,33 @@ public class Record implements Serializable {
 
     public void setSensor_vendor(String sensor_vendor) {
         this.sensor_vendor = sensor_vendor;
+    }
+
+    public void setSensor_resolution(String sensor_resolution) {
+        this.sensor_resolution = sensor_resolution;
+    }
+
+    public String getSensor_latitude() {
+        return sensor_latitude;
+    }
+
+    public void setSensor_latitude(String sensor_latitude) {
+        this.sensor_latitude = sensor_latitude;
+    }
+
+    public String getSensor_longitude() {
+        return sensor_longitude;
+    }
+
+    public void setSensor_longitude(String sensor_longitude) {
+        this.sensor_longitude = sensor_longitude;
+    }
+
+    public String getSensor_address() {
+        return sensor_address;
+    }
+
+    public void setSensor_address(String sensor_address) {
+        this.sensor_address = sensor_address;
     }
 }

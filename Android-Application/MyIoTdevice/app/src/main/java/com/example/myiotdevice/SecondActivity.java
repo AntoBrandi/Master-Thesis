@@ -67,6 +67,9 @@ public class SecondActivity extends AppCompatActivity {
     public Record temperatureRecord;
     public Record lightRecord;
 
+    private String longitude;
+    private String latitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +92,9 @@ public class SecondActivity extends AppCompatActivity {
         Intent i = getIntent();
         p=(Publication) i.getSerializableExtra("Publication");
         address = (String) i.getStringExtra("Address");
+        longitude = (String) i.getStringExtra("Longitude");
+        latitude = (String) i.getStringExtra("Latitude");
+
 
         if(address != null){
             address_view.setText(address);
@@ -178,9 +184,12 @@ public class SecondActivity extends AppCompatActivity {
             orientationRecord.setSensor_reading_2(orientation_coordinateAzimuth.getText().toString());
             orientationRecord.setSensor_reading_3(orientation_coordinateRoll.getText().toString());
             orientationRecord.setSensor_name(orientation_name);
-            orientationRecord.setSensor_accuracy(orientation_accuracy);
+            orientationRecord.setSensor_resolution(orientation_accuracy);
             orientationRecord.setSensor_vendor(orientation_vendor);
             orientationRecord.setSensor_type(orientation_type);
+            orientationRecord.setSensor_latitude(String.valueOf(latitude));
+            orientationRecord.setSensor_longitude(String.valueOf(longitude));
+            orientationRecord.setSensor_address(address);
         }
 
         if(gyroscope_cb.isChecked()){
@@ -188,31 +197,41 @@ public class SecondActivity extends AppCompatActivity {
             gyroscopeRecord.setSensor_reading_2(gyroscope_coordinateY.getText().toString());
             gyroscopeRecord.setSensor_reading_3(gyroscope_coordinateZ.getText().toString());
             gyroscopeRecord.setSensor_name(gyroscope_name);
-            gyroscopeRecord.setSensor_accuracy(gyroscope_accuracy);
+            gyroscopeRecord.setSensor_resolution(gyroscope_accuracy);
             gyroscopeRecord.setSensor_vendor(gyroscope_vendor);
             gyroscopeRecord.setSensor_type(gyroscope_type);
+            gyroscopeRecord.setSensor_latitude(String.valueOf(latitude));
+            gyroscopeRecord.setSensor_longitude(String.valueOf(longitude));
+            gyroscopeRecord.setSensor_address(address);
         }
 
         if(light_cb.isChecked()){
             lightRecord.setSensor_reading_1(light_view.getText().toString());
             lightRecord.setSensor_name(light_name);
-            lightRecord.setSensor_accuracy(light_accuracy);
+            lightRecord.setSensor_resolution(light_accuracy);
             lightRecord.setSensor_vendor(light_vendor);
             lightRecord.setSensor_type(light_type);
+            lightRecord.setSensor_latitude(String.valueOf(latitude));
+            lightRecord.setSensor_longitude(String.valueOf(longitude));
+            lightRecord.setSensor_address(address);
         }
 
         if(temperature_cb.isChecked()){
             temperatureRecord.setSensor_reading_1(temperature_view.getText().toString());
             temperatureRecord.setSensor_name(temperature_name);
-            temperatureRecord.setSensor_accuracy(temperature_accuracy);
+            temperatureRecord.setSensor_resolution(temperature_accuracy);
             temperatureRecord.setSensor_vendor(temperature_vendor);
             temperatureRecord.setSensor_type(temperature_type);
+            temperatureRecord.setSensor_latitude(String.valueOf(latitude));
+            temperatureRecord.setSensor_longitude(String.valueOf(longitude));
+            temperatureRecord.setSensor_address(address);
         }
 
         p.records.add(orientationRecord);
         p.records.add(gyroscopeRecord);
         p.records.add(temperatureRecord);
         p.records.add(lightRecord);
+        p.setPublication_longitude(longitude);
 
         return p;
     }
