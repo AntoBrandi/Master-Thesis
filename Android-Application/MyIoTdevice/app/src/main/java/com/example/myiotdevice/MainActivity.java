@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     public String accelerometer_resolution;
     public String accelerometer_vendor;
 
+    public String pressure_accuracy;
+    public String pressure_vendor;
+
     public FloatingActionButton fab;
 
     public Record accelerometerRecord;
@@ -130,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Record r = createRecord();
+                Publication p = createPublication();
                 Intent i = new Intent(MainActivity.this,SecondActivity.class);
-                i.putExtra("Record",r);
+                i.putExtra("Publication",p);
                 i.putExtra("Address",address);
                 startActivity(i);
             }
@@ -238,8 +241,8 @@ public class MainActivity extends AppCompatActivity {
         position_longitude.setText(String.valueOf(longitude));
     }
 
-    public Record createRecord(){
-        //Record r = new Record(Calendar.getInstance(TimeZone.getDefault()));
+    public Publication createPublication(){
+        Publication publication = new Publication();
 
         if(acceleration_cb.isChecked()){
             accelerometerRecord=new Record();
@@ -252,15 +255,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(pressure_cb.isChecked()){
-            r.pressure=pressure_view.getText().toString();
-            r.pressureName = pressure_name;
+            pressureRecord = new Record();
+            pressureRecord.setSensor_reading_1(pressure_view.getText().toString());
+            pressureRecord.setSensor_name(pressure_name);
+            pressureRecord.setSensor_accuracy(pressure_accuracy);
+            accelerometerRecord.setSensor_vendor(pressure_vendor);
         }
 
         if(altitude_cb.isChecked()){
-            r.altitude=altitude_view.getText().toString();
+            altimeterRecord = new Record();
+            altimeterRecord.setSensor_reading_1(altitude_view.getText().toString());
+            altimeterRecord.setSensor_name(pressure_name);
+            altimeterRecord.setSensor_accuracy(pressure_accuracy);
+            altimeterRecord.setSensor_vendor(pressure_vendor);
         }
 
-        return r;
+        publication.records.add(accelerometerRecord);
+        publication.records.add(pressureRecord);
+        publication.records.add(altimeterRecord);
+        publication.setPublication_latitude(latitude);
+        publication.setPublication_longitude(longitude);
+        publication.setPublication_location(address);
+
+        return publication;
     }
 
     private class GeocoderHandler extends Handler {

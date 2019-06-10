@@ -37,6 +37,13 @@ public class SecondActivity extends AppCompatActivity {
     public String gyroscope_name;
     public String temperature_name;
     public String light_name;
+    public String gyroscope_accuracy;
+    public String gyroscope_vendor;
+    public String light_accuracy;
+    public String light_vendor;
+    public String temperature_accuracy;
+    public String temperature_vendor;
+
 
     public FloatingActionButton fab;
 
@@ -44,8 +51,16 @@ public class SecondActivity extends AppCompatActivity {
     public Thread timeThread;
     public MySecondSensorListener msl;
 
-    public Record r;
+    public Publication p;
     public String address;
+
+    public String orientation_accuracy;
+    public String orientation_vendor;
+
+    public Record orientationRecord;
+    public Record gyroscopeRecord;
+    public Record temperatureRecord;
+    public Record lightRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +82,7 @@ public class SecondActivity extends AppCompatActivity {
         light_cb = (CheckBox) findViewById(R.id.checkbox_light);
 
         Intent i = getIntent();
-        r=(Record) i.getSerializableExtra("Record");
+        p=(Publication) i.getSerializableExtra("Publication");
         address = (String) i.getStringExtra("Address");
 
         if(address != null){
@@ -80,9 +95,9 @@ public class SecondActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                r = createRecord();
+                p = createRecord();
                 Intent j = new Intent(SecondActivity.this,SendEventActivity.class);
-                j.putExtra("Record",r);
+                j.putExtra("Publication",p);
                 startActivity(j);
             }
         });
@@ -151,32 +166,45 @@ public class SecondActivity extends AppCompatActivity {
     }
 
 
-    public Record createRecord(){
+    public Publication createRecord(){
 
         if(orientation_cb.isChecked()){
-            r.pitch = orientation_coordinatePitch.getText().toString();
-            r.azimuth = orientation_coordinateAzimuth.getText().toString();
-            r.roll=orientation_coordinateRoll.getText().toString();
-            r.orientationName = orientation_name;
+            orientationRecord.setSensor_reading_1(orientation_coordinatePitch.getText().toString());
+            orientationRecord.setSensor_reading_2(orientation_coordinateAzimuth.getText().toString());
+            orientationRecord.setSensor_reading_3(orientation_coordinateRoll.getText().toString());
+            orientationRecord.setSensor_name(orientation_name);
+            orientationRecord.setSensor_accuracy(orientation_accuracy);
+            orientationRecord.setSensor_vendor(orientation_vendor);
         }
 
         if(gyroscope_cb.isChecked()){
-            r.gyroscopeX=gyroscope_coordinateX.getText().toString();
-            r.gyroscopeY=gyroscope_coordinateY.getText().toString();
-            r.gyroscopeZ=gyroscope_coordinateZ.getText().toString();
-            r.gyroscopeName = gyroscope_name;
+            gyroscopeRecord.setSensor_reading_1(gyroscope_coordinateX.getText().toString());
+            gyroscopeRecord.setSensor_reading_2(gyroscope_coordinateY.getText().toString());
+            gyroscopeRecord.setSensor_reading_3(gyroscope_coordinateZ.getText().toString());
+            gyroscopeRecord.setSensor_name(gyroscope_name);
+            gyroscopeRecord.setSensor_accuracy(gyroscope_accuracy);
+            gyroscopeRecord.setSensor_vendor(gyroscope_vendor);
         }
 
         if(light_cb.isChecked()){
-            r.light=light_view.getText().toString();
-            r.lightName = light_name;
+            lightRecord.setSensor_reading_1(light_view.getText().toString());
+            lightRecord.setSensor_name(light_name);
+            lightRecord.setSensor_accuracy(light_accuracy);
+            lightRecord.setSensor_vendor(light_vendor);
         }
 
         if(temperature_cb.isChecked()){
-            r.temperature=temperature_view.getText().toString();
-            r.temperatureName = temperature_name;
+            temperatureRecord.setSensor_reading_1(temperature_view.getText().toString());
+            temperatureRecord.setSensor_name(temperature_name);
+            temperatureRecord.setSensor_accuracy(temperature_accuracy);
+            temperatureRecord.setSensor_vendor(temperature_vendor);
         }
 
-        return r;
+        p.records.add(orientationRecord);
+        p.records.add(gyroscopeRecord);
+        p.records.add(temperatureRecord);
+        p.records.add(lightRecord);
+
+        return p;
     }
 }

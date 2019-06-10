@@ -38,6 +38,8 @@ public class MySensorListener implements SensorEventListener {
                         mainActivity.altitude_view.setText(String.format("%.2f", altitude)+" m");
                         // Sensor information and name
                     mainActivity.pressure_name = mySensor.getName();
+                    mainActivity.pressure_accuracy = String.valueOf(mySensor.getResolution());
+                    mainActivity.accelerometer_vendor = mySensor.getVendor();
                 }
             }
         });

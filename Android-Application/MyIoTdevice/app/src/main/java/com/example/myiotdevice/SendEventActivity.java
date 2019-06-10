@@ -20,7 +20,7 @@ public class SendEventActivity extends AppCompatActivity {
     public int traffic_jam_click;
     public int landslide_click;
     public int snow_click;
-    public Record r;
+    public Publication p;
     public String XML_Document;
 
 
@@ -36,7 +36,7 @@ public class SendEventActivity extends AppCompatActivity {
 
         // Retrieve the Record object that has been sent over the intent
         Intent i = getIntent();
-        r = (Record) i.getSerializableExtra("Record");
+        p = (Publication) i.getSerializableExtra("Publication");
 
 
         // Button Click manage
@@ -105,16 +105,17 @@ public class SendEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if ((car_accident_click%2)-1==0) {
-                    r.isCarAccident= true;
+                    p.setCarAccident(true);
                 }
                 if((traffic_jam_click%2)-1==0) {
-                    r.isTrafficJam=true;
+                    p.setTrafficJam(true);
                 }
                 if((landslide_click%2)-1==0) {
-                    r.isLandSlide=true;
+                    p.setLandSlide(true);
+
                 }
                 if((snow_click%2)-1==0) {
-                    r.isSnow=true;
+                    p.setSnow(true);
                 }
 
                 // TODO: improve the XML data format with the DATEX II standard
@@ -133,13 +134,13 @@ public class SendEventActivity extends AppCompatActivity {
                     xmlSerializer.attribute("", "SENSOR_NAME", "GPS");
                     xmlSerializer.startTag("", "value");
                     xmlSerializer.startTag("", "latitude");
-                    xmlSerializer.text(String.valueOf(r.latitude));
+                    xmlSerializer.text(String.valueOf(p.getPublication_latitude()));
                     xmlSerializer.endTag("", "latitude");
                     xmlSerializer.startTag("", "longitude");
-                    xmlSerializer.text(String.valueOf(r.longitude));
+                    xmlSerializer.text(String.valueOf(p.getPublication_longitude()));
                     xmlSerializer.endTag("", "longitude");
                     xmlSerializer.startTag("", "address");
-                    xmlSerializer.text(String.valueOf(r.address));
+                    xmlSerializer.text(String.valueOf(p.getPublication_location()));
                     xmlSerializer.endTag("", "address");
                     xmlSerializer.endTag("", "value");
                     xmlSerializer.endTag("", "sensor");

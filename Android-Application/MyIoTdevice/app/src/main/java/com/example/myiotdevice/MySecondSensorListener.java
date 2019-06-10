@@ -24,6 +24,8 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.orientation_coordinateAzimuth.setText(String.format("%.2f", event.values[2]));
                     // sensor information and name
                     secondActivity.orientation_name = mySensor.getName();
+                    secondActivity.orientation_accuracy = String.valueOf(mySensor.getResolution());
+                    secondActivity.orientation_vendor = String.valueOf(mySensor.getVendor());
                 }
                 if (mySensor.getType()==Sensor.TYPE_GYROSCOPE){
                     secondActivity.gyroscope_coordinateX.setText(String.format("%.2f", event.values[0])+" rad/s");
@@ -31,6 +33,8 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.gyroscope_coordinateZ.setText(String.format("%.2f", event.values[2])+" rad/s");
                     // sensor information and name
                     secondActivity.gyroscope_name = mySensor.getName();
+                    secondActivity.gyroscope_accuracy = String.valueOf(mySensor.getResolution());
+                    secondActivity.gyroscope_vendor = String.valueOf(mySensor.getVendor());
                 }
 
 
@@ -43,6 +47,8 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.light_view.setText(String.format("%.2f", event.values[0])+" lx");
                     // sensor information and name
                     secondActivity.light_name = mySensor.getName();
+                    secondActivity.light_accuracy = String.valueOf(mySensor.getResolution());
+                    secondActivity.light_vendor = String.valueOf(mySensor.getVendor());
                 }
             }
         });
