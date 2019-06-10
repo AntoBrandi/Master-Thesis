@@ -58,6 +58,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/EditTextBottom"
+            android:id="@+id/description"
             android:hint="Descrizione dell'evento (Facoltativo)"/>
 
         <android.support.design.widget.FloatingActionButton

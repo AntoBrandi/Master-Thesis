@@ -14,6 +14,7 @@ import android.telephony.TelephonyManager;
 import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.xmlpull.v1.XmlSerializer;
@@ -31,6 +32,7 @@ public class SendEventActivity extends AppCompatActivity {
     public String XML_Document;
     private TelephonyManager telephonyManager;
     private String deviceID;
+    private EditText description;
 
 
     @Override
@@ -42,6 +44,7 @@ public class SendEventActivity extends AppCompatActivity {
         traffic_jam_click=0;
         landslide_click=0;
         snow_click=0;
+        description = (EditText) findViewById(R.id.description);
 
         // get ID for a smartphone
         if (ActivityCompat.checkSelfPermission(SendEventActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
@@ -141,6 +144,10 @@ public class SendEventActivity extends AppCompatActivity {
                 p.setEndDate(Calendar.getInstance().getTime());
                 p.calculateDuration();
                 p.setLanguage("it");
+                if (description.getText().toString() == null)
+                {
+                    p.setDescription(description.getText().toString());
+                }
                 if(deviceID != null) {
                     p.setCreator("it-" + deviceID);
                 }

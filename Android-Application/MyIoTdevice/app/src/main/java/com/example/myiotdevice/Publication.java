@@ -9,6 +9,7 @@ public class Publication implements Serializable {
     private String publication_location;
     private String publication_latitude;
     private String publication_longitude;
+    private String description;
     private double time_precision;
     private long reading_duration;
     private String language;
@@ -28,6 +29,14 @@ public class Publication implements Serializable {
         this.isSnow=false;
         this.isTrafficJam=false;
         records = new ArrayList<Record>();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void calculateDuration(){
