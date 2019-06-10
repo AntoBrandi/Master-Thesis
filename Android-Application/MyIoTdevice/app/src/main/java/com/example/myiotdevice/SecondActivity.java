@@ -43,6 +43,11 @@ public class SecondActivity extends AppCompatActivity {
     public String light_vendor;
     public String temperature_accuracy;
     public String temperature_vendor;
+    public String orientation_type;
+    public String gyroscope_type;
+    public String temperature_type;
+    public String light_type;
+
 
 
     public FloatingActionButton fab;
@@ -175,6 +180,7 @@ public class SecondActivity extends AppCompatActivity {
             orientationRecord.setSensor_name(orientation_name);
             orientationRecord.setSensor_accuracy(orientation_accuracy);
             orientationRecord.setSensor_vendor(orientation_vendor);
+            orientationRecord.setSensor_type(orientation_type);
         }
 
         if(gyroscope_cb.isChecked()){
@@ -184,6 +190,7 @@ public class SecondActivity extends AppCompatActivity {
             gyroscopeRecord.setSensor_name(gyroscope_name);
             gyroscopeRecord.setSensor_accuracy(gyroscope_accuracy);
             gyroscopeRecord.setSensor_vendor(gyroscope_vendor);
+            gyroscopeRecord.setSensor_type(gyroscope_type);
         }
 
         if(light_cb.isChecked()){
@@ -191,6 +198,7 @@ public class SecondActivity extends AppCompatActivity {
             lightRecord.setSensor_name(light_name);
             lightRecord.setSensor_accuracy(light_accuracy);
             lightRecord.setSensor_vendor(light_vendor);
+            lightRecord.setSensor_type(light_type);
         }
 
         if(temperature_cb.isChecked()){
@@ -198,6 +206,7 @@ public class SecondActivity extends AppCompatActivity {
             temperatureRecord.setSensor_name(temperature_name);
             temperatureRecord.setSensor_accuracy(temperature_accuracy);
             temperatureRecord.setSensor_vendor(temperature_vendor);
+            temperatureRecord.setSensor_type(temperature_type);
         }
 
         p.records.add(orientationRecord);

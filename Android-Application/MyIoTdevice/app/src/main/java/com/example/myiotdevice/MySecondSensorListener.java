@@ -26,6 +26,7 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.orientation_name = mySensor.getName();
                     secondActivity.orientation_accuracy = String.valueOf(mySensor.getResolution());
                     secondActivity.orientation_vendor = String.valueOf(mySensor.getVendor());
+                    secondActivity.orientation_type = String.valueOf(mySensor.getType());
                 }
                 if (mySensor.getType()==Sensor.TYPE_GYROSCOPE){
                     secondActivity.gyroscope_coordinateX.setText(String.format("%.2f", event.values[0])+" rad/s");
@@ -35,6 +36,7 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.gyroscope_name = mySensor.getName();
                     secondActivity.gyroscope_accuracy = String.valueOf(mySensor.getResolution());
                     secondActivity.gyroscope_vendor = String.valueOf(mySensor.getVendor());
+                    secondActivity.gyroscope_type=String.valueOf(mySensor.getType());
                 }
 
 
@@ -42,6 +44,9 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.temperature_view.setText(String.format("%.2f", event.values[0])+" °C");
                     // sensor information and name
                     secondActivity.temperature_name = mySensor.getName();
+                    secondActivity.temperature_accuracy = String.valueOf(mySensor.getResolution());
+                    secondActivity.temperature_vendor = mySensor.getVendor();
+                    secondActivity.temperature_type = String.valueOf(mySensor.getType());
                 }
                 if(mySensor.getType()==Sensor.TYPE_LIGHT){
                     secondActivity.light_view.setText(String.format("%.2f", event.values[0])+" lx");
@@ -49,6 +54,7 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.light_name = mySensor.getName();
                     secondActivity.light_accuracy = String.valueOf(mySensor.getResolution());
                     secondActivity.light_vendor = String.valueOf(mySensor.getVendor());
+                    secondActivity.light_type = String.valueOf(mySensor.getType());
                 }
             }
         });

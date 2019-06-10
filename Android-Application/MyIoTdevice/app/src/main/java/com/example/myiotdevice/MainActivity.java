@@ -59,9 +59,12 @@ public class MainActivity extends AppCompatActivity {
     public String pressure_name;
     public String accelerometer_resolution;
     public String accelerometer_vendor;
+    public String accelerometer_type;
 
     public String pressure_accuracy;
     public String pressure_vendor;
+    public String pressure_type;
+    public String altimeter_type;
 
     public FloatingActionButton fab;
 
@@ -252,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
             accelerometerRecord.setSensor_name(accelerometer_name);
             accelerometerRecord.setSensor_accuracy(accelerometer_resolution);
             accelerometerRecord.setSensor_vendor(accelerometer_vendor);
+            accelerometerRecord.setSensor_type(accelerometer_type);
         }
 
         if(pressure_cb.isChecked()){
@@ -259,7 +263,8 @@ public class MainActivity extends AppCompatActivity {
             pressureRecord.setSensor_reading_1(pressure_view.getText().toString());
             pressureRecord.setSensor_name(pressure_name);
             pressureRecord.setSensor_accuracy(pressure_accuracy);
-            accelerometerRecord.setSensor_vendor(pressure_vendor);
+            pressureRecord.setSensor_vendor(pressure_vendor);
+            pressureRecord.setSensor_type(pressure_type);
         }
 
         if(altitude_cb.isChecked()){
@@ -268,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
             altimeterRecord.setSensor_name(pressure_name);
             altimeterRecord.setSensor_accuracy(pressure_accuracy);
             altimeterRecord.setSensor_vendor(pressure_vendor);
+            altimeterRecord.setSensor_type(pressure_type);
         }
 
         publication.records.add(accelerometerRecord);

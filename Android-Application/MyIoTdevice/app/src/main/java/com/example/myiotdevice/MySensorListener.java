@@ -28,7 +28,7 @@ public class MySensorListener implements SensorEventListener {
                     mainActivity.accelerometer_name= mySensor.getName();
                     mainActivity.accelerometer_resolution = String.valueOf(mySensor.getResolution());
                     mainActivity.accelerometer_vendor = mySensor.getVendor();
-
+                    mainActivity.accelerometer_type = String.valueOf(mySensor.getType());
                 }
 
                 if(mySensor.getType()==Sensor.TYPE_PRESSURE){
@@ -39,7 +39,8 @@ public class MySensorListener implements SensorEventListener {
                         // Sensor information and name
                     mainActivity.pressure_name = mySensor.getName();
                     mainActivity.pressure_accuracy = String.valueOf(mySensor.getResolution());
-                    mainActivity.accelerometer_vendor = mySensor.getVendor();
+                    mainActivity.pressure_vendor = mySensor.getVendor();
+                    mainActivity.pressure_type = String.valueOf(mySensor.getType());
                 }
             }
         });
