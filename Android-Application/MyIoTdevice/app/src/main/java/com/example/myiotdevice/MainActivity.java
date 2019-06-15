@@ -26,9 +26,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,13 +65,15 @@ public class MainActivity extends AppCompatActivity {
     public String pressure_accuracy;
     public String pressure_vendor;
     public String pressure_type;
-    public String altimeter_type;
 
     public FloatingActionButton fab;
 
     public Record accelerometerRecord;
     public Record pressureRecord;
     public Record altimeterRecord;
+
+    private SimpleDateFormat df;
+
 
 
     // GPS VARIABLES
@@ -119,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
         acceleration_cb = (CheckBox) findViewById(R.id.checkbox_acceleration);
         altitude_cb=(CheckBox) findViewById(R.id.checkbox_altitude);
         pressure_cb = (CheckBox) findViewById(R.id.checkbox_pressure);
+
+        df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+
 
         // ASK FOR PERMISSIONS
         // GPS access
@@ -252,6 +258,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(acceleration_cb.isChecked()){
             accelerometerRecord=new Record();
+
+            accelerometerRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
             accelerometerRecord.setSensor_reading_1(acceleration_coordinateX.getText().toString());
             accelerometerRecord.setSensor_reading_2(acceleration_coordinateY.getText().toString());
             accelerometerRecord.setSensor_reading_3(acceleration_coordinateZ.getText().toString());
@@ -262,10 +270,17 @@ public class MainActivity extends AppCompatActivity {
             accelerometerRecord.setSensor_latitude(String.valueOf(latitude));
             accelerometerRecord.setSensor_longitude(String.valueOf(longitude));
             accelerometerRecord.setSensor_address(address);
+            accelerometerRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+
+            accelerometerRecord.ID = "ACC";
+
+            publication.records.add(accelerometerRecord);
         }
 
         if(pressure_cb.isChecked()){
             pressureRecord = new Record();
+
+            pressureRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
             pressureRecord.setSensor_reading_1(pressure_view.getText().toString());
             pressureRecord.setSensor_name(pressure_name);
             pressureRecord.setSensor_resolution(pressure_accuracy);
@@ -274,10 +289,16 @@ public class MainActivity extends AppCompatActivity {
             pressureRecord.setSensor_latitude(String.valueOf(latitude));
             pressureRecord.setSensor_longitude(String.valueOf(longitude));
             pressureRecord.setSensor_address(address);
+            pressureRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+
+            pressureRecord.ID = "PRESS";
+
+            publication.records.add(pressureRecord);
         }
 
         if(altitude_cb.isChecked()){
             altimeterRecord = new Record();
+            altimeterRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
             altimeterRecord.setSensor_reading_1(altitude_view.getText().toString());
             altimeterRecord.setSensor_name(pressure_name);
             altimeterRecord.setSensor_resolution(pressure_accuracy);
@@ -286,11 +307,14 @@ public class MainActivity extends AppCompatActivity {
             altimeterRecord.setSensor_latitude(String.valueOf(latitude));
             altimeterRecord.setSensor_longitude(String.valueOf(longitude));
             altimeterRecord.setSensor_address(address);
+            altimeterRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+
+            altimeterRecord.ID = "ALT";
+
+            publication.records.add(altimeterRecord);
         }
 
-        publication.records.add(accelerometerRecord);
-        publication.records.add(pressureRecord);
-        publication.records.add(altimeterRecord);
+
         publication.setPublication_latitude(String.valueOf(latitude));
         publication.setPublication_longitude(String.valueOf(longitude));
         publication.setPublication_location(String.valueOf(address));

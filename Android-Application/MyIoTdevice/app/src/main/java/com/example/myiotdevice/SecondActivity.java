@@ -13,6 +13,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class SecondActivity extends AppCompatActivity {
 
     public TextView temperature_view;
@@ -70,6 +74,9 @@ public class SecondActivity extends AppCompatActivity {
     private String longitude;
     private String latitude;
 
+    private SimpleDateFormat df;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +101,9 @@ public class SecondActivity extends AppCompatActivity {
         address = (String) i.getStringExtra("Address");
         longitude = (String) i.getStringExtra("Longitude");
         latitude = (String) i.getStringExtra("Latitude");
+
+
+        df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 
         if(address != null){
@@ -180,6 +190,8 @@ public class SecondActivity extends AppCompatActivity {
     public Publication createRecord(){
 
         if(orientation_cb.isChecked()){
+            orientationRecord = new Record();
+            orientationRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
             orientationRecord.setSensor_reading_1(orientation_coordinatePitch.getText().toString());
             orientationRecord.setSensor_reading_2(orientation_coordinateAzimuth.getText().toString());
             orientationRecord.setSensor_reading_3(orientation_coordinateRoll.getText().toString());
@@ -190,9 +202,16 @@ public class SecondActivity extends AppCompatActivity {
             orientationRecord.setSensor_latitude(String.valueOf(latitude));
             orientationRecord.setSensor_longitude(String.valueOf(longitude));
             orientationRecord.setSensor_address(address);
+            orientationRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+
+            orientationRecord.ID = "ORIEN";
+
+            p.records.add(orientationRecord);
         }
 
         if(gyroscope_cb.isChecked()){
+            gyroscopeRecord = new Record();
+            gyroscopeRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
             gyroscopeRecord.setSensor_reading_1(gyroscope_coordinateX.getText().toString());
             gyroscopeRecord.setSensor_reading_2(gyroscope_coordinateY.getText().toString());
             gyroscopeRecord.setSensor_reading_3(gyroscope_coordinateZ.getText().toString());
@@ -203,10 +222,16 @@ public class SecondActivity extends AppCompatActivity {
             gyroscopeRecord.setSensor_latitude(String.valueOf(latitude));
             gyroscopeRecord.setSensor_longitude(String.valueOf(longitude));
             gyroscopeRecord.setSensor_address(address);
+            gyroscopeRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+            gyroscopeRecord.ID = "GYRO";
+
+            p.records.add(gyroscopeRecord);
         }
 
         if(light_cb.isChecked()){
-            lightRecord.setSensor_reading_1(light_view.getText().toString());
+            lightRecord = new Record();
+            lightRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
+             lightRecord.setSensor_reading_1(light_view.getText().toString());
             lightRecord.setSensor_name(light_name);
             lightRecord.setSensor_resolution(light_accuracy);
             lightRecord.setSensor_vendor(light_vendor);
@@ -214,9 +239,15 @@ public class SecondActivity extends AppCompatActivity {
             lightRecord.setSensor_latitude(String.valueOf(latitude));
             lightRecord.setSensor_longitude(String.valueOf(longitude));
             lightRecord.setSensor_address(address);
+            lightRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+            lightRecord.ID="LIGHT";
+
+            p.records.add(lightRecord);
         }
 
         if(temperature_cb.isChecked()){
+            temperatureRecord = new Record();
+            temperatureRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
             temperatureRecord.setSensor_reading_1(temperature_view.getText().toString());
             temperatureRecord.setSensor_name(temperature_name);
             temperatureRecord.setSensor_resolution(temperature_accuracy);
@@ -225,13 +256,11 @@ public class SecondActivity extends AppCompatActivity {
             temperatureRecord.setSensor_latitude(String.valueOf(latitude));
             temperatureRecord.setSensor_longitude(String.valueOf(longitude));
             temperatureRecord.setSensor_address(address);
-        }
+            temperatureRecord.setOverallEndTime(df.format(Calendar.getInstance().getTime()));
+            temperatureRecord.ID = "TEMP";
 
-        p.records.add(orientationRecord);
-        p.records.add(gyroscopeRecord);
-        p.records.add(temperatureRecord);
-        p.records.add(lightRecord);
-        p.setPublication_longitude(longitude);
+            p.records.add(temperatureRecord);
+        }
 
         return p;
     }

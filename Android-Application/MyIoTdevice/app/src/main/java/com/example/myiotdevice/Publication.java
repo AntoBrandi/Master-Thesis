@@ -14,6 +14,7 @@ public class Publication implements Serializable {
     private long reading_duration;
     private String language;
     private String creator;
+    private String type;
     public ArrayList<Record> records;
     private boolean isCarAccident;
     private boolean isTrafficJam;
@@ -29,6 +30,7 @@ public class Publication implements Serializable {
         this.isSnow=false;
         this.isTrafficJam=false;
         records = new ArrayList<Record>();
+        type = "";
     }
 
     public String getDescription() {
@@ -145,5 +147,21 @@ public class Publication implements Serializable {
 
     public void setCreator(String creator) {
         this.creator = creator;
+    }
+
+    public String getType () {
+        if (isCarAccident==true){
+            type = type + "Car Accident";
+        }
+        if (isTrafficJam ==true){
+            type = type + ", Traffic Jam";
+        }
+        if(isSnow==true){
+            type = type + ", Climate Conditions";
+        }
+        if(isLandSlide==true){
+            type = type + ", Obstruction";
+        }
+        return type;
     }
 }
