@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 public class MySecondSensorListener implements SensorEventListener {
     public SecondActivity secondActivity;
+    static final float ALPHA = 0.4f; // manual settings
+    public float[] output;
 
     public MySecondSensorListener(SecondActivity activity){
         this.secondActivity = activity;
@@ -29,9 +31,18 @@ public class MySecondSensorListener implements SensorEventListener {
                     secondActivity.orientation_type = String.valueOf(mySensor.getType());
                 }
                 if (mySensor.getType()==Sensor.TYPE_GYROSCOPE){
-                    secondActivity.gyroscope_coordinateX.setText(String.format("%.2f", event.values[0])+" rad/s");
-                    secondActivity.gyroscope_coordinateY.setText(String.format("%.2f", event.values[1])+" rad/s");
-                    secondActivity.gyroscope_coordinateZ.setText(String.format("%.2f", event.values[2])+" rad/s");
+                    output = lowPassFilter(event.values.clone(),output);
+
+                    // FILTERED
+                    secondActivity.gyroscope_coordinateX.setText(String.format("%.2f", output[0])+" rad/s");
+                    secondActivity.gyroscope_coordinateY.setText(String.format("%.2f", output[1])+" rad/s");
+                    secondActivity.gyroscope_coordinateZ.setText(String.format("%.2f", output[2])+" rad/s");
+
+                    // NOT FILTERED
+//                    secondActivity.gyroscope_coordinateX.setText(String.format("%.2f", event.values[0])+" rad/s");
+//                    secondActivity.gyroscope_coordinateY.setText(String.format("%.2f", event.values[1])+" rad/s");
+//                    secondActivity.gyroscope_coordinateZ.setText(String.format("%.2f", event.values[2])+" rad/s");
+
                     // sensor information and name
                     secondActivity.gyroscope_name = mySensor.getName();
                     secondActivity.gyroscope_accuracy = String.valueOf(mySensor.getResolution());
@@ -58,5 +69,13 @@ public class MySecondSensorListener implements SensorEventListener {
                 }
             }
         });
+    }
+
+    public float[] lowPassFilter(float[] input,float[] output){
+        if ( output == null ) return input;
+        for ( int i=0; i<input.length; i++ ) {
+            output[i] = output[i] + ALPHA * (input[i] - output[i]);
+        }
+        return output;
     }
 }
