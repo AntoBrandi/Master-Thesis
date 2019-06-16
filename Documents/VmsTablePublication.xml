@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D2LogicalModel:d2LogicalModel modelBaseVersion="2" xmlns:D2LogicalModel="http://datex2.eu/schema/2/2_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datex2.eu/schema/2/2_0 http://www.datex2.eu/schema/2/2_3/DATEXIISchema_2_2_3.xsd">
+	<D2LogicalModel:exchange>
+		<D2LogicalModel:supplierIdentification>
+			<D2LogicalModel:country>se</D2LogicalModel:country>
+			<D2LogicalModel:nationalIdentifier>STA</D2LogicalModel:nationalIdentifier>
+		</D2LogicalModel:supplierIdentification>
+	</D2LogicalModel:exchange>
+	<D2LogicalModel:payloadPublication xsi:type="D2LogicalModel:VmsTablePublication" lang="sv">
+		<D2LogicalModel:publicationTime>2011-03-28T18:45:00+02:00</D2LogicalModel:publicationTime>
+		<D2LogicalModel:publicationCreator>
+			<D2LogicalModel:country>se</D2LogicalModel:country>
+			<D2LogicalModel:nationalIdentifier>STA</D2LogicalModel:nationalIdentifier>
+		</D2LogicalModel:publicationCreator>
+		<D2LogicalModel:headerInformation>
+			<D2LogicalModel:confidentiality>noRestriction</D2LogicalModel:confidentiality>
+			<D2LogicalModel:informationStatus>real</D2LogicalModel:informationStatus>
+		</D2LogicalModel:headerInformation>
+	<D2LogicalModel:vmsUnitTable id="SE_STA_UnitTableReference_1" version="1">
+	<D2LogicalModel:vmsUnitTableIdentification>Example of a VMSTablePublication</D2LogicalModel:vmsUnitTableIdentification>
+		<D2LogicalModel:vmsUnitRecord id="SE_STA_VMSUnit_1" version="1">
+		<D2LogicalModel:numberOfVms>1</D2LogicalModel:numberOfVms>
+		<D2LogicalModel:vmsUnitIPAddress>192.168.32.1</D2LogicalModel:vmsUnitIPAddress>
+		<D2LogicalModel:vmsRecord vmsIndex="1">
+			<D2LogicalModel:vmsRecord>
+			<D2LogicalModel:vmsOwner>
+				<D2LogicalModel:values>
+					<D2LogicalModel:value lang="sv">Trafikverket</D2LogicalModel:value>
+				</D2LogicalModel:values>
+			</D2LogicalModel:vmsOwner>
+			<D2LogicalModel:vmsType>colourGraphic</D2LogicalModel:vmsType>
+			<D2LogicalModel:dynamicallyConfigurableDisplayAreas>false</D2LogicalModel:dynamicallyConfigurableDisplayAreas>
+			<D2LogicalModel:vmsTextDisplayCharacteristics>
+				<D2LogicalModel:textPageSequencingCapable>false</D2LogicalModel:textPageSequencingCapable>		
+				<D2LogicalModel:maxNumberOfCharacters>20</D2LogicalModel:maxNumberOfCharacters>	
+				<D2LogicalModel:maxNumberOfRows>2</D2LogicalModel:maxNumberOfRows>
+			</D2LogicalModel:vmsTextDisplayCharacteristics>
+			<D2LogicalModel:vmsLocation xsi:type="D2LogicalModel:Point">
+			<D2LogicalModel:pointByCoordinates>
+				<D2LogicalModel:pointCoordinates>
+					<D2LogicalModel:latitude>59.917516</D2LogicalModel:latitude>
+					<D2LogicalModel:longitude>10.809174</D2LogicalModel:longitude>
+				</D2LogicalModel:pointCoordinates>
+			</D2LogicalModel:pointByCoordinates>
+			</D2LogicalModel:vmsLocation>
+			</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsUnitRecord>
+		<D2LogicalModel:vmsUnitRecord id="SE_STA_VMSUnit_2" version="1">
+		<D2LogicalModel:numberOfVms>1</D2LogicalModel:numberOfVms>
+		<D2LogicalModel:vmsUnitIPAddress>192.168.32.2</D2LogicalModel:vmsUnitIPAddress>
+		<D2LogicalModel:vmsRecord vmsIndex="1">
+			<D2LogicalModel:vmsRecord>
+			<D2LogicalModel:vmsOwner>
+				<D2LogicalModel:values>
+					<D2LogicalModel:value lang="sv">Trafikverket</D2LogicalModel:value>
+				</D2LogicalModel:values>
+			</D2LogicalModel:vmsOwner>
+			<D2LogicalModel:vmsType>colourGraphic</D2LogicalModel:vmsType>
+			<D2LogicalModel:dynamicallyConfigurableDisplayAreas>false</D2LogicalModel:dynamicallyConfigurableDisplayAreas>
+				<D2LogicalModel:vmsTextDisplayCharacteristics>
+				<D2LogicalModel:textPageSequencingCapable>false</D2LogicalModel:textPageSequencingCapable>		
+				<D2LogicalModel:maxNumberOfCharacters>20</D2LogicalModel:maxNumberOfCharacters>	
+				<D2LogicalModel:maxNumberOfRows>2</D2LogicalModel:maxNumberOfRows>
+			</D2LogicalModel:vmsTextDisplayCharacteristics>
+			<D2LogicalModel:vmsPictogramDisplayCharacteristics pictogramDisplayAreaIndex="1">
+				<D2LogicalModel:vmsPictogramDisplayCharacteristics>
+					<D2LogicalModel:pictogramPixelsAcross>1000</D2LogicalModel:pictogramPixelsAcross>
+					<D2LogicalModel:pictogramPixelsDown>600</D2LogicalModel:pictogramPixelsDown>
+					<D2LogicalModel:pictogramNumberOfColours>32</D2LogicalModel:pictogramNumberOfColours>
+				</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+				</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			<D2LogicalModel:vmsLocation xsi:type="D2LogicalModel:Point">
+			<D2LogicalModel:pointByCoordinates>
+				<D2LogicalModel:pointCoordinates>
+					<D2LogicalModel:latitude>59.217516</D2LogicalModel:latitude>
+					<D2LogicalModel:longitude>10.803174</D2LogicalModel:longitude>
+				</D2LogicalModel:pointCoordinates>
+			</D2LogicalModel:pointByCoordinates>
+			</D2LogicalModel:vmsLocation>
+		</D2LogicalModel:vmsRecord>		
+		</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsUnitRecord>
+		<D2LogicalModel:vmsUnitRecord id="SE_STA_VMSUnit_3" version="1">
+		<D2LogicalModel:numberOfVms>1</D2LogicalModel:numberOfVms>
+		<D2LogicalModel:vmsUnitIPAddress>192.168.32.3</D2LogicalModel:vmsUnitIPAddress>
+		<D2LogicalModel:vmsRecord vmsIndex="1">
+			<D2LogicalModel:vmsRecord>
+			<D2LogicalModel:vmsOwner>
+				<D2LogicalModel:values>
+					<D2LogicalModel:value lang="sv">Trafikverket</D2LogicalModel:value>
+				</D2LogicalModel:values>
+			</D2LogicalModel:vmsOwner>
+			<D2LogicalModel:vmsType>colourGraphic</D2LogicalModel:vmsType>
+			<D2LogicalModel:dynamicallyConfigurableDisplayAreas>false</D2LogicalModel:dynamicallyConfigurableDisplayAreas>
+				<D2LogicalModel:vmsTextDisplayCharacteristics>
+				<D2LogicalModel:textPageSequencingCapable>false</D2LogicalModel:textPageSequencingCapable>		
+				<D2LogicalModel:maxNumberOfCharacters>20</D2LogicalModel:maxNumberOfCharacters>	
+				<D2LogicalModel:maxNumberOfRows>2</D2LogicalModel:maxNumberOfRows>
+			</D2LogicalModel:vmsTextDisplayCharacteristics>
+			<D2LogicalModel:vmsPictogramDisplayCharacteristics pictogramDisplayAreaIndex="1">
+				<D2LogicalModel:vmsPictogramDisplayCharacteristics>
+					<D2LogicalModel:pictogramPixelsAcross>1000</D2LogicalModel:pictogramPixelsAcross>
+					<D2LogicalModel:pictogramPixelsDown>600</D2LogicalModel:pictogramPixelsDown>
+					<D2LogicalModel:pictogramNumberOfColours>32</D2LogicalModel:pictogramNumberOfColours>
+					<D2LogicalModel:pictogramPositionX>50</D2LogicalModel:pictogramPositionX>
+					<D2LogicalModel:pictogramPositionY>50</D2LogicalModel:pictogramPositionY>
+				</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			<D2LogicalModel:vmsPictogramDisplayCharacteristics pictogramDisplayAreaIndex="2">
+				<D2LogicalModel:vmsPictogramDisplayCharacteristics>
+					<D2LogicalModel:pictogramPixelsAcross>1000</D2LogicalModel:pictogramPixelsAcross>
+					<D2LogicalModel:pictogramPixelsDown>600</D2LogicalModel:pictogramPixelsDown>
+					<D2LogicalModel:pictogramNumberOfColours>32</D2LogicalModel:pictogramNumberOfColours>
+					<D2LogicalModel:pictogramPositionX>500</D2LogicalModel:pictogramPositionX>
+					<D2LogicalModel:pictogramPositionY>50</D2LogicalModel:pictogramPositionY>
+				</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			<D2LogicalModel:vmsLocation xsi:type="D2LogicalModel:Point">
+			<D2LogicalModel:pointByCoordinates>
+				<D2LogicalModel:pointCoordinates>
+					<D2LogicalModel:latitude>59.317516</D2LogicalModel:latitude>
+					<D2LogicalModel:longitude>10.303174</D2LogicalModel:longitude>
+				</D2LogicalModel:pointCoordinates>
+			</D2LogicalModel:pointByCoordinates>
+			</D2LogicalModel:vmsLocation>
+			</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsUnitRecord>
+		<D2LogicalModel:vmsUnitRecord id="SE_STA_VMSUnit_4" version="1">
+		<D2LogicalModel:numberOfVms>2</D2LogicalModel:numberOfVms>
+		<D2LogicalModel:vmsUnitIPAddress>192.168.32.4</D2LogicalModel:vmsUnitIPAddress>
+		<D2LogicalModel:vmsRecord vmsIndex="1">
+			<D2LogicalModel:vmsRecord>
+			<D2LogicalModel:vmsOwner>
+				<D2LogicalModel:values>
+					<D2LogicalModel:value lang="sv">Trafikverket</D2LogicalModel:value>
+				</D2LogicalModel:values>
+			</D2LogicalModel:vmsOwner>
+			<D2LogicalModel:vmsType>colourGraphic</D2LogicalModel:vmsType>
+			<D2LogicalModel:dynamicallyConfigurableDisplayAreas>false</D2LogicalModel:dynamicallyConfigurableDisplayAreas>
+			<D2LogicalModel:vmsTextDisplayCharacteristics>
+				<D2LogicalModel:textPageSequencingCapable>false</D2LogicalModel:textPageSequencingCapable>		
+				<D2LogicalModel:maxNumberOfCharacters>20</D2LogicalModel:maxNumberOfCharacters>	
+				<D2LogicalModel:maxNumberOfRows>2</D2LogicalModel:maxNumberOfRows>
+			</D2LogicalModel:vmsTextDisplayCharacteristics>
+			<D2LogicalModel:vmsPictogramDisplayCharacteristics pictogramDisplayAreaIndex="1">
+				<D2LogicalModel:vmsPictogramDisplayCharacteristics>
+					<D2LogicalModel:pictogramPixelsAcross>1000</D2LogicalModel:pictogramPixelsAcross>
+					<D2LogicalModel:pictogramPixelsDown>600</D2LogicalModel:pictogramPixelsDown>
+					<D2LogicalModel:pictogramNumberOfColours>32</D2LogicalModel:pictogramNumberOfColours>
+					<D2LogicalModel:pictogramPositionX>1</D2LogicalModel:pictogramPositionX>
+					<D2LogicalModel:pictogramPositionY>0.5</D2LogicalModel:pictogramPositionY>
+				</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			<D2LogicalModel:vmsLocation xsi:type="D2LogicalModel:Point">
+			<D2LogicalModel:pointByCoordinates>
+				<D2LogicalModel:pointCoordinates>
+					<D2LogicalModel:latitude>59.317516</D2LogicalModel:latitude>
+					<D2LogicalModel:longitude>10.303174</D2LogicalModel:longitude>
+				</D2LogicalModel:pointCoordinates>
+			</D2LogicalModel:pointByCoordinates>
+			</D2LogicalModel:vmsLocation>
+			</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsRecord>
+	<D2LogicalModel:vmsRecord vmsIndex="2">
+			<D2LogicalModel:vmsRecord>
+			<D2LogicalModel:vmsOwner>
+				<D2LogicalModel:values>
+					<D2LogicalModel:value lang="sv">Trafikverket</D2LogicalModel:value>
+				</D2LogicalModel:values>
+			</D2LogicalModel:vmsOwner>
+			<D2LogicalModel:vmsType>colourGraphic</D2LogicalModel:vmsType>
+			<D2LogicalModel:dynamicallyConfigurableDisplayAreas>false</D2LogicalModel:dynamicallyConfigurableDisplayAreas>
+			<D2LogicalModel:vmsTextDisplayCharacteristics>
+				<D2LogicalModel:textPageSequencingCapable>false</D2LogicalModel:textPageSequencingCapable>		
+				<D2LogicalModel:maxNumberOfCharacters>20</D2LogicalModel:maxNumberOfCharacters>	
+				<D2LogicalModel:maxNumberOfRows>2</D2LogicalModel:maxNumberOfRows>
+			</D2LogicalModel:vmsTextDisplayCharacteristics>
+			<D2LogicalModel:vmsPictogramDisplayCharacteristics pictogramDisplayAreaIndex="1">
+				<D2LogicalModel:vmsPictogramDisplayCharacteristics>
+					<D2LogicalModel:pictogramPixelsAcross>1000</D2LogicalModel:pictogramPixelsAcross>
+					<D2LogicalModel:pictogramPixelsDown>600</D2LogicalModel:pictogramPixelsDown>
+					<D2LogicalModel:pictogramNumberOfColours>32</D2LogicalModel:pictogramNumberOfColours>
+					<D2LogicalModel:pictogramPositionX>1</D2LogicalModel:pictogramPositionX>
+					<D2LogicalModel:pictogramPositionY>0.5</D2LogicalModel:pictogramPositionY>
+				</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			</D2LogicalModel:vmsPictogramDisplayCharacteristics>
+			<D2LogicalModel:vmsLocation xsi:type="D2LogicalModel:Point">
+			<D2LogicalModel:pointByCoordinates>
+				<D2LogicalModel:pointCoordinates>
+					<D2LogicalModel:latitude>59.317520</D2LogicalModel:latitude>
+					<D2LogicalModel:longitude>10.303175</D2LogicalModel:longitude>
+				</D2LogicalModel:pointCoordinates>
+			</D2LogicalModel:pointByCoordinates>
+			</D2LogicalModel:vmsLocation>
+			</D2LogicalModel:vmsRecord>
+		</D2LogicalModel:vmsRecord>
+
+		</D2LogicalModel:vmsUnitRecord>
+
+	</D2LogicalModel:vmsUnitTable>
+	</D2LogicalModel:payloadPublication>
+</D2LogicalModel:d2LogicalModel>

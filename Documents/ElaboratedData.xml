@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d2LogicalModel modelBaseVersion="2" xmlns="http://datex2.eu/schema/2/2_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datex2.eu/schema/2/2_0 http://www.datex2.eu/schema/2/2_3/DATEXIISchema_2_2_3.xsd">
+	<exchange>
+		<supplierIdentification>
+			<country>fr</country>
+			<nationalIdentifier>X</nationalIdentifier>
+		</supplierIdentification>
+	</exchange>
+	<payloadPublication xsi:type="ElaboratedDataPublication" lang="fr">
+		<publicationTime>2006-11-09T15:52:00+01:00</publicationTime>
+		<publicationCreator>
+			<country>fr</country>
+			<nationalIdentifier>X2</nationalIdentifier>
+		</publicationCreator>
+		<headerInformation>
+			<confidentiality>noRestriction</confidentiality>
+			<informationStatus>real</informationStatus>
+		</headerInformation>
+		<elaboratedData>
+			<basicData xsi:type="TravelTimeData">
+				<measurementOrCalculationTime>2010-01-02T15:32:00+02:00</measurementOrCalculationTime>
+				<pertinentLocation xsi:type="Linear">
+					<alertCLinear xsi:type="AlertCMethod2Linear">
+						<alertCLocationCountryCode>14</alertCLocationCountryCode>
+						<alertCLocationTableNumber>30</alertCLocationTableNumber>
+						<alertCLocationTableVersion>1</alertCLocationTableVersion>
+						<alertCDirection>
+							<alertCDirectionCoded>positive</alertCDirectionCoded>
+						</alertCDirection>
+						<alertCMethod2PrimaryPointLocation>
+							<alertCLocation>
+								<specificLocation>1243</specificLocation>
+							</alertCLocation>
+						</alertCMethod2PrimaryPointLocation>
+						<alertCMethod2SecondaryPointLocation>
+							<alertCLocation>
+								<specificLocation>1244</specificLocation>
+							</alertCLocation>
+						</alertCMethod2SecondaryPointLocation>
+					</alertCLinear>
+				</pertinentLocation>
+				<travelTimeTrendType>increasing</travelTimeTrendType>
+				<travelTime>
+					<duration>271</duration>
+				</travelTime>
+				<freeFlowTravelTime>
+					<duration>250</duration>
+				</freeFlowTravelTime>
+				<freeFlowSpeed>
+					<speed>72</speed>
+				</freeFlowSpeed>
+			</basicData>
+		</elaboratedData>
+		<elaboratedData>
+			<basicData xsi:type="TravelTimeData">
+				<pertinentLocation xsi:type="LocationByReference">
+					<predefinedLocationReference targetClass="PredefinedLocation" id="GUID1234277721992" version="0"/>
+				</pertinentLocation>
+				<travelTimeTrendType>increasing</travelTimeTrendType>
+				<travelTime>
+					<duration>271</duration>
+				</travelTime>
+				<freeFlowTravelTime>
+					<duration>250</duration>
+				</freeFlowTravelTime>
+				<freeFlowSpeed>
+					<speed>72</speed>
+				</freeFlowSpeed>
+			</basicData>
+		</elaboratedData>
+	</payloadPublication>
+</d2LogicalModel>

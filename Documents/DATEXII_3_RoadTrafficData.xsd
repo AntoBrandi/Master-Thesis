@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:roa="http://datex2.eu/schema/3/roadTrafficData" version="3.0" targetNamespace="http://datex2.eu/schema/3/roadTrafficData" xmlns:com="http://datex2.eu/schema/3/common" xmlns:loc="http://datex2.eu/schema/3/locationReferencing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://datex2.eu/schema/3/locationReferencing" schemaLocation="DATEXII_3_LocationReferencing.xsd" />
+  <xs:import namespace="http://datex2.eu/schema/3/common" schemaLocation="DATEXII_3_Common.xsd" />
+  <xs:complexType name="_MeasuredOrDerivedDataTypeEnum">
+    <xs:simpleContent>
+      <xs:extension base="roa:MeasuredOrDerivedDataTypeEnum">
+        <xs:attribute name="_extendedValue" type="xs:string" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="_MeasurementSiteRecordIndexMeasurementSpecificCharacteristics">
+    <xs:sequence>
+      <xs:element name="measurementSpecificCharacteristics" type="roa:MeasurementSpecificCharacteristics" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="index" type="xs:int" use="required" />
+  </xs:complexType>
+  <xs:simpleType name="MeasuredOrDerivedDataTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="humidityInformation" />
+      <xs:enumeration value="individualVehicleMeasurements" />
+      <xs:enumeration value="pollutionInformation" />
+      <xs:enumeration value="precipitationInformation" />
+      <xs:enumeration value="pressureInformation" />
+      <xs:enumeration value="roadSurfaceConditionInformation" />
+      <xs:enumeration value="temperatureInformation" />
+      <xs:enumeration value="trafficConcentration" />
+      <xs:enumeration value="trafficFlow" />
+      <xs:enumeration value="trafficHeadway" />
+      <xs:enumeration value="trafficSpeed" />
+      <xs:enumeration value="trafficStatusInformation" />
+      <xs:enumeration value="travelTimeInformation" />
+      <xs:enumeration value="visibilityInformation" />
+      <xs:enumeration value="windInformation" />
+      <xs:enumeration value="_extended" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="MeasurementSiteRecord">
+    <xs:sequence>
+      <xs:element name="measurementSiteRecordVersionTime" type="com:DateTime" minOccurs="0" maxOccurs="1" />
+      <xs:element name="computationMethod" type="com:_ComputationMethodEnum" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementEquipmentReference" type="com:String" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementEquipmentTypeUsed" type="com:MultilingualString" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementSiteName" type="com:MultilingualString" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementSiteNumberOfLanes" type="com:NonNegativeInteger" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementSiteIdentification" type="com:String" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementSide" type="loc:_DirectionEnum" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementSpecificCharacteristics" type="roa:_MeasurementSiteRecordIndexMeasurementSpecificCharacteristics" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="measurementSiteLocation" type="loc:LocationReference" />
+      <xs:element name="informationManagerOverride" type="com:InternationalIdentifier" minOccurs="0" />
+      <xs:element name="_measurementSiteRecordExtension" type="com:_ExtensionType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required" />
+    <xs:attribute name="version" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="MeasurementSiteTable">
+    <xs:sequence>
+      <xs:element name="measurementSiteTableIdentification" type="com:String" minOccurs="0" maxOccurs="1" />
+      <xs:element name="measurementSiteRecord" type="roa:MeasurementSiteRecord" maxOccurs="unbounded" />
+      <xs:element name="informationManager" type="com:InternationalIdentifier" minOccurs="0" />
+      <xs:element name="_measurementSiteTableExtension" type="com:_ExtensionType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required" />
+    <xs:attribute name="version" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="MeasurementSiteTablePublication">
+    <xs:complexContent>
+      <xs:extension base="com:PayloadPublication">
+        <xs:sequence>
+          <xs:element name="headerInformation" type="com:HeaderInformation" />
+          <xs:element name="measurementSiteTable" type="roa:MeasurementSiteTable" maxOccurs="unbounded" />
+          <xs:element name="_measurementSiteTablePublicationExtension" type="com:_ExtensionType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="MeasurementSpecificCharacteristics">
+    <xs:sequence>
+      <xs:element name="accuracy" type="com:Percentage" minOccurs="0" maxOccurs="1" />
+      <xs:element name="period" type="com:Seconds" minOccurs="0" maxOccurs="1" />
+      <xs:element name="smoothingFactor" type="com:Float" minOccurs="0" maxOccurs="1" />
+      <xs:element name="specificMeasurementValueType" type="roa:_MeasuredOrDerivedDataTypeEnum" minOccurs="1" maxOccurs="1" />
+      <xs:element name="specificVehicleCharacteristics" type="com:VehicleCharacteristics" minOccurs="0" />
+      <xs:element name="specificLane" type="loc:Lane" minOccurs="0" />
+      <xs:element name="_measurementSpecificCharacteristicsExtension" type="com:_ExtensionType" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

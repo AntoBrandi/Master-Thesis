@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d2LogicalModel modelBaseVersion="2" xmlns="http://datex2.eu/schema/2/2_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datex2.eu/schema/2/2_0 http://www.datex2.eu/schema/2/2_3/DATEXIISchema_2_2_3.xsd">
+	<exchange>
+		<supplierIdentification>
+			<country>se</country>
+			<nationalIdentifier>SRA</nationalIdentifier>
+		</supplierIdentification>
+	</exchange>
+	<payloadPublication xsi:type="SituationPublication" lang="sv">
+		<publicationTime>2010-01-01T16:00:00+01:00</publicationTime>
+		<publicationCreator>
+			<country>se</country>
+			<nationalIdentifier>SRA</nationalIdentifier>
+		</publicationCreator>
+		<situation id="GUID2A22530C-D452-4ae8-B942-893BC2923D13" version="1">
+			<overallSeverity>medium</overallSeverity>
+			<headerInformation>
+				<confidentiality>noRestriction</confidentiality>
+				<informationStatus>real</informationStatus>
+				<urgency>normalUrgency</urgency>
+			</headerInformation>
+			<situationRecord xsi:type="TransitInformation" id="GUID2A22330C-D452-4ae8-B942-993BC2923D14" version="1">
+				<situationRecordCreationTime>2010-01-01T16:00:00+01:00</situationRecordCreationTime>
+				<situationRecordVersionTime>2010-01-01T16:05:00+00:00</situationRecordVersionTime>
+				<situationRecordFirstSupplierVersionTime>2010-01-01T16:05:00+00:00</situationRecordFirstSupplierVersionTime>
+				<probabilityOfOccurrence>certain</probabilityOfOccurrence>
+				<severity>medium</severity>
+				<source>
+					<sourceIdentification>SRA</sourceIdentification>
+					<sourceName>
+						<values>
+							<value lang="se">Vägverket</value>
+							<value lang="en">Swedish Road Administration</value>
+						</values>
+					</sourceName>
+					<sourceType>roadAuthorities</sourceType>
+				</source>
+				<validity>
+					<validityStatus>definedByValidityTimeSpec</validityStatus>
+					<validityTimeSpecification>
+						<overallStartTime>2010-01-01T14:00:00+02:00</overallStartTime>
+						<overallEndTime>2010-01-01T16:00:00+02:00</overallEndTime>
+					</validityTimeSpecification>
+				</validity>
+				<generalPublicComment>
+					<comment>
+						<values>
+							<value lang="se">Försenad färja beroende på dåligt väder</value>
+							<value lang="en">Delayed ferry due to bad weather</value>
+						</values>
+					</comment>
+				</generalPublicComment>
+				<groupOfLocations xsi:type="Linear">
+					<alertCLinear xsi:type="AlertCMethod4Linear">
+						<alertCLocationCountryCode>E</alertCLocationCountryCode>
+						<alertCLocationTableNumber>33</alertCLocationTableNumber>
+						<alertCLocationTableVersion>1</alertCLocationTableVersion>
+						<alertCDirection>
+							<alertCDirectionCoded>positive</alertCDirectionCoded>
+						</alertCDirection>
+						<alertCMethod4PrimaryPointLocation>
+							<alertCLocation>
+								<specificLocation>9244</specificLocation>
+							</alertCLocation>
+							<offsetDistance>
+								<offsetDistance>10</offsetDistance>
+							</offsetDistance>
+						</alertCMethod4PrimaryPointLocation>
+						<alertCMethod4SecondaryPointLocation>
+							<alertCLocation>
+								<specificLocation>9245</specificLocation>
+							</alertCLocation>
+							<offsetDistance>
+								<offsetDistance>30</offsetDistance>
+							</offsetDistance>
+						</alertCMethod4SecondaryPointLocation>
+					</alertCLinear>
+				</groupOfLocations>
+				<journeyReference>Ängö - Fruvik</journeyReference>
+				<transitServiceInformation>delayDueToBadWeather</transitServiceInformation>
+				<transitServiceType>ferry</transitServiceType>
+			</situationRecord>
+		</situation>
+	</payloadPublication>
+</d2LogicalModel>

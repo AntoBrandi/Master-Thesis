@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D2LogicalModel:d2LogicalModel modelBaseVersion="2" xmlns:D2LogicalModel="http://datex2.eu/schema/2/2_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datex2.eu/schema/2/2_0 http://www.datex2.eu/schema/2/2_3/DATEXIISchema_2_2_3.xsd">
+	<D2LogicalModel:exchange>
+		<D2LogicalModel:supplierIdentification>
+			<D2LogicalModel:country>se</D2LogicalModel:country>
+			<D2LogicalModel:nationalIdentifier>STA</D2LogicalModel:nationalIdentifier>
+		</D2LogicalModel:supplierIdentification>
+	</D2LogicalModel:exchange>
+	<D2LogicalModel:payloadPublication xsi:type="D2LogicalModel:VmsPublication" lang="sv">
+		<D2LogicalModel:publicationTime>2011-03-28T18:45:00+02:00</D2LogicalModel:publicationTime>
+		<D2LogicalModel:publicationCreator>
+			<D2LogicalModel:country>se</D2LogicalModel:country>
+			<D2LogicalModel:nationalIdentifier>STA</D2LogicalModel:nationalIdentifier>
+		</D2LogicalModel:publicationCreator>
+		<D2LogicalModel:headerInformation>
+			<D2LogicalModel:confidentiality>noRestriction</D2LogicalModel:confidentiality>
+			<D2LogicalModel:informationStatus>real</D2LogicalModel:informationStatus>
+		</D2LogicalModel:headerInformation>
+		<D2LogicalModel:vmsUnit>
+			<D2LogicalModel:vmsUnitTableReference id="SE_STA_UnitTableReference_1" targetClass="VmsUnitTable" version="1"/>
+			<D2LogicalModel:vmsUnitReference id="SE_STA_VMSUnit_125" targetClass="VmsUnitRecord" version="1"/>
+			<D2LogicalModel:vms vmsIndex="1">
+				<D2LogicalModel:vms>
+					<D2LogicalModel:vmsWorking>true</D2LogicalModel:vmsWorking>
+					<D2LogicalModel:vmsMessage messageIndex="1">
+						<D2LogicalModel:vmsMessage>
+							<D2LogicalModel:timeLastSet>2011-03-28T18:00:00+02:00</D2LogicalModel:timeLastSet>
+							<D2LogicalModel:textPictogramSequencingInterval>30</D2LogicalModel:textPictogramSequencingInterval>
+							<D2LogicalModel:textPage pageNumber="1">
+								<D2LogicalModel:vmsText>
+									<D2LogicalModel:vmsTextLine lineIndex="1">
+										<D2LogicalModel:vmsTextLine>
+											<D2LogicalModel:vmsTextLine>Olycka om 1 km</D2LogicalModel:vmsTextLine>
+										</D2LogicalModel:vmsTextLine>
+									</D2LogicalModel:vmsTextLine>
+								</D2LogicalModel:vmsText>
+							</D2LogicalModel:textPage>
+							<D2LogicalModel:vmsPictogramDisplayArea pictogramDisplayAreaIndex="1">
+								<D2LogicalModel:vmsPictogramDisplayArea>
+									<D2LogicalModel:vmsPictogram pictogramSequencingIndex="1">
+										<D2LogicalModel:vmsPictogram>
+											<D2LogicalModel:pictogramDescription>accident</D2LogicalModel:pictogramDescription>
+											<D2LogicalModel:pictogramCode>236</D2LogicalModel:pictogramCode>
+											<D2LogicalModel:presenceOfRedTriangle>false</D2LogicalModel:presenceOfRedTriangle>
+										</D2LogicalModel:vmsPictogram>
+									</D2LogicalModel:vmsPictogram>
+									<D2LogicalModel:vmsPictogram pictogramSequencingIndex="2">
+										<D2LogicalModel:vmsPictogram>
+											<D2LogicalModel:pictogramDescription>queue</D2LogicalModel:pictogramDescription>
+											<D2LogicalModel:pictogramCode>255</D2LogicalModel:pictogramCode>
+											<D2LogicalModel:presenceOfRedTriangle>false</D2LogicalModel:presenceOfRedTriangle>
+										</D2LogicalModel:vmsPictogram>
+									</D2LogicalModel:vmsPictogram>
+								</D2LogicalModel:vmsPictogramDisplayArea>
+							</D2LogicalModel:vmsPictogramDisplayArea>
+						</D2LogicalModel:vmsMessage>
+					</D2LogicalModel:vmsMessage>
+				</D2LogicalModel:vms>
+			</D2LogicalModel:vms>
+		</D2LogicalModel:vmsUnit>
+	</D2LogicalModel:payloadPublication>
+</D2LogicalModel:d2LogicalModel>

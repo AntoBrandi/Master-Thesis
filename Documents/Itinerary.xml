@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<D2LogicalModel:d2LogicalModel modelBaseVersion="2" xmlns:D2LogicalModel="http://datex2.eu/schema/2/2_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datex2.eu/schema/2/2_0 http://www.datex2.eu/schema/2/2_3/DATEXIISchema_2_2_3.xsd">
+	<D2LogicalModel:exchange>
+		<D2LogicalModel:supplierIdentification>
+			<D2LogicalModel:country>se</D2LogicalModel:country>
+			<D2LogicalModel:nationalIdentifier>SRA</D2LogicalModel:nationalIdentifier>
+		</D2LogicalModel:supplierIdentification>
+	</D2LogicalModel:exchange>
+	<D2LogicalModel:payloadPublication xsi:type="D2LogicalModel:SituationPublication" lang="sv">
+		<D2LogicalModel:publicationTime>2009-08-03T12:09:00+02:00</D2LogicalModel:publicationTime>
+		<D2LogicalModel:publicationCreator>
+			<D2LogicalModel:country>se</D2LogicalModel:country>
+			<D2LogicalModel:nationalIdentifier>SRA</D2LogicalModel:nationalIdentifier>
+		</D2LogicalModel:publicationCreator>
+		<D2LogicalModel:situation id="XXXX1" version="1">
+			<D2LogicalModel:headerInformation>
+				<D2LogicalModel:confidentiality>noRestriction</D2LogicalModel:confidentiality>
+				<D2LogicalModel:informationStatus>real</D2LogicalModel:informationStatus>
+			</D2LogicalModel:headerInformation>
+			<D2LogicalModel:situationRecord xsi:type="D2LogicalModel:VehicleObstruction" id="SSSSSS1" version="1">
+				<D2LogicalModel:situationRecordCreationTime>2009-08-03T12:09:00+02:00</D2LogicalModel:situationRecordCreationTime>
+				<D2LogicalModel:situationRecordVersionTime>2009-08-03T12:09:00+02:00</D2LogicalModel:situationRecordVersionTime>
+				<D2LogicalModel:probabilityOfOccurrence>certain</D2LogicalModel:probabilityOfOccurrence>
+				<D2LogicalModel:validity>
+					<D2LogicalModel:validityStatus>active</D2LogicalModel:validityStatus>
+					<D2LogicalModel:validityTimeSpecification>
+						<D2LogicalModel:overallStartTime>2009-08-03T12:09:00+02:00</D2LogicalModel:overallStartTime>
+					</D2LogicalModel:validityTimeSpecification>
+				</D2LogicalModel:validity>
+				<D2LogicalModel:generalPublicComment>
+					<D2LogicalModel:comment>
+						<D2LogicalModel:values>
+							<D2LogicalModel:value>TEst</D2LogicalModel:value>
+						</D2LogicalModel:values>
+					</D2LogicalModel:comment>
+				</D2LogicalModel:generalPublicComment>
+				<D2LogicalModel:groupOfLocations xsi:type="D2LogicalModel:ItineraryByIndexedLocations">
+					<D2LogicalModel:routeDestination xsi:type="D2LogicalModel:AreaDestination">
+						<D2LogicalModel:area>
+							<D2LogicalModel:alertCArea>
+								<D2LogicalModel:alertCLocationCountryCode>E</D2LogicalModel:alertCLocationCountryCode>
+								<D2LogicalModel:alertCLocationTableNumber>33</D2LogicalModel:alertCLocationTableNumber>
+								<D2LogicalModel:alertCLocationTableVersion>2.1</D2LogicalModel:alertCLocationTableVersion>
+								<D2LogicalModel:areaLocation>
+									<D2LogicalModel:specificLocation>23</D2LogicalModel:specificLocation>
+								</D2LogicalModel:areaLocation>
+							</D2LogicalModel:alertCArea>
+						</D2LogicalModel:area>
+					</D2LogicalModel:routeDestination>
+					<D2LogicalModel:locationContainedInItinerary index="1">
+						<D2LogicalModel:location xsi:type="D2LogicalModel:Point">
+							<D2LogicalModel:alertCPoint xsi:type="D2LogicalModel:AlertCMethod2Point">
+								<D2LogicalModel:alertCLocationCountryCode>14</D2LogicalModel:alertCLocationCountryCode>
+								<D2LogicalModel:alertCLocationTableNumber>33</D2LogicalModel:alertCLocationTableNumber>
+								<D2LogicalModel:alertCLocationTableVersion>2.0</D2LogicalModel:alertCLocationTableVersion>
+								<D2LogicalModel:alertCDirection>
+									<D2LogicalModel:alertCDirectionCoded>both</D2LogicalModel:alertCDirectionCoded>
+								</D2LogicalModel:alertCDirection>
+								<D2LogicalModel:alertCMethod2PrimaryPointLocation>
+									<D2LogicalModel:alertCLocation>
+										<D2LogicalModel:specificLocation>1234</D2LogicalModel:specificLocation>
+									</D2LogicalModel:alertCLocation>
+								</D2LogicalModel:alertCMethod2PrimaryPointLocation>
+							</D2LogicalModel:alertCPoint>
+						</D2LogicalModel:location>
+					</D2LogicalModel:locationContainedInItinerary>
+					<D2LogicalModel:locationContainedInItinerary index="2">
+						<D2LogicalModel:location xsi:type="D2LogicalModel:Point">
+							<D2LogicalModel:alertCPoint xsi:type="D2LogicalModel:AlertCMethod2Point">
+								<D2LogicalModel:alertCLocationCountryCode>14</D2LogicalModel:alertCLocationCountryCode>
+								<D2LogicalModel:alertCLocationTableNumber>33</D2LogicalModel:alertCLocationTableNumber>
+								<D2LogicalModel:alertCLocationTableVersion>2.0</D2LogicalModel:alertCLocationTableVersion>
+								<D2LogicalModel:alertCDirection>
+									<D2LogicalModel:alertCDirectionCoded>both</D2LogicalModel:alertCDirectionCoded>
+								</D2LogicalModel:alertCDirection>
+								<D2LogicalModel:alertCMethod2PrimaryPointLocation>
+									<D2LogicalModel:alertCLocation>
+										<D2LogicalModel:specificLocation>1235</D2LogicalModel:specificLocation>
+									</D2LogicalModel:alertCLocation>
+								</D2LogicalModel:alertCMethod2PrimaryPointLocation>
+							</D2LogicalModel:alertCPoint>
+						</D2LogicalModel:location>
+					</D2LogicalModel:locationContainedInItinerary>
+				</D2LogicalModel:groupOfLocations>
+				<D2LogicalModel:vehicleObstructionType>convoy</D2LogicalModel:vehicleObstructionType>
+			</D2LogicalModel:situationRecord>
+		</D2LogicalModel:situation>
+	</D2LogicalModel:payloadPublication>
+</D2LogicalModel:d2LogicalModel>
