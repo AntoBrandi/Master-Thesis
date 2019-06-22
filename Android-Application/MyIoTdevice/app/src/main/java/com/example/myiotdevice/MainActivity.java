@@ -51,27 +51,21 @@ public class MainActivity extends AppCompatActivity {
     public TextView acceleration_coordinateZ;
     public TextView pressure_view;
     public TextView altitude_view;
-
     public CheckBox acceleration_cb;
     public CheckBox pressure_cb;
     public CheckBox altitude_cb;
-
     public String accelerometer_name;
     public String pressure_name;
     public String accelerometer_resolution;
     public String accelerometer_vendor;
     public String accelerometer_type;
-
     public String pressure_accuracy;
     public String pressure_vendor;
     public String pressure_type;
-
     public FloatingActionButton fab;
-
     public Record accelerometerRecord;
     public Record pressureRecord;
     public Record altimeterRecord;
-
     private SimpleDateFormat df;
 
 
@@ -108,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         tvAddress = (TextView) findViewById(R.id.MainPosition);
         position_latitude = (TextView) findViewById(R.id.item_value_1_position);
         position_longitude =(TextView) findViewById(R.id.item_value_2_position);
@@ -117,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         acceleration_coordinateZ = (TextView) findViewById(R.id.item_value_3_acceleration);
         pressure_view = (TextView) findViewById(R.id.item_splitted_value_1_pressure);
         altitude_view = (TextView) findViewById(R.id.item_splitted_value_2_altitude);
-
         acceleration_cb = (CheckBox) findViewById(R.id.checkbox_acceleration);
         altitude_cb=(CheckBox) findViewById(R.id.checkbox_altitude);
         pressure_cb = (CheckBox) findViewById(R.id.checkbox_pressure);

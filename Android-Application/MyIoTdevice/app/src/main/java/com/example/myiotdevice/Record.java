@@ -1,9 +1,7 @@
 package com.example.myiotdevice;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Record implements Serializable {
     private Calendar calendar;
@@ -35,6 +33,8 @@ public class Record implements Serializable {
         this.validity_status = "suspended";
         this.isOverrunning = false;
         this.validity_period = "100";
+        this.sensor_latitude = "No Latitude";
+        this.sensor_longitude = "No Longitude";
     }
 
     public Calendar getCalendar() {

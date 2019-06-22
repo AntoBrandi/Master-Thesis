@@ -11,12 +11,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.xmlpull.v1.XmlSerializer;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,6 +45,28 @@ public class SendEventActivity extends AppCompatActivity {
     private Date actualDate;
     private SimpleDateFormat df;
     private String publicationTime;
+
+
+    private void writeToFile(String data,Context context) {
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput("XML_output.txt",MODE_PRIVATE);
+            fos.write(data.getBytes());
+            Toast.makeText(context, "Saved to "+getFilesDir()+"/", Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+        finally {
+            if (fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 
 
@@ -426,6 +453,8 @@ public class SendEventActivity extends AppCompatActivity {
 
 
             XML_Document = writer.toString();
+
+            writeToFile(XML_Document,this);
         }
         catch (Exception e){}
     }
