@@ -13,4 +13,10 @@
     <dimen name="ItemValueLeft">140dp</dimen>
     <dimen name="ButtonPadding">34dp</dimen>
     <dimen name="EditTextBottom">200dp</dimen>
+    <dimen name="DoubleMarginLeft">48dp</dimen>
+    <dimen name="DoubleMarginRight">48dp</dimen>
+    <dimen name="DoubleMarginTop">24dp</dimen>
+    <dimen name="DoubleMarginBottom">24dp</dimen>
+    <dimen name="AWS_iot_header">22sp</dimen>
+    <dimen name="AWS_iot_bottom_margin">96dp</dimen>
 </resources>

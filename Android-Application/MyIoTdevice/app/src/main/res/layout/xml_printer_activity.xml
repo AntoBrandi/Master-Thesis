@@ -3,9 +3,140 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/xml_text"/>
+        android:background="@color/colorBackground">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/aws_iot_logo"
+            android:id="@+id/aws_iot_logo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/aws_iot_logo"
+        android:layout_marginLeft="@dimen/MarginLeft"
+        android:layout_marginRight="@dimen/MarginRight"
+        android:layout_marginTop="@dimen/MarginTop"
+        android:layout_marginBottom="@dimen/MarginBottom"
+        android:text="Status"
+        android:textSize="@dimen/AWS_iot_header"
+        android:textColor="@color/colorSecondaryDark"
+        android:id="@+id/status_header"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/status_header"
+            android:layout_toRightOf="@id/status_header"
+            android:layout_marginLeft="@dimen/DoubleMarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/MarginTop"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:text="Disconnected"
+            android:textSize="@dimen/ItemHeader"
+            android:textColor="@color/colorTextOnPrimary"
+            android:id="@+id/status_view"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/status_header"
+            android:layout_marginLeft="@dimen/MarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/DoubleMarginTop"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:text="Client ID"
+            android:textSize="@dimen/AWS_iot_header"
+            android:textColor="@color/colorSecondaryDark"
+            android:id="@+id/client_header"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/client_header"
+            android:layout_toRightOf="@id/status_header"
+            android:layout_marginLeft="@dimen/DoubleMarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/MarginTop"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:text="Unknown"
+            android:textSize="@dimen/ItemHeader"
+            android:textColor="@color/colorTextOnPrimary"
+            android:id="@+id/client_view"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/client_header"
+            android:layout_marginLeft="@dimen/MarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/DoubleMarginTop"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:text="Topic Name"
+            android:textSize="@dimen/AWS_iot_header"
+            android:textColor="@color/colorSecondaryDark"
+            android:id="@+id/topic_header"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/topic_header"
+            android:layout_toRightOf="@id/status_header"
+            android:layout_marginLeft="@dimen/DoubleMarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/MarginTop"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:text="Unknown"
+            android:textSize="@dimen/ItemHeader"
+            android:textColor="@color/colorTextOnPrimary"
+            android:id="@+id/topic_view"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topic_header"
+            android:layout_marginLeft="@dimen/MarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/DoubleMarginTop"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:text="Message"
+            android:textSize="@dimen/AWS_iot_header"
+            android:textColor="@color/colorSecondaryDark"
+            android:id="@+id/message_header"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBaseline="@id/message_header"
+            android:layout_toRightOf="@id/status_header"
+            android:layout_marginLeft="@dimen/DoubleMarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:layout_marginTop="@dimen/MarginTop"
+            android:layout_marginBottom="@dimen/AWS_iot_bottom_margin"
+            android:text="Unknown"
+            android:textSize="@dimen/ItemHeader"
+            android:textColor="@color/colorTextOnPrimary"
+            android:id="@+id/message_view"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/upload_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:backgroundTint="@color/colorSecondary"
+            android:clickable="true"
+            android:src="@drawable/baseline_cloud_upload_white_36" />
+
+
+
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
