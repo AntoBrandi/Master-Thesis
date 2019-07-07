@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public class XMLPrinter extends AppCompatActivity {
 
-    private final String TOPIC_NAME = "Europe";
+    private final String TOPIC_NAME = "EU_WEST_2";
 
     // References to view structures
     TextView statusView;
@@ -36,6 +36,7 @@ public class XMLPrinter extends AppCompatActivity {
     TextView messageView;
     ImageButton connectButton;
     public FloatingActionButton fab;
+
 
     // Readings
     String message;
@@ -68,6 +69,7 @@ public class XMLPrinter extends AppCompatActivity {
     KeyStore clientKeyStore = null;
     String certificateId;
     CognitoCachingCredentialsProvider credentialsProvider;
+    private boolean isConnected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class XMLPrinter extends AppCompatActivity {
         connectButton = (ImageButton) findViewById(R.id.connectButton);
         fab =findViewById(R.id.upload_fab);
         connectButton.setOnClickListener(connectClick);
+        isConnected=false;
 
 
         // Values to assign to the text views
@@ -212,9 +215,14 @@ public class XMLPrinter extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                publish(message);
-                //disconnect();
-                Toast.makeText(getApplicationContext(),"Pubblication Complete",Toast.LENGTH_SHORT).show();
+                if(isConnected==true) {
+                    publish(message);
+                    //disconnect();
+                    Toast.makeText(getApplicationContext(), "Pubblication Complete", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Make sure you are connected to the server",Toast.LENGTH_SHORT);
+                }
             }
         });
     }
@@ -231,6 +239,7 @@ public class XMLPrinter extends AppCompatActivity {
     private void disconnect(){
         try {
             mqttManager.disconnect();
+            isConnected=false;
         } catch (Exception e) {
             Log.e(LOG_TAG, "Disconnect error.", e);
         }
@@ -257,6 +266,7 @@ public class XMLPrinter extends AppCompatActivity {
 
                                 } else if (status == AWSIotMqttClientStatus.Connected) {
                                     statusView.setText("Connected");
+                                    isConnected = true;
 
                                 } else if (status == AWSIotMqttClientStatus.Reconnecting) {
                                     if (throwable != null) {
@@ -268,8 +278,10 @@ public class XMLPrinter extends AppCompatActivity {
                                         Log.e(LOG_TAG, "Connection error.", throwable);
                                     }
                                     statusView.setText("Disconnected");
+                                    isConnected = false;
                                 } else {
                                     statusView.setText("Disconnected");
+                                    isConnected = false;
 
                                 }
                             }
