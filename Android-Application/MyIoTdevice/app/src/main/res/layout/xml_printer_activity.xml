@@ -10,7 +10,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:background="@drawable/aws_iot_logo"
             android:id="@+id/aws_iot_logo"/>
 
@@ -40,6 +40,20 @@
             android:textSize="@dimen/ItemHeader"
             android:textColor="@color/colorTextOnPrimary"
             android:id="@+id/status_view"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aws_iot_logo"
+            android:layout_toRightOf="@id/status_view"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/MarginLeft"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:padding="@dimen/buttonPadding"
+            android:background="@color/colorSecondary"
+            android:id="@+id/connectButton"
+            android:src="@drawable/baseline_cloud_upload_white_36"
+            />
 
         <TextView
             android:layout_width="wrap_content"

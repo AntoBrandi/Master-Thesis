@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class XMLPrinter extends AppCompatActivity {
     TextView clientIdView;
     TextView topicNameView;
     TextView messageView;
+    ImageButton connectButton;
     public FloatingActionButton fab;
 
     // Readings
@@ -43,10 +45,10 @@ public class XMLPrinter extends AppCompatActivity {
     // --- Constants to modify per your configuration ---
     // IoT endpoint
     // AWS Iot CLI describe-endpoint call returns: XXXXXXXXXX.iot.<region>.amazonaws.com
-    private static final String CUSTOMER_SPECIFIC_ENDPOINT = "REPLACE_1";
+    private static final String CUSTOMER_SPECIFIC_ENDPOINT = "1";
     // Cognito pool ID. For this app, pool needs to be unauthenticated pool with
     // AWS IoT permissions.
-    private static final String COGNITO_POOL_ID = "REPLACE_2";
+    private static final String COGNITO_POOL_ID = "2";
     // Name of the AWS IoT policy to attach to a newly created certificate
     private static final String AWS_IOT_POLICY_NAME = "myAndroidIoTPolicy";
     // Region of AWS IoT
@@ -77,7 +79,9 @@ public class XMLPrinter extends AppCompatActivity {
         clientIdView = (TextView) findViewById(R.id.client_view);
         topicNameView = (TextView) findViewById(R.id.topic_view);
         messageView = (TextView) findViewById(R.id.message_view);
+        connectButton = (ImageButton) findViewById(R.id.connectButton);
         fab =findViewById(R.id.upload_fab);
+        connectButton.setOnClickListener(connectClick);
 
 
         // Values to assign to the text views
@@ -202,12 +206,6 @@ public class XMLPrinter extends AppCompatActivity {
             }).start();
         }
 
-
-        /**
-         * CONNECT
-         */
-        connect();
-
         /**
          * UPLOAD DATA AND DISCONNECT
          */
@@ -215,7 +213,7 @@ public class XMLPrinter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 publish(message);
-                disconnect();
+                //disconnect();
                 Toast.makeText(getApplicationContext(),"Pubblication Complete",Toast.LENGTH_SHORT).show();
             }
         });
@@ -230,49 +228,6 @@ public class XMLPrinter extends AppCompatActivity {
         }
     }
 
-    private void connect(){
-        Log.d(LOG_TAG, "clientId = " + clientId);
-
-        try {
-            mqttManager.connect(clientKeyStore, new AWSIotMqttClientStatusCallback() {
-                @Override
-                public void onStatusChanged(final AWSIotMqttClientStatus status,
-                                            final Throwable throwable) {
-                    Log.d(LOG_TAG, "Status = " + String.valueOf(status));
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (status == AWSIotMqttClientStatus.Connecting) {
-                                statusView.setText("Connecting...");
-
-                            } else if (status == AWSIotMqttClientStatus.Connected) {
-                                statusView.setText("Connected");
-
-                            } else if (status == AWSIotMqttClientStatus.Reconnecting) {
-                                if (throwable != null) {
-                                    Log.e(LOG_TAG, "Connection error.", throwable);
-                                }
-                                statusView.setText("Reconnecting");
-                            } else if (status == AWSIotMqttClientStatus.ConnectionLost) {
-                                if (throwable != null) {
-                                    Log.e(LOG_TAG, "Connection error.", throwable);
-                                }
-                                statusView.setText("Disconnected");
-                            } else {
-                                statusView.setText("Disconnected");
-
-                            }
-                        }
-                    });
-                }
-            });
-        } catch (final Exception e) {
-            Log.e(LOG_TAG, "Connection error.", e);
-            statusView.setText("Error! " + e.getMessage());
-        }
-    }
-
     private void disconnect(){
         try {
             mqttManager.disconnect();
@@ -280,4 +235,53 @@ public class XMLPrinter extends AppCompatActivity {
             Log.e(LOG_TAG, "Disconnect error.", e);
         }
     }
+
+    View.OnClickListener connectClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Log.d(LOG_TAG, "clientId = " + clientId);
+
+            try {
+                mqttManager.connect(clientKeyStore, new AWSIotMqttClientStatusCallback() {
+                    @Override
+                    public void onStatusChanged(final AWSIotMqttClientStatus status,
+                                                final Throwable throwable) {
+                        Log.d(LOG_TAG, "Status = " + String.valueOf(status));
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (status == AWSIotMqttClientStatus.Connecting) {
+                                    statusView.setText("Connecting...");
+
+                                } else if (status == AWSIotMqttClientStatus.Connected) {
+                                    statusView.setText("Connected");
+
+                                } else if (status == AWSIotMqttClientStatus.Reconnecting) {
+                                    if (throwable != null) {
+                                        Log.e(LOG_TAG, "Connection error.", throwable);
+                                    }
+                                    statusView.setText("Reconnecting");
+                                } else if (status == AWSIotMqttClientStatus.ConnectionLost) {
+                                    if (throwable != null) {
+                                        Log.e(LOG_TAG, "Connection error.", throwable);
+                                    }
+                                    statusView.setText("Disconnected");
+                                } else {
+                                    statusView.setText("Disconnected");
+
+                                }
+                            }
+                        });
+                    }
+                });
+            } catch (final Exception e) {
+                Log.e(LOG_TAG, "Connection error.", e);
+                statusView.setText("Error! " + e.getMessage());
+            }
+        }
+    };
+
+
 }
