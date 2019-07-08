@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.FileOutputStream;
@@ -44,7 +47,9 @@ public class SendEventActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Date actualDate;
     private SimpleDateFormat df;
-    private String publicationTime;
+    private Gson gson;
+    private String messageJSON;
+
 
 
     private void writeToFile(String data,Context context) {
@@ -74,6 +79,11 @@ public class SendEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_event_activity);
+
+        // Retrieve the Record object that has been sent over the intent
+        Intent i = getIntent();
+        p = (Publication) i.getSerializableExtra("Publication");
+
         // reset counter click
         car_accident_click=0;
         traffic_jam_click=0;
@@ -88,7 +98,8 @@ public class SendEventActivity extends AppCompatActivity {
 
         actualDate = Calendar.getInstance().getTime();
         df = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-        publicationTime = df.format(actualDate);
+        p.setPublicationTime(df.format(actualDate));
+        p.setMeasurementOrCalculationTimePrecision("1us");
 
         // get ID for a smartphone
         if (ActivityCompat.checkSelfPermission(SendEventActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
@@ -100,10 +111,6 @@ public class SendEventActivity extends AppCompatActivity {
             deviceID = telephonyManager.getDeviceId();
         }
         catch (Exception e){}
-
-        // Retrieve the Record object that has been sent over the intent
-        Intent i = getIntent();
-        p = (Publication) i.getSerializableExtra("Publication");
 
 
 
@@ -197,12 +204,17 @@ public class SendEventActivity extends AppCompatActivity {
                     p.setCreator("it-" +"-"+ Build.MANUFACTURER+"-"+Build.MODEL+"-"+Build.USER);
                 }
 
+                p.setMeasurementOrCalculationPeriod(String.valueOf(p.getEndDate().getTime()-p.getStartDate().getTime()));
+                generateXML();
 
-                    generateXML();
+                // Create the JSON string that will be sent
+                gson = new Gson();
+                messageJSON = gson.toJson(p);
 
 
                     Intent k = new Intent(SendEventActivity.this,XMLPrinter.class);
                     k.putExtra("XML",XML_Document);
+                    k.putExtra("JSON",messageJSON);
                     startActivity(k);
 
             }
@@ -234,10 +246,10 @@ public class SendEventActivity extends AppCompatActivity {
             xmlSerializer.startTag("","exchange");
             xmlSerializer.startTag("","supplierIdentification");
             xmlSerializer.startTag("","country");
-            xmlSerializer.text("it");
+            xmlSerializer.text(p.getCountry());
             xmlSerializer.endTag("","country");
             xmlSerializer.startTag("","nationalIdentifier");
-            xmlSerializer.text("IT");
+            xmlSerializer.text(p.getNationalIdentifier());
             xmlSerializer.endTag("","nationalIdentifier");
             xmlSerializer.endTag("","supplierIdentification");
             xmlSerializer.endTag("","exchange");
@@ -247,7 +259,7 @@ public class SendEventActivity extends AppCompatActivity {
             xmlSerializer.attribute("","xsi:type","MeasuredDataPublication");
             xmlSerializer.attribute("","lang","it");
             xmlSerializer.startTag("","publicationTime");
-            xmlSerializer.text(publicationTime);
+            xmlSerializer.text(p.getPublicationTime());
             xmlSerializer.endTag("","publicationTime");
             xmlSerializer.startTag("","feedDescription");
             xmlSerializer.text(p.getDescription());
@@ -281,15 +293,15 @@ public class SendEventActivity extends AppCompatActivity {
             xmlSerializer.text(p.getCreator());
             xmlSerializer.endTag("","measurementSiteReference");
             xmlSerializer.startTag("","measurementTimeDefault");
-            xmlSerializer.text(publicationTime);
+            xmlSerializer.text(p.getPublicationTime());
             xmlSerializer.endTag("","measurementTimeDefault");
             xmlSerializer.endTag("","siteMeasurement");
             xmlSerializer.startTag("","basicData");
             xmlSerializer.startTag("","measurementOrCalculationTimePrecision");
-            xmlSerializer.text("1us");
+            xmlSerializer.text(p.getMeasurementOrCalculationTimePrecision());
             xmlSerializer.endTag("","measurementOrCalculationTimePrecision");
             xmlSerializer.startTag("","measurementOrCalculationPeriod");
-            xmlSerializer.text(String.valueOf(p.getEndDate().getTime()-p.getStartDate().getTime()));
+            xmlSerializer.text(p.getMeasurementOrCalculationPeriod());
             xmlSerializer.endTag("","measurementOrCalculationPeriod");
             xmlSerializer.endTag("","basicData");
             xmlSerializer.endTag("","measuredValue");
@@ -300,7 +312,7 @@ public class SendEventActivity extends AppCompatActivity {
             for (int i =0;i<p.records.size();i++) {
                 xmlSerializer.startTag("", "measurementSiteRecord");
                 xmlSerializer.startTag("","computationalMethod");
-                xmlSerializer.text("low pass filter");
+                xmlSerializer.text(p.records.get(i).getComputationalMethod());
                 xmlSerializer.endTag("","computationalMethod");
                 xmlSerializer.startTag("","measurementEquipmentReference");
                 xmlSerializer.text(p.records.get(i).getSensor_vendor());

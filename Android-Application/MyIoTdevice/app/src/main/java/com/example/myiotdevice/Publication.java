@@ -22,6 +22,12 @@ public class Publication implements Serializable {
     private boolean isSnow;
     private Date startDate;
     private Date endDate;
+    private String country;
+    private String nationalIdentifier;
+    private String publicationTime;
+    private String measurementOrCalculationTimePrecision;
+    private String measurementOrCalculationPeriod;
+
 
 
     public Publication(){
@@ -31,6 +37,52 @@ public class Publication implements Serializable {
         this.isTrafficJam=false;
         records = new ArrayList<Record>();
         type = "";
+        country="it";
+        nationalIdentifier = "IT";
+    }
+
+    public String getMeasurementOrCalculationPeriod() {
+        return measurementOrCalculationPeriod;
+    }
+
+    public void setMeasurementOrCalculationPeriod(String measurementOrCalculationPeriod) {
+        this.measurementOrCalculationPeriod = measurementOrCalculationPeriod;
+    }
+
+    public String getMeasurementOrCalculationTimePrecision() {
+        return measurementOrCalculationTimePrecision;
+    }
+
+    public void setMeasurementOrCalculationTimePrecision(String measurementOrCalculationTimePrecision) {
+        this.measurementOrCalculationTimePrecision = measurementOrCalculationTimePrecision;
+    }
+
+    public String getPublicationTime() {
+        return publicationTime;
+    }
+
+    public void setPublicationTime(String publicationTime) {
+        this.publicationTime = publicationTime;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getNationalIdentifier() {
+        return nationalIdentifier;
+    }
+
+    public void setNationalIdentifier(String nationalIdentifier) {
+        this.nationalIdentifier = nationalIdentifier;
     }
 
     public String getDescription() {

@@ -22,6 +22,8 @@ import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
+import com.google.gson.Gson;
+
 import java.security.KeyStore;
 import java.util.UUID;
 
@@ -39,7 +41,9 @@ public class XMLPrinter extends AppCompatActivity {
 
 
     // Readings
-    String message;
+    String messageXML;
+    Gson gson;
+    String messageJSON;
 
     // AWS Connection
     static final String LOG_TAG = XMLPrinter.class.getCanonicalName();
@@ -89,8 +93,9 @@ public class XMLPrinter extends AppCompatActivity {
 
         // Values to assign to the text views
         Intent i = getIntent();
-        message = i.getStringExtra("XML");
-        messageView.setText(message);
+        messageXML = i.getStringExtra("XML");
+        messageJSON = i.getStringExtra("JSON");
+        messageView.setText(messageJSON);
         topicNameView.setText(TOPIC_NAME);
 
 
@@ -216,7 +221,7 @@ public class XMLPrinter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isConnected==true) {
-                    publish(message);
+                    publish(messageJSON);
                     //disconnect();
                     Toast.makeText(getApplicationContext(), "Pubblication Complete", Toast.LENGTH_SHORT).show();
                 }

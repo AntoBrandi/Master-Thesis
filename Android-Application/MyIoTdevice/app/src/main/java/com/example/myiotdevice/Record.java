@@ -25,6 +25,7 @@ public class Record implements Serializable {
     private String sensor_longitude;
     private String sensor_address;
     public String ID;
+    private String computationalMethod;
 
 
 
@@ -35,6 +36,15 @@ public class Record implements Serializable {
         this.validity_period = "100";
         this.sensor_latitude = "No Latitude";
         this.sensor_longitude = "No Longitude";
+        this.computationalMethod = "low pass filter";
+    }
+
+    public String getComputationalMethod() {
+        return computationalMethod;
+    }
+
+    public void setComputationalMethod(String computationalMethod) {
+        this.computationalMethod = computationalMethod;
     }
 
     public Calendar getCalendar() {
