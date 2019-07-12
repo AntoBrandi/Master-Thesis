@@ -42,7 +42,6 @@ public class XMLPrinter extends AppCompatActivity {
 
     // Readings
     String messageXML;
-    Gson gson;
     String messageJSON;
 
     // AWS Connection

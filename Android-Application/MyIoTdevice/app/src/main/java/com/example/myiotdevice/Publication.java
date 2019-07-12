@@ -35,10 +35,23 @@ public class Publication implements Serializable {
         this.isLandSlide=false;
         this.isSnow=false;
         this.isTrafficJam=false;
-        records = new ArrayList<Record>();
-        type = "";
-        country="it";
-        nationalIdentifier = "IT";
+        this.description = "null";
+        this.records = new ArrayList<Record>();
+        this.type = "null";
+        this.country="it";
+        this.reading_duration=0;
+        this.nationalIdentifier = "IT";
+        this.publication_latitude = "null";
+        this.publication_longitude = "null";
+        this.publication_location = "null";
+        this.time_precision = 0;
+        this.language = "null";
+        this.creator = "null";
+        this.nationalIdentifier = "null";
+        this.publicationTime = "null";
+        this.measurementOrCalculationTimePrecision = "null";
+        this.measurementOrCalculationPeriod = "null";
+
     }
 
     public String getMeasurementOrCalculationPeriod() {
