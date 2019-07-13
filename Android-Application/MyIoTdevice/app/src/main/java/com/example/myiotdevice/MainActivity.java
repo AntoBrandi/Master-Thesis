@@ -26,15 +26,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public SensorManager senSensorManager;
     public Sensor senAccelerometer,senPressure;
+    public SensorManager senSensorManager;
     public Thread timeThread;
     private HandlerThread mAccelerometerThread,mPressureThread;
     private Handler mAccelerometerHandler,mPressureHandler;

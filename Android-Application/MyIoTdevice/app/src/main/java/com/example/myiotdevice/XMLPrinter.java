@@ -21,7 +21,6 @@ import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
-
 import java.security.KeyStore;
 import java.util.UUID;
 
