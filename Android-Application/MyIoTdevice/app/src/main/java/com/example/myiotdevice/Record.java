@@ -37,6 +37,20 @@ public class Record implements Serializable {
         this.sensor_latitude = "No Latitude";
         this.sensor_longitude = "No Longitude";
         this.computationalMethod = "low pass filter";
+        this.recordId = 0;
+        this.overallStartTime = "null";
+        this.overallEndTime = "null";
+        this.exception_period = "null";
+        this.type = "null";
+        this.sensor_type = "null";
+        this.sensor_name = "null";
+        this.sensor_resolution="null";
+        this.sensor_reading_1 = "null";
+        this.sensor_reading_2 = "null";
+        this.sensor_reading_3 = "null";
+        this.sensor_vendor = "null";
+        this.sensor_address = "null";
+        this.ID = "null";
     }
 
     public String getComputationalMethod() {

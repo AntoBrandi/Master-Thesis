@@ -254,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
             accelerometerRecord=new Record();
 
             accelerometerRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-            accelerometerRecord.setSensor_reading_1(acceleration_coordinateX.getText().toString());
-            accelerometerRecord.setSensor_reading_2(acceleration_coordinateY.getText().toString());
-            accelerometerRecord.setSensor_reading_3(acceleration_coordinateZ.getText().toString());
+            accelerometerRecord.setSensor_reading_1(acceleration_coordinateX.getText().toString().matches("")?"null":acceleration_coordinateX.getText().toString());
+            accelerometerRecord.setSensor_reading_2(acceleration_coordinateY.getText().toString().matches("")?"null":acceleration_coordinateY.getText().toString());
+            accelerometerRecord.setSensor_reading_3(acceleration_coordinateZ.getText().toString().matches("")?"null":acceleration_coordinateZ.getText().toString());
             accelerometerRecord.setSensor_name(accelerometer_name);
             accelerometerRecord.setSensor_resolution(accelerometer_resolution);
             accelerometerRecord.setSensor_vendor(accelerometer_vendor);
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
             pressureRecord = new Record();
 
             pressureRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-            pressureRecord.setSensor_reading_1(pressure_view.getText().toString());
+            pressureRecord.setSensor_reading_1(pressure_view.getText().toString().matches("")?"null":pressure_view.getText().toString());
             pressureRecord.setSensor_name(pressure_name);
             pressureRecord.setSensor_resolution(pressure_accuracy);
             pressureRecord.setSensor_vendor(pressure_vendor);
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
         if(altitude_cb.isChecked()){
             altimeterRecord = new Record();
             altimeterRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-            altimeterRecord.setSensor_reading_1(altitude_view.getText().toString());
+            altimeterRecord.setSensor_reading_1(altitude_view.getText().toString().matches("")?"null":altitude_view.getText().toString());
             altimeterRecord.setSensor_name(pressure_name);
             altimeterRecord.setSensor_resolution(pressure_accuracy);
             altimeterRecord.setSensor_vendor(pressure_vendor);

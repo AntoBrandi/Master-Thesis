@@ -192,9 +192,9 @@ public class SecondActivity extends AppCompatActivity {
         if(orientation_cb.isChecked()){
             orientationRecord = new Record();
             orientationRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-            orientationRecord.setSensor_reading_1(orientation_coordinatePitch.getText().toString());
-            orientationRecord.setSensor_reading_2(orientation_coordinateAzimuth.getText().toString());
-            orientationRecord.setSensor_reading_3(orientation_coordinateRoll.getText().toString());
+            orientationRecord.setSensor_reading_1(orientation_coordinatePitch.getText().toString().matches("")?"null":orientation_coordinatePitch.getText().toString());
+            orientationRecord.setSensor_reading_2(orientation_coordinateAzimuth.getText().toString().matches("")?"null":orientation_coordinateAzimuth.getText().toString());
+            orientationRecord.setSensor_reading_3(orientation_coordinateRoll.getText().toString().matches("")?"null":orientation_coordinateRoll.getText().toString());
             orientationRecord.setSensor_name(orientation_name);
             orientationRecord.setSensor_resolution(orientation_accuracy);
             orientationRecord.setSensor_vendor(orientation_vendor);
@@ -212,9 +212,9 @@ public class SecondActivity extends AppCompatActivity {
         if(gyroscope_cb.isChecked()){
             gyroscopeRecord = new Record();
             gyroscopeRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-            gyroscopeRecord.setSensor_reading_1(gyroscope_coordinateX.getText().toString());
-            gyroscopeRecord.setSensor_reading_2(gyroscope_coordinateY.getText().toString());
-            gyroscopeRecord.setSensor_reading_3(gyroscope_coordinateZ.getText().toString());
+            gyroscopeRecord.setSensor_reading_1(gyroscope_coordinateX.getText().toString().matches("")?"null":gyroscope_coordinateX.getText().toString());
+            gyroscopeRecord.setSensor_reading_2(gyroscope_coordinateY.getText().toString().matches("")?"null":gyroscope_coordinateY.getText().toString());
+            gyroscopeRecord.setSensor_reading_3(gyroscope_coordinateZ.getText().toString().matches("")?"null":gyroscope_coordinateZ.getText().toString());
             gyroscopeRecord.setSensor_name(gyroscope_name);
             gyroscopeRecord.setSensor_resolution(gyroscope_accuracy);
             gyroscopeRecord.setSensor_vendor(gyroscope_vendor);
@@ -231,7 +231,7 @@ public class SecondActivity extends AppCompatActivity {
         if(light_cb.isChecked()){
             lightRecord = new Record();
             lightRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-             lightRecord.setSensor_reading_1(light_view.getText().toString());
+             lightRecord.setSensor_reading_1(light_view.getText().toString().matches("")?"null":light_view.getText().toString());
             lightRecord.setSensor_name(light_name);
             lightRecord.setSensor_resolution(light_accuracy);
             lightRecord.setSensor_vendor(light_vendor);
@@ -248,7 +248,7 @@ public class SecondActivity extends AppCompatActivity {
         if(temperature_cb.isChecked()){
             temperatureRecord = new Record();
             temperatureRecord.setOverallStartTime(df.format(Calendar.getInstance().getTime()));
-            temperatureRecord.setSensor_reading_1(temperature_view.getText().toString());
+            temperatureRecord.setSensor_reading_1(temperature_view.getText().toString().matches("")?"null":temperature_view.getText().toString());
             temperatureRecord.setSensor_name(temperature_name);
             temperatureRecord.setSensor_resolution(temperature_accuracy);
             temperatureRecord.setSensor_vendor(temperature_vendor);

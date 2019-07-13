@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.iot.AWSIotKeystoreHelper;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
@@ -22,7 +21,6 @@ import com.amazonaws.services.iot.AWSIotClient;
 import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
-import com.google.gson.Gson;
 
 import java.security.KeyStore;
 import java.util.UUID;
@@ -222,7 +220,7 @@ public class XMLPrinter extends AppCompatActivity {
                 if(isConnected==true) {
                     publish(messageJSON);
                     //disconnect();
-                    Toast.makeText(getApplicationContext(), "Pubblication Complete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Publication Complete", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(getApplicationContext(),"Make sure you are connected to the server",Toast.LENGTH_SHORT);

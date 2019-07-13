@@ -191,11 +191,11 @@ public class SendEventActivity extends AppCompatActivity {
                 p.setEndDate(Calendar.getInstance().getTime());
                 p.calculateDuration();
                 p.setLanguage("it");
-                if ((description.getText().toString() != null) && (description.getText().toString()!= ""))
+                if (description.getText().toString().matches(""))
                 {
-                    p.setDescription(description.getText().toString());
-                }else{
                     p.setDescription("No Description");
+                }else{
+                    p.setDescription(description.getText().toString());
                 }
                 if(deviceID != null) {
                     p.setCreator("it-" + deviceID);
