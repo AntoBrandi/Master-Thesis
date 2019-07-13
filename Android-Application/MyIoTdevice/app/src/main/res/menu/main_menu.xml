@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/item_update"
+        android:title="Refresh"
+        android:icon="@drawable/baseline_update_white_36"
+        app:showAsAction="ifRoom"></item>
+    <item android:id="@+id/item_upload"
+        android:title="Upload"
+        android:icon="@drawable/baseline_cloud_upload_white_36"
+        app:showAsAction="ifRoom"></item>
+</menu>
