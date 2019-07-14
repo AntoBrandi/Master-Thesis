@@ -181,8 +181,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // remove old marker
         mMap.clear();
         // add new circle into the actual position
-        actualPosition = new LatLng(latitude,longitude);
-        mMap.addCircle(new CircleOptions().center(actualPosition).radius(50).fillColor(R.color.colorSecondary));
+        if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        }
+        else{
+            actualPosition = new LatLng(latitude,longitude);
+            mMap.addCircle(new CircleOptions().center(actualPosition).radius(50).fillColor(R.color.colorSecondary));
+        }
     }
 
     private void refreshGPS(){
