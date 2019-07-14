@@ -30,8 +30,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
+            android:name=".MapsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +38,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".FirstSensorActivity"></activity>
+        <activity android:name=".SecondSensorActivity"></activity>
+        <activity android:name=".TypeOfEventActivity"></activity>
+        <activity android:name=".AWSConnectionActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>

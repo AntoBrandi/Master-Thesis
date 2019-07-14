@@ -1,4 +1,20 @@
 <resources>
-    <string name="app_name">MyIoTDevice</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">My IoT Device</string>
+    <string name="position">Posizione</string>
+    <string name="latitude">Latitudine</string>
+    <string name="longitude">Longitudine</string>
+    <string name="address">Indirizzo</string>
+    <string name="acceleration">Accelerazione</string>
+    <string name="temperature">Temperatura</string>
+    <string name="pressure">Pressione</string>
+    <string name="light">Luce</string>
+    <string name="altitude">Altitudine</string>
+    <string name="orientation">Orientamento</string>
+    <string name="gyroscope">Giroscopio</string>
+    <string name="coordinateX">X</string>
+    <string name="coordinateY">Y</string>
+    <string name="coordinateZ">Z</string>
+    <string name="orientationPitch">Pitch</string>
+    <string name="orientationRoll">Roll</string>
+    <string name="orientationYaw">Yaw</string>
 </resources>

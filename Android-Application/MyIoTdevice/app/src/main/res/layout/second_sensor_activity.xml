@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:context=".SecondSensorActivity"
         android:orientation="vertical"
-        android:background="@color/colorBackground"
-        tools:context=".FirstSensorActivity">
+        android:background="@color/colorBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,78 +70,87 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/position"
+                    android:text="@string/orientation"
                     android:textAllCaps="true"
                     android:textColor="@color/colorSecondaryDark"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginTop="@dimen/MarginTop"
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textSize="@dimen/ItemHeader"
-                    android:id="@+id/item_header_position"/>
+                    android:id="@+id/item_header_orientation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/latitude"
+                    android:text="@string/orientationPitch"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
-                    android:layout_below="@id/item_header_position"
-                    android:id="@+id/item_text_1_position"/>
+                    android:layout_below="@id/item_header_orientation"
+                    android:id="@+id/item_text_1_orientation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/longitude"
+                    android:text="@string/orientationRoll"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
-                    android:layout_below="@id/item_text_1_position"
-                    android:id="@+id/item_text_2_position"/>
+                    android:layout_below="@id/item_text_1_orientation"
+                    android:id="@+id/item_text_2_orientation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/address"
+                    android:text="@string/orientationYaw"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
-                    android:layout_below="@id/item_text_2_position"
-                    android:id="@+id/item_text_3_position"/>
+                    android:layout_below="@id/item_text_2_orientation"
+                    android:id="@+id/item_text_3_orientation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_value_1_position"
+                    android:id="@+id/item_value_1_orientation"
                     tools:text="62.00"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
                     android:layout_marginLeft="@dimen/ItemValueLeft"
-                    android:layout_alignBaseline="@id/item_text_1_position"/>
+                    android:layout_alignBaseline="@id/item_text_1_orientation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_value_2_position"
+                    android:id="@+id/item_value_2_orientation"
                     tools:text="41.00"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
                     android:layout_marginLeft="@dimen/ItemValueLeft"
-                    android:layout_alignBaseline="@id/item_text_2_position"/>
+                    android:layout_alignBaseline="@id/item_text_2_orientation"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_value_3_position"
+                    android:id="@+id/item_value_3_orientation"
                     tools:text="Via Ammiraglio Vacca"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
                     android:layout_marginLeft="@dimen/ItemValueLeft"
-                    android:layout_alignBaseline="@id/item_text_3_position"/>
+                    android:layout_alignBaseline="@id/item_text_3_orientation"/>
 
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorSecondaryDark"
+                    android:layout_alignBaseline="@id/item_header_orientation"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="@color/colorSecondaryLight"
+                    android:id="@+id/checkbox_orientation"
+                    android:layout_marginRight="@dimen/MarginRight"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -173,14 +181,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/acceleration"
+                    android:text="@string/gyroscope"
                     android:textAllCaps="true"
                     android:textColor="@color/colorSecondaryDark"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginTop="@dimen/MarginTop"
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textSize="@dimen/ItemHeader"
-                    android:id="@+id/item_header_acceleration"/>
+                    android:id="@+id/item_header_gyroscope"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,8 +198,8 @@
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
-                    android:layout_below="@id/item_header_acceleration"
-                    android:id="@+id/item_text_1_acceleration"/>
+                    android:layout_below="@id/item_header_gyroscope"
+                    android:id="@+id/item_text_1_gyroscope"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -201,8 +209,8 @@
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
-                    android:layout_below="@id/item_text_1_acceleration"
-                    android:id="@+id/item_text_2_acceleration"/>
+                    android:layout_below="@id/item_text_1_gyroscope"
+                    android:id="@+id/item_text_2_gyroscope"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -212,47 +220,47 @@
                     android:layout_marginBottom="@dimen/MarginBottom"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
-                    android:layout_below="@id/item_text_2_acceleration"
-                    android:id="@+id/item_text_3_acceleration"/>
+                    android:layout_below="@id/item_text_2_gyroscope"
+                    android:id="@+id/item_text_3_gyroscope"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_value_1_acceleration"
+                    android:id="@+id/item_value_1_gyroscope"
                     tools:text="62.00"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
                     android:layout_marginLeft="@dimen/ItemValueLeft"
-                    android:layout_alignBaseline="@id/item_text_1_acceleration"/>
+                    android:layout_alignBaseline="@id/item_text_1_gyroscope"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_value_2_acceleration"
+                    android:id="@+id/item_value_2_gyroscope"
                     tools:text="41.00"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
                     android:layout_marginLeft="@dimen/ItemValueLeft"
-                    android:layout_alignBaseline="@id/item_text_2_acceleration"/>
+                    android:layout_alignBaseline="@id/item_text_2_gyroscope"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/item_value_3_acceleration"
+                    android:id="@+id/item_value_3_gyroscope"
                     tools:text="Via Ammiraglio Vacca"
                     android:textColor="@color/colorTextOnPrimary"
                     android:textSize="@dimen/ItemText"
                     android:layout_marginLeft="@dimen/ItemValueLeft"
-                    android:layout_alignBaseline="@id/item_text_3_acceleration"/>
+                    android:layout_alignBaseline="@id/item_text_3_gyroscope"/>
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorSecondaryDark"
-                    android:layout_alignBaseline="@id/item_header_acceleration"
+                    android:layout_alignBaseline="@id/item_header_gyroscope"
                     android:layout_alignParentRight="true"
                     android:backgroundTint="@color/colorSecondaryLight"
-                    android:id="@+id/checkbox_acceleration"
+                    android:id="@+id/checkbox_gyroscope"
                     android:layout_marginRight="@dimen/MarginRight"/>
 
             </RelativeLayout>
@@ -284,35 +292,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pressure"
+                    android:text="@string/temperature"
                     android:textSize="@dimen/ItemHeader"
                     android:layout_marginTop="@dimen/MarginTop"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginRight="@dimen/MarginRight"
                     android:textColor="@color/colorSecondaryDark"
-                    android:id="@+id/item_splitted_header_1_pressure"
+                    android:id="@+id/item_splitted_header_1_temperature"
                     android:textAllCaps="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/item_splitted_header_1_pressure"
+                    android:layout_below="@id/item_splitted_header_1_temperature"
                     android:textSize="@dimen/ItemValue"
                     tools:text="999,76 hPa"
                     android:textColor="@color/colorTextOnPrimary"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginTop="@dimen/MarginTop"
                     android:layout_centerInParent="true"
-                    android:id="@+id/item_splitted_value_1_pressure"
+                    android:id="@+id/item_splitted_value_1_temperature"
                     android:layout_marginBottom="@dimen/MarginBottom" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorSecondaryDark"
-                    android:layout_alignBaseline="@id/item_splitted_header_1_pressure"
+                    android:layout_alignBaseline="@id/item_splitted_header_1_temperature"
                     android:backgroundTint="@color/colorSecondaryLight"
-                    android:id="@+id/checkbox_pressure"
-                    android:layout_toEndOf="@id/item_splitted_header_1_pressure"/>
+                    android:id="@+id/checkbox_temperature"
+                    android:layout_toEndOf="@id/item_splitted_header_1_temperature"/>
 
             </RelativeLayout>
 
@@ -329,35 +337,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/altitude"
+                    android:text="@string/light"
                     android:textSize="@dimen/ItemHeader"
                     android:layout_marginTop="@dimen/MarginTop"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginRight="@dimen/MarginRight"
                     android:textColor="@color/colorSecondaryDark"
-                    android:id="@+id/item_splitted_header_2_altitude"
+                    android:id="@+id/item_splitted_header_2_light"
                     android:textAllCaps="true"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/item_splitted_header_2_altitude"
+                    android:layout_below="@id/item_splitted_header_2_light"
                     android:textSize="@dimen/ItemValue"
                     tools:text="115 m"
                     android:textColor="@color/colorTextOnPrimary"
                     android:layout_marginLeft="@dimen/MarginLeft"
                     android:layout_marginTop="@dimen/MarginTop"
                     android:layout_centerInParent="true"
-                    android:id="@+id/item_splitted_value_2_altitude"
+                    android:id="@+id/item_splitted_value_2_light"
                     android:layout_marginBottom="@dimen/MarginBottom" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorSecondaryDark"
-                    android:layout_alignBaseline="@id/item_splitted_header_2_altitude"
+                    android:layout_alignBaseline="@id/item_splitted_header_2_light"
                     android:backgroundTint="@color/colorSecondaryLight"
-                    android:id="@+id/checkbox_altitude"
-                    android:layout_toEndOf="@id/item_splitted_header_2_altitude"/>
+                    android:id="@+id/checkbox_light"
+                    android:layout_toEndOf="@id/item_splitted_header_2_light"/>
 
             </RelativeLayout>
 
@@ -367,16 +375,18 @@
 
 
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/MarginBottom"
-        android:layout_marginRight="@dimen/MarginRight"
-        android:id="@+id/continue_btn"
-        android:padding="12dp"
-        android:src="@drawable/baseline_send_white_36" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/MarginBottom"
+            android:layout_marginRight="@dimen/MarginRight"
+            android:id="@+id/continue_btn"
+            android:padding="12dp"
+            android:src="@drawable/baseline_send_white_36" />
+
+
 
     </RelativeLayout>
