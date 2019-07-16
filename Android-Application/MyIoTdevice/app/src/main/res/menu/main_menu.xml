@@ -9,4 +9,16 @@
         android:title="Upload"
         android:icon="@drawable/baseline_cloud_upload_white_36"
         app:showAsAction="ifRoom"></item>
+    <item android:id="@+id/item_small_radius"
+        android:title="Raggio 100Km"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/item_medium_radius"
+        android:title="Raggio 500Km"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/item_large_radius"
+        android:title="Raggio 1000Km"
+        app:showAsAction="never"></item>
+    <item android:id="@+id/item_all"
+        android:title="All Events"
+        app:showAsAction="never"></item>
 </menu>

@@ -8,31 +8,73 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.AWSStartupHandler;
+import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    // Database variables
+    private DynamoDBMapper dynamoDBMapper;
+    private MapsActivity mapsActivity;
+    private PublicationDO publicationItem;
+    private StringBuilder stringBuilder;
+    private PaginatedList<PublicationDO> result;
+    private ArrayList<JSON_Response> responses;
+    private Gson gson;
+    private String jsonFormOfItem;
+    private JSON_Response response;
+    private MarkerOptions markerOption;
+    private double item_latitude;
+    private double item_longitude;
+    private String item_title;
+
+    private String TAG = "DynamoDb_Demo";
     // GPS VARIABLES
     private double latitude;
     private double longitude;
     private String address;
+    private double minLat;
+    private double maxLat;
+    private double minLong;
+    private double maxLong;
+    private double radius;
     private LatLng actualPosition;
     private String providerId = LocationManager.GPS_PROVIDER;
     private LocationManager locationManager=null;
@@ -66,6 +108,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        // Default value for the radius
+        radius=100;
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -82,6 +128,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(MapsActivity.this, new String[]{Manifest.permission.INTERNET}, 1);
             return;
         }
+
+        // Database comunication setup
+        mapsActivity = this;
+
+        // AWSMobileClient enables AWS user credentials to access your table
+        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
+
+            @Override
+            public void onComplete(AWSStartupResult awsStartupResult) {
+
+                // Add code to instantiate a AmazonDynamoDBClient
+                AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
+                dynamoDBMapper = DynamoDBMapper.builder()
+                        .dynamoDBClient(dynamoDBClient)
+                        .awsConfiguration(
+                                AWSMobileClient.getInstance().getConfiguration())
+                        .build();
+
+            }
+        }).execute();
     }
 
     @Override
@@ -122,6 +188,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 i.putExtra("longitude",String.valueOf(longitude));
                 i.putExtra("address",address);
                 startActivity(i);
+                return true;
+            case R.id.item_small_radius:
+                // set min e max latitude/logitude
+                radius=100;
+                return true;
+            case R.id.item_medium_radius:
+                // set min e max latitude/logitude
+                radius=500;
+                return true;
+            case R.id.item_large_radius:
+                // set min e max latitude/logitude
+                radius=1000;
+                return true;
+            case R.id.item_all:
+                // set min e max latitude/logitude
+                radius=0;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -175,6 +257,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+
+        // set min/max longitude/latitude
+        if(radius==100){
+            minLat = latitude-10;
+            maxLat = latitude+10;
+            minLong = longitude-10;
+            maxLong = longitude+10;
+        }
+        else if (radius==500){
+            minLat = latitude-50;
+            maxLat = latitude+50;
+            minLong = longitude-50;
+            maxLong = longitude+50;
+        }
+
+
         LocationAddress locationAddress = new LocationAddress();
         locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
 
@@ -203,8 +301,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 updateGUI(location);
 
             locationManager.requestLocationUpdates(providerId, MIN_PERIOD, MIN_DIST, locationListener);
+
+            // query execution managed by async task
+            new QueryTask().execute("");
+            //query();
         }
         catch(Exception e){}
+
     }
 
 
@@ -224,4 +327,174 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
+
+
+    /**
+     * Database functions
+     * Gestione attraverso gli AsyncTask
+     */
+    private class QueryTask extends AsyncTask<String,Void,String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                PublicationDO publication = new PublicationDO();
+                publication.set_creator("it-357221066422461");       //partition key
+                publication.set_publication_time("14/07/2019 09:49:51"); //range key
+
+                Condition rangeKeyCondition = new Condition()
+                        .withComparisonOperator(ComparisonOperator.BEGINS_WITH)
+                        .withAttributeValueList(new AttributeValue().withS("it"));
+                DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
+                        .withHashKeyValues(publication)
+                        //.withRangeKeyCondition("creator", rangeKeyCondition)
+                        .withConsistentRead(false);
+
+                result = dynamoDBMapper.query(PublicationDO.class, queryExpression);
+
+                gson = new Gson();
+                responses = new ArrayList<JSON_Response>();
+                stringBuilder = new StringBuilder();
+
+                // Loop through query results
+                for (int i = 0; i < result.size(); i++) {
+                    jsonFormOfItem = gson.toJson(result.get(i));
+                    response = new JSON_Response();
+                    response = new Gson().fromJson(jsonFormOfItem, JSON_Response.class);
+                    responses.add(response);
+                    Log.d("Latitude: ", responses.get(i).get_payload().get_publication_latitude());
+                    stringBuilder.append(jsonFormOfItem + "\n\n");
+                }
+            }
+            catch (Exception e){}
+
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // Print markers on the map
+            if(responses!=null) {
+                for (int i = 0; i < responses.size(); i++) {
+                    item_latitude = Double.parseDouble(responses.get(i).get_payload().get_publication_latitude());
+                    item_longitude = Double.parseDouble(responses.get(i).get_payload().get_publication_longitude());
+                    item_title = responses.get(i).get_payload().get_publication_location();
+
+                    Log.d("Latitude : ", responses.get(i).get_payload().get_publication_latitude());
+
+                    // Reading valid data
+                    if ((item_latitude != 0.0) && (item_longitude != 0.0)) {
+
+                        markerOption = new MarkerOptions();
+                        markerOption.position(new LatLng(item_latitude, item_longitude));
+                        markerOption.title(item_title);
+                        markerOption.icon(getMarkerIcon("#fdd835"));
+                        mMap.addMarker(markerOption);
+                    }
+                }
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
+
+    public BitmapDescriptor getMarkerIcon(String color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(Color.parseColor(color), hsv);
+        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
+    }
+
+
+
+    /*
+    public void query() {
+
+        new Thread(new Runnable() {
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+
+            @Override
+            public void run() {
+                PublicationDO publication = new PublicationDO();
+                publication.set_creator("it-357221066422461");       //partition key
+                publication.set_publication_time("14/07/2019 09:49:51"); //range key
+
+                Condition rangeKeyCondition = new Condition()
+                        .withComparisonOperator(ComparisonOperator.BEGINS_WITH)
+                        .withAttributeValueList(new AttributeValue().withS("it"));
+                DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
+                        .withHashKeyValues(publication)
+                        //.withRangeKeyCondition("creator", rangeKeyCondition)
+                        .withConsistentRead(false);
+
+                result = dynamoDBMapper.query(PublicationDO.class, queryExpression);
+
+                gson = new Gson();
+                responses = new ArrayList<JSON_Response>();
+                stringBuilder = new StringBuilder();
+
+                // Loop through query results
+                for (int i = 0; i < result.size(); i++) {
+                    jsonFormOfItem = gson.toJson(result.get(i));
+                    response = new JSON_Response();
+                    response = new Gson().fromJson(jsonFormOfItem,JSON_Response.class);
+                    responses.add(response);
+                    Log.d("Latitude: ",responses.get(i).get_payload().get_publication_latitude());
+                    stringBuilder.append(jsonFormOfItem + "\n\n");
+                }
+
+                // Add your code here to deal with the data result
+                mapsActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("Query results: ", stringBuilder.toString());
+
+                        if (result.isEmpty()) {
+                            // There were no items matching your query.
+                            Log.d("No data",null);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+
+
+
+    public void read() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                publicationItem = dynamoDBMapper.load(
+                        PublicationDO.class,
+                        "it-357221066422461",       // Partition key (hash key)
+                        "14/07/2019 09:49:51");    // Sort key (range key)
+
+                // Item read
+                mapsActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (publicationItem != null) {
+                            String creator = publicationItem.get_creator();
+                            Log.d("Publication class= ",publicationItem.toString()+". \n The publication creator is: "+creator);
+                        }
+                        else{
+                            Log.d("No result",null);
+                        }
+                    }
+                });
+
+            }
+        }).start();
+    }
+    */
 }
