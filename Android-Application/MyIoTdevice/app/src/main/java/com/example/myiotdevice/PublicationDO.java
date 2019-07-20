@@ -51,7 +51,7 @@ public class PublicationDO {
         public String getPublication_latitude(){return _publication_latitude;}
         public void setPublication_latitude(String publication_latitude){this._publication_latitude=publication_latitude;}
 
-        @DynamoDBAttribute(attributeName = "publication_longitude")
+        @DynamoDBAttribute(attributeName = "publication_location")
         public String getPublication_location(){return _publication_location;}
         public void setPublication_location(String publication_location){this._publication_location=publication_location;}
 
@@ -76,27 +76,4 @@ public class PublicationDO {
         public void set_is_traffic_jam(boolean is_traffic_jam){this._is_traffic_jam=is_traffic_jam;}
 
     }
-
-
-
-
-
-
-
-
-
-
-    /*
-        @DynamoDBMarshalling(marshallerClass = PayloadMarshaller.class)
-        @DynamoDBAttribute(attributeName = "payload")
-        public Map<String,Payload> get_payload(){
-            return _payload;
-        }
-        public void set_payload(Map<String,Payload> _payload){
-            this._payload=_payload;
-        }
-
-    */
-
-
 }

@@ -22,8 +22,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,7 +42,6 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 
@@ -70,16 +67,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private double latitude;
     private double longitude;
     private String address;
-    private double minLat;
-    private double maxLat;
-    private double minLong;
-    private double maxLong;
-    private double radius;
+    private double radius;      // Radius in KM selected by the user
     private LatLng actualPosition;
     private String providerId = LocationManager.GPS_PROVIDER;
     private LocationManager locationManager=null;
     private static final int MIN_DIST=20;
     private static final int MIN_PERIOD=30000;
+    private static final double EARTH_RADIUS = 6372.795477598;      // earth radius in KM
+
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
@@ -145,7 +140,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .awsConfiguration(
                                 AWSMobileClient.getInstance().getConfiguration())
                         .build();
-
             }
         }).execute();
     }
@@ -192,18 +186,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.item_small_radius:
                 // set min e max latitude/logitude
                 radius=100;
+                mMap.clear();
+                refreshGPS();
                 return true;
             case R.id.item_medium_radius:
                 // set min e max latitude/logitude
                 radius=500;
+                mMap.clear();
+                refreshGPS();
                 return true;
             case R.id.item_large_radius:
                 // set min e max latitude/logitude
                 radius=1000;
+                mMap.clear();
+                refreshGPS();
                 return true;
             case R.id.item_all:
                 // set min e max latitude/logitude
-                radius=0;
+                radius=8000;
+                mMap.clear();
+                refreshGPS();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -258,26 +260,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
-        // set min/max longitude/latitude
-        if(radius==100){
-            minLat = latitude-10;
-            maxLat = latitude+10;
-            minLong = longitude-10;
-            maxLong = longitude+10;
-        }
-        else if (radius==500){
-            minLat = latitude-50;
-            maxLat = latitude+50;
-            minLong = longitude-50;
-            maxLong = longitude+50;
-        }
-
-
         LocationAddress locationAddress = new LocationAddress();
         locationAddress.getAddressFromLocation(latitude, longitude,getApplicationContext(), new GeocoderHandler());
 
-        // remove old marker
-        mMap.clear();
+
         // add new circle into the actual position
         if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
@@ -361,9 +347,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     jsonFormOfItem = gson.toJson(result.get(i));
                     response = new JSON_Response();
                     response = new Gson().fromJson(jsonFormOfItem, JSON_Response.class);
-                    responses.add(response);
-                    Log.d("Latitude: ", responses.get(i).get_payload().get_publication_latitude());
-                    stringBuilder.append(jsonFormOfItem + "\n\n");
+                    if(getDistanceFromPoint(response.get_payload().get_publication_latitude(),response.get_payload().get_publication_longitude())<radius){
+                        responses.add(response);
+                    }
+                    else{
+                        Log.d(TAG, "far away");
+                    }
                 }
             }
             catch (Exception e){}
@@ -410,91 +399,44 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    private double getDistanceFromPoint(double latB,double lonB){
+        double latA = latitude;
+        double lonA = longitude;
+        double distance=0;
 
-    /*
-    public void query() {
+        // Conversion in Radianti
+        latB = convertDegreesInRadiants(latB);
+        lonB = convertDegreesInRadiants(lonB);
+        latA = convertDegreesInRadiants(latA);
+        lonA = convertDegreesInRadiants(lonA);
 
-        new Thread(new Runnable() {
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
+        distance = EARTH_RADIUS * Math.acos((Math.sin(latA)*Math.sin(latB)+Math.cos(latA)*Math.cos(latB)*Math.cos(lonA-lonB)));
 
-            @Override
-            public void run() {
-                PublicationDO publication = new PublicationDO();
-                publication.set_creator("it-357221066422461");       //partition key
-                publication.set_publication_time("14/07/2019 09:49:51"); //range key
 
-                Condition rangeKeyCondition = new Condition()
-                        .withComparisonOperator(ComparisonOperator.BEGINS_WITH)
-                        .withAttributeValueList(new AttributeValue().withS("it"));
-                DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
-                        .withHashKeyValues(publication)
-                        //.withRangeKeyCondition("creator", rangeKeyCondition)
-                        .withConsistentRead(false);
-
-                result = dynamoDBMapper.query(PublicationDO.class, queryExpression);
-
-                gson = new Gson();
-                responses = new ArrayList<JSON_Response>();
-                stringBuilder = new StringBuilder();
-
-                // Loop through query results
-                for (int i = 0; i < result.size(); i++) {
-                    jsonFormOfItem = gson.toJson(result.get(i));
-                    response = new JSON_Response();
-                    response = new Gson().fromJson(jsonFormOfItem,JSON_Response.class);
-                    responses.add(response);
-                    Log.d("Latitude: ",responses.get(i).get_payload().get_publication_latitude());
-                    stringBuilder.append(jsonFormOfItem + "\n\n");
-                }
-
-                // Add your code here to deal with the data result
-                mapsActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("Query results: ", stringBuilder.toString());
-
-                        if (result.isEmpty()) {
-                            // There were no items matching your query.
-                            Log.d("No data",null);
-                        }
-                    }
-                });
-            }
-        }).start();
+        return distance;
     }
 
+    private double getDistanceFromPoint(String SlatB,String SlonB){
+        double latA = latitude;
+        double lonA = longitude;
+        double latB = Double.parseDouble(SlatB);
+        double lonB = Double.parseDouble(SlonB);
+        double distance=0;
+
+        // Conversion in Radianti
+        latB = convertDegreesInRadiants(latB);
+        lonB = convertDegreesInRadiants(lonB);
+        latA = convertDegreesInRadiants(latA);
+        lonA = convertDegreesInRadiants(lonA);
+
+        distance = EARTH_RADIUS * Math.acos((Math.sin(latA)*Math.sin(latB)+Math.cos(latA)*Math.cos(latB)*Math.cos(lonA-lonB)));
 
 
-
-    public void read() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                publicationItem = dynamoDBMapper.load(
-                        PublicationDO.class,
-                        "it-357221066422461",       // Partition key (hash key)
-                        "14/07/2019 09:49:51");    // Sort key (range key)
-
-                // Item read
-                mapsActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (publicationItem != null) {
-                            String creator = publicationItem.get_creator();
-                            Log.d("Publication class= ",publicationItem.toString()+". \n The publication creator is: "+creator);
-                        }
-                        else{
-                            Log.d("No result",null);
-                        }
-                    }
-                });
-
-            }
-        }).start();
+        return distance;
     }
-    */
+
+    private double convertDegreesInRadiants(double deg){
+        double rad = deg *Math.PI / 180;
+        return  rad;
+    }
 }
