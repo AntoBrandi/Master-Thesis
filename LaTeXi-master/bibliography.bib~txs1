@@ -1,0 +1,77 @@
+@article{famous:paper_1,
+	author = "C. Gomez, J.Oller  and J. Paradells",
+	journal = "Sensors",
+	keywords = "important",
+	pages = "11734--11753",
+	title = "{Overview and Evaluation of bluetooth low energy: An emerging low-power wireless technology}",
+	volume = 12,
+	year = 2012
+}
+
+@article{famous:paper_2,
+	author = "M. Siekkinen, M. Hiienkari, J.K. Nurminen  and J. Nieminen",
+	journal = "Proc. IEEE Wireless Commun. Netw. Conf. Workshops (WCNCW)",
+	keywords = "important",
+	pages = "232--237",
+	title = "{How low energy is bluetooth low energy? Comparative measurement with zigbee/802.15.4}",
+	year = 2012
+}
+
+@article{famous:paper_3,
+	author = "M. Research",
+	journal = "White Paper",
+	keywords = "important",
+	title = "{The need for low cost, high reach, wide area connectivity for the internet of things. A mobile network operator's perspective}",
+	year = 2014
+}
+
+@article{famous:paper_Grieco_1,
+	author = "M.R. Palattella, M. Dohler, A. Grieco, G. Rizzo, J. Torsner, T. Engel  and L. Ladid",
+	journal = "IEEE Journal on Selected Areas in Communications",
+	keywords = "important",
+	pages = "510--527",
+	title = "{Internet of Things in the 5G Era: Enablers, Architecture, and Business Models}",
+	volume = 34,
+	year = 2016
+}
+
+@article{famous:paper_full_intro,
+	author = "OECD",
+	journal = "OECD Digital Economy Papers",
+	keywords = "important",
+	title = "{IoT measurement and applications}",
+	volume = 271,
+	year = 2018,
+	url=" https://doi.org/10.1787/35209dbf-en",
+	publisher="OECD Publishing Paris"	
+}
+
+@article{famous:paper_cisco_intro,
+	author = "Dave Evans",
+	journal = "Cisco Internet Business Solutions Group (IBSG)",
+	keywords = "important",
+	title = "{The Internet of Things, how the next evolution of the Internet is changing everything}",
+	year = 2011,
+	publisher="Cisco IBSG"	
+}
+
+@article{famous:paper_francese,
+	author = "ARCEP",
+	journal = "Le Livre Blanc",
+	keywords = "important",
+	title = "{Préparer la révolution de l'Internet des objects}",
+	year = 2016
+}
+
+
+@book{notcited:book,
+	author = "Cane, Carlino",
+	edition = "first edition",
+	editor = "Leggoo, Anche",
+	keywords = "non-citato",
+	publisher = "O'Reilly",
+	title = "{No one cited me}",
+	url = "http://bar.com/",
+	year = 2009
+}
+

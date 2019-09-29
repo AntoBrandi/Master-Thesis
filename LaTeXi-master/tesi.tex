@@ -33,6 +33,10 @@
 \usepackage[babel]{csquotes}
 \usepackage{hyperref}
 \usepackage[backend=bibtex]{biblatex}
+\usepackage{pbox}
+\usepackage{longtable}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsfonts}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -145,17 +149,19 @@
 \logosede{images/logo_poliba}
 
 % DATA - MESE ANNO
-\sedutadilaurea{25 Luglio 2019}
+\sedutadilaurea{17 Ottobre 2019}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % LISTA DEI CAPITOLI DA INCLUDERE - PERSONALIZZARE
 \includeonly{%
 chap_introduzione,%
-chap_quo,%
-chap_qua,%
+chap_due,%
+chap_tre,%
+chap_quattro,%
 chap_conclusioni,%
 app_a,%
+app_b,
 }
 
 % FILE DI BIBLIOGRAFIA
@@ -196,7 +202,7 @@ app_a,%
 \vspace*{\stretch{1}}
 \begin{flushright}
 \noindent
-Solo coloro che sono abbastanza folli da pensare di cambiare il mondo,\\ alla fine lo cambiano per davvero
+\textit{Solo coloro che sono abbastanza folli da pensare di cambiare il mondo,\\ alla fine lo cambiano per davvero}
 
 \textit{}
 \end{flushright}
@@ -220,10 +226,29 @@ Solo coloro che sono abbastanza folli da pensare di cambiare il mondo,\\ alla fi
 
 % ABSTRACT - PERSONALIZZARE
 \sommario
-In questo lavoro di tesi si intende esplorare le funzionalità e potenzialità offerte dalla rapida ascesa delle tecnologie disponibili nel mondo dell' Internet of Things. \\
+In questo lavoro di tesi si intende esplorare le funzionalità e potenzialità offerte dalla rapida ascesa delle tecnologie disponibili nel mondo dell' Internet of Things (IoT). \\
 A seguito di una dettagliata analisi dello stato dell'arte e dei campi di applicazione che maggiormente potrebbero beneficiare del rapido sviluppo delle tecnologie IoT, ci si concentrerà maggiormente sul settore della mobilità, con il fine ultimo di sviluppare un prototipo dimostrativo delle potenzialità offerte da una piattaforma di Crowdsourcing.\\
-Nella fattispecie, l'intento della fase di prototipazione non sarà quello di descrivere dettagliatamente un prodotto finito o valido in tutte le circostanze, ma sarà piuttosto quello di mostrare quanto ampio può essere il mondo legato all'IoT e quanto semplice sia la scalabilità di un simile prototipo ad un mercato di massa, che non si limiti al solo settore della mobilità. \\
-In ultima analisi, con riferimento al prototipo in output a questo lavoro di tesi, ne saranno mostrate le caratteristiche implementative, basate sullo standard Datex II. Il fine ultimo di questa fase sarà quello di mostrare la struttura implementativa del prototipo in funzione della quale poter fornire delle linee guida implementative e possibili sviluppi futuri.
+L'output di questo lavoro di tesi sarà quindi un prototipo di una Applicazione sviluppata per smartphone Android che consenta la raccolta dei dati provenienti dai sensori integrati nello smartphone stesso e la condivisione di questi dati in una piattaforma Cloud. Tale condivione dei dati relativi alla navigazione stradale si rende necessaria in quanto, solo attraverso la condivisione e raccolta di una grossa mole di dati, possono essere adottate delle tecniche di analisi e predizione avanzate che potrebbero consentire una migliore qualità della navigazione ed una più pronta reazione delle autorità a particolari eventi.\\
+I protocolli di condivisione dei dati raccolti dallo smartphone saranno uno dei punti salienti di questo lavoro di tesi in quanto saranno analizzate diverse tecnologie per una comunicazione Client/Server tra dispositivi eterogenei e che ulteriormente siano scalabili ed adatte alla condivisione di dati relativi al traffico.\\
+Nella fattispecie, l'intento della fase di prototipazione non sarà quello di descrivere dettagliatamente un prodotto finito, ma sarà piuttosto quello di mostrare il flusso logico che ha portato ad intraprendere alcune scelte progettuali piuttosto che altre e, ulteriormente, quello di mostrare la logica che ha portato alla realizzazione della architettura hardware e software del prototipo. \\
+Il vantaggio di questo approccio è quello di poter riutilizzare le stesse logiche progettuali intraprese in questo lavoro di tesi, anche per altri progetti legati al mondo dell'IoT che condividano le stesse necessità di raccolta decentralizzata dei dati e condivisione degli stessi su piattaforme Cloud.\\
+
+Nel \autoref{chap:introduzione}, a seguito di una breve panoramica del mondo e dei numeri dell' Internet Of Things, saranno mostrate alcune delle tecnologie legate al mondo dell'IoT e che si intendono utilizzare per la realizzazione del prototipo.\\
+
+Nel \autoref{chap:due}, ci si soffermerà invece sulla spiegazione del significato del termine Crowdsourcing e lo si valuterà applicato al mondo dell'IoT corredato da esempi di applicazioni che si basano proprio su piattaforme di Crowdsourcing.\\
+
+Nel \autoref{chap:tre}, ci si focalizzerà sulla fase di Progettazione di tutte le componenti del prototipo spiegando, per ciascuna fase, le ragioni che abbiano portato ad alcune scelte progettuali piuttosto che altre. Questo capitolo, seguirà quindi il processo logico della implementazione di un nuovo sistema o applicativo legato al mondo dell'IoT e quindi, piuttosto che mostrare nei dettagli l'implementazione di ciascuna scelta progettuale, se ne mostrerà solo la logica e le motivazioni che hanno influenzato la scelta. Sebbene in questo capitolo sono mostrate delle brevi guide per l'accesso o l'utilizzo di alcune componenti, queste sono di carattere generale e non sono in alcun modo limitate al solo prototipo in fase di progettazione.\\
+Le componenti che sarà necessario progettare in questo capitolo saranno quindi:\\
+\begin{itemize}
+	\item Protocolli di comunicazione di basso livello
+	\item Standard di formattazione dei dati
+	\item Architettura Software
+	\item Piattaforme di Crowdsourcing per dispositivi IoT
+	\item Architettura del Cloud Server
+	\item Architettura del Cloud Database
+\end{itemize}
+
+Nel \autoref{chap:quattro}, infine, sulla base delle scelte progettuali intraprese nel \autoref{chap:tre}, si andrà ad implementare il sistema. Questo capitolo, pertanto, è molto specifico per l'applicativo progettato in questo lavoro di tesi e risulta anche molto specifico in termini di linguaggio di programmazione utilizzato, piattaforma di sviluppo e piattaforme server. Il fine ultimo di questa fase sarà quello di mostrare la struttura implementativa del prototipo in funzione della quale poter fornire delle linee guida implementative e possibili sviluppi futuri.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -248,13 +273,15 @@ In ultima analisi, con riferimento al prototipo in output a questo lavoro di tes
 
 % INCLUSIONE FILE CAPITOLI - PERSONALIZZARE - TENERE COERENTE CON LISTA IN ALTO
 \include{chap_introduzione}
-\include{chap_quo}
-\include{chap_qua}
+\include{chap_due}
+\include{chap_tre}
+\include{chap_quattro}
 \include{chap_conclusioni}
 
 \appendix
 % INCLUSIONE APPENDICI - - PERSONALIZZARE - TENERE COERENTE CON LISTA IN ALTO
 \include{app_a}
+\include{app_b}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

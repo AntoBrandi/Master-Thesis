@@ -1,0 +1,66 @@
+\chapter{Implementazione del Protocollo DATEX II}
+\label{app:a}
+In questo appendice sono mostrati  i diagrammi delle classi relativi all'implementazione del Protocollo DATEX II all'interno del sistema definito nel \autoref{chap:tre}.\\
+I diagrammi delle classi di seguito mostrati sono stati ricavati da quelli implementati per lo standard DATEX. (\url{http://d2docs.ndwcloud.nu/_static/umlmodel/v3.0/index.htm})\\
+Si presti inoltre attenzione al fatto che i diagrammi delle classi mostrati in questo appendice non coprono il progetto nella sua interezza ma si intendono riferite alla sola implementazione dello standard DATEX II all'interno del progetto.
+Infine, i diagrammi delle classi di seguito esposti non comprendono lo standard DATEX II nella sua interezza, ma riguardano le sole componenti che si è ritenuto opportuno integrare nel progetto.\\
+\subsubsection{General Structure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.6\columnwidth]{images/uml_1}
+	\end{center}
+	\caption{Distinzione effettuata dallo Standard DATEX II tra metodo di comunicazione (\textit{Exchange}) e formato del Payload (\textit{PayloadPublication})}
+	\label{fig:app_uml_1}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/datexii_publication_implementation}
+	\end{center}
+	\caption{Implementazione della Publication}
+	\label{fig:app_datexii_publication_implementation}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/uml_2}
+	\end{center}
+	\caption{Implementazione del' Exchange}
+	\label{fig:app_uml_2}
+\end{figure}
+\subsubsection{Location}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/uml_3_3}
+	\end{center}
+	\caption{Location reference}
+	\label{fig:app_uml_3_3}
+\end{figure}
+\subsubsection{Elaborated Data Publication}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/uml_3_6}
+	\end{center}
+	\caption{Location reference}
+	\label{fig:app_uml_3_6}
+\end{figure}
+\subsubsection{Measured Data Publication}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/uml_3_8}
+	\end{center}
+	\caption{Location reference}
+	\label{fig:app_uml_3_8}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/uml_3_9}
+	\end{center}
+	\caption{Location reference}
+	\label{fig:app_uml_3_9}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/uml_4_28}
+	\end{center}
+	\caption{Location reference}
+	\label{fig:app_uml_4_28}
+\end{figure}

@@ -1,0 +1,104 @@
+\chapter{Introduzione}
+\label{chap:introduzione}
+
+
+%This is a reference to a chapter \ref{chap:quo}. This is a reference to a figure \ref{fig:doge}. This is a reference to some code \ref{lst:hello}. This is a citation \cite{famous:paper}.
+%
+%\lstinputlisting[label=lst:hello, firstline=2, lastline=4, caption={I directly included a portion of a file}]{code/hello.py}
+%
+%\begin{lstlisting}[language=Java, label=lst:java, caption={Some code in another language than the default one}]
+%public void prepare(AClass foo) {
+%        AnotherClass bar = new AnotherClass(foo)
+%}
+%\end{lstlisting}
+%
+%\Blindtext
+
+Il panorama mondiale ha, nell'ultimo decennio, riposto particolare attenzione ed interesse verso le emergenti tecnologie nel campo dell'Internet of Things. \\ Questo perchè, il paradigma IoT consente oggi di realizzare la vision ed il concept che era già stato supposto e predetto come sviluppo della rete Internet. Ovvero adempiere allo scopo di collegare il mondo. \\
+Tuttavia, se grazie ad Interent è stato possibile collegare le persone, metterle in relazione, fornire ad essi gli strumenti per interagire tra loro, indipendentemente dalla loro posizione geografica o razza o sesso o colore, allo stesso modo, il naturale sviluppo di Internet non può che essere quello di mettere in relazione le cose. I dispositivi che siamo abituati ad utilizzare ogni giorno e che, seppur diversi ed eterogenei tra loro in termini di funzionalità, costo e posizione geografica, sono in grado di comunicare tra loro, scambiarsi dati ed informazioni al fine di cambiare definitivamente il nostro modo di lavorare, acquistare, consumare e quindi di vivere.
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{images/iot.jpg}
+\end{center}
+\caption{Overview del paradigma IoT}
+\label{fig:iot}
+\end{figure}
+\\Per rendere ancora più evidente il livello innovativo introdotto dal paradigma IoT, è necessario prima effettuare una chiara distinzione tra Internet ed il World Wide Web, spesso confusi.
+Con il termine Internet ci si riferisce al livello fisico dello stack protocollare realizzato da switch, routers e altri strumenti che consentono lo scambio di dati da un punto ad un altro.
+Per World Wide Web si intende piuttosto un livello applicativo dello stack protocollare situato al di sopra di Internet, con il ruolo di definire una interfaccia o uno standard che renda comprensibile World Wide le informazioni trasmesse attraverso Internet.\\
+Questo per evidenziare il fatto che Internet, come noi oggi lo conosciamo ed utilizziamo sia pressochè la stessa tecnologia prototipata ed utilizzata per scopi scientifico/militari nel 1969 dal DARPA denominata ARPANET (Advanced Research Projects Agency NETwork) dalla quale, nel 1983 naque Internet.\\
+Il paradigma IoT si propone quindi come la prima, vera, evoluzione di Internet con la potenzialità di cambiare radicalmente il modo di vivere, imparare e lavorare. \cite{famous:paper_cisco_intro}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/iot_revolution.png}
+	\end{center}
+	\caption{Gli oggetti collegati ad Internet possono essere progettati per una grande varietà di applicazioni \cite{famous:paper_francese}}
+	\label{fig:iot_revolution}
+\end{figure}
+
+
+
+
+\section{I Numeri dell'IoT}
+\label{sec:i_numeri_dell_iot}
+Alla luce di quanto detto, si può quindi riassumere il significato del termine Internet of Things come la connessione di un numero crescente di dispositivi ed oggetti che comunicano tra di loro sfruttando la rete Internet. \cite{famous:paper_full_intro}\\
+Ci si aspetta, ed i numeri attuali lo dimostrano, che il mondo dell'IoT abbia una crescita esponenziale, connettendo miliardi di dispositivi in un tempo relativamente breve. Questo, ovviamente non può che avere un enorme impatto dal punto di vista tecnologico ed economico.\\
+Dal punto di vista \textbf{tecnologico}, va affrontata la sfida di creare delle infrastrutture scalabili che possano supportare il numero crescente di dispositivi e la crescente mole di dati tra di essi trasmessa, in quanto come già evidenziato, 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.7\columnwidth]{images/iot_tech_data.png}
+	\end{center}
+	\caption{Number of IoT devices roadmap \cite{famous:paper_cisco_intro}}
+	\label{fig:iot_tech_data}
+\end{figure}
+Va inoltre notato come tali stime non tengano in conto anche dei vantaggi di una rapida ascesa di Internet ma che si basino solo sui dati noti al momento della stima.\\
+La sfida tecnologica è dovuta al fatto che Internet sia una tecnologia che risale allo scorso secolo che non fosse stata progettata per supportare un così crescente numero di dispositivi connessi alla rete.\\
+Internet, infatti, fa largo uso del protocollo IP per la assegnazione di indirizzi pubblici univoci a ciascun device (o meglio connessione fisica alla rete) . Nella sua versione IPv4, ciascun indirizzo è formato da 32 bit, limitando così il numero massimo di indirizzi univoci a:
+\begin{equation}
+2^{32} = 4.294.967.296 \cong 4,3 \cdot 10^9
+\end{equation}
+Ma va tenuto presente che non tutti sono utilizzabili in quanto alcuni di questi siano riservati per specifici utilizzi.
+Tale protoccolo quindi poco si adatta alla frenetica crescita del numero di dispositivo collegati ad Internet, motivo per il quale, già nel 1998 viene proposta una nuova versione di questo protocollo denominata IPv6 che sarà analizzata in dettaglio nella \autoref{sec:iot_enabling_technologies}. Il primo, evidente vantaggio di questa nuova versione, sta nel fatto che IPv6 riserva 128 bit per la codifica di ciascun indirizzo, portando così il numero massimo di indirizzi univoci assegnabili a \cite{book:ref_book_1}:
+\begin{equation}
+2^{128} \cong 3,4 \cdot 10^{38}
+\end{equation}
+Questo inevitabile sviluppo del protocollo IP è completamente giustificato dalle stime sulla rapida crescita del numero di oggetti che vengono connessi alla rete Internet.\\
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/numbers_devices.png}
+	\end{center}
+	\caption{Previsioni della rapida crescita sul numero di oggetti connessi ad Internet \cite{famous:paper_cisco_2013}}
+	\label{fig:numbers_devices}
+\end{figure}
+Dal punto di vista \textbf{economico}, una simile ascesa del numero di dispositivi connessi in rete, in un campo così ampio di applicazione, ha un tale impatto da giustificare gli investimenti su infrastrutture di telecomunicazione e sui plant industriali. 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/numbers_economic.png}
+	\end{center}
+	\caption{Impatto economico di applicazioni IoT nel 2025 fornito dal McKinsey Global Institute}
+	\label{fig:numbers_economic}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/numbers_where.png}
+	\end{center}
+	\caption{Campi di applicazione nei quali si stima il maggiore sviluppo reso possibile dall'IoT \cite{famous:paper_cisco_2013}}
+	\label{fig:numbers_where}
+\end{figure}
+
+
+
+
+
+\section{IoT Enabling Technologies}
+\label{sec:iot_enabling_technologies}
+L'idea di una rete Internet che consentisse la comunicazione a livello globale tra persone o tra persone e cose o tra cose era già da molto tempo una visione condivsa di quello che sarebbe potuto essere lo sviluppo di Internet. \\
+Tale visione è oggi possibile grazie alla diffusione capillare in qualsiasi strumento di piccoli, economici e potenti dispositivi di calcolo. \\
+Tuttavia, affinchè una simile rivoluzione tecnologia si paventasse, era necessario superare i tradizionali protocolli di comunicazione tipici della rete Internet (IPv4) e creare conseguentemente delle nuove tecnologie per la comunicazione che fossero ottimizzate per le nuove esigenze (IPv6, etc.).
+Va infatti ricordato ancora una volta che la vision dell'IoT sia quella di abilitare una comunicazione tra qualsiasi tipo di dispositivo che abbia al suo interno una unità di calcolo. Questo significa stabilire una comunicazione tra dispositivi eterogenei, dispositivi che assolvono diversi compiti ed adempiono a diverse necessità e che sono molto spesso anche dotati di una diversa e limitata potenza di elaborazione. \\
+Di qui la necessità di nuovi protocolli e tecnologie di comunicazione che non solo garantissero la trasmissione sicura di una grossa mole di dati tra un grande numero di dispositivi, ma che fossero anche dei protocolli leggeri dal punto di vista computazionale ed ovviamente economici, così da poter essere integrati in qualsiasi dispositivo, da quelli destinati all'industria a quelli destinati al mercato consumer.
+Data la complessità della sfida tecnologica da fronteggiare e considerata l'eterogeneità del problema e delle necessità nei diversi campi applicativi,
+sono stati sviluppati e proposti diverse tipologie di tecnologie e protocolli di comunicazione. \\
+Tra le più rilevanti nel campo della comunicazione domestica o locale emergono Bluetooth Low Energy \cite{famous:paper_1} and Zigbee \cite{famous:paper_2}. Mentre altri protocolli come WiFi, LowPower Wide Area Networks (LPWA) \cite{famous:paper_3} e le comunicazioni cellulari come 3GPP , 4G o 5G \cite{famous:paper_Grieco_1} hanno uno scope più ampio, abilitando la comunicazione tra dispositivi anche molto distanti tra loro.
+
+

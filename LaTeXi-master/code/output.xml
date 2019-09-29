@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<d2LogicalModel modelBaseVersion="2" xmls="http://datex2.eu/schema/2/2_0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datex2.eu/schema/2/2_0 http://www.datex2.eu/schema/2/2_3/DATEXIISchema_2_2_3.xsd">
+  <exchange>
+    <supplierIdentification>
+      <country>it</country>
+      <nationalIdentifier>IT</nationalIdentifier>
+    </supplierIdentification>
+  </exchange>
+  <payloadPublication xsi:type="MeasuredDataPublication" lang="it">
+    <publicationTime>22/06/2019 11:02:35</publicationTime>
+    <feedDescription></feedDescription>
+    <feedType>, Obstruction</feedType>
+    <defaultLanguage>it</defaultLanguage>
+    <publicationCreator>
+      <country>it</country>
+      <nationalID>it</nationalID>
+    </publicationCreator>
+  </payloadPublication>
+  <measuredValue>
+    <measurementEquipmentTypeUsed>Goldfish 3-axis Accelerometer</measurementEquipmentTypeUsed>
+    <measurementEquipmentTypeUsed>Goldfish Pressure sensor</measurementEquipmentTypeUsed>
+    <siteMeasurement>
+      <measurementSiteReference>it-358240051111110</measurementSiteReference>
+      <measurementTimeDefault>22/06/2019 11:02:35</measurementTimeDefault>
+    </siteMeasurement>
+    <basicData>
+      <measurementOrCalculationTimePrecision>1us
+      </measurementOrCalculationTimePrecision>
+      <measurementOrCalculationPeriod>6467</measurementOrCalculationPeriod>
+    </basicData>
+  </measuredValue>
+  <measurementSiteRecord>
+    <computationalMethod>low pass filter</computationalMethod>
+    <measurementEquipmentReference>The Android Open Source Project</measurementEquipmentReference>
+    <measurementSpecificCharacteristics>
+      <accuracy>2.480159E-4</accuracy>
+      <period>100</period>
+    </measurementSpecificCharacteristics>
+    <groupOfLocations>
+      <tpegPointLocation xsi:type="ns1:TPEGSimplePoint">
+        <point xsi:type="ns1:TPEGNonJunctionPoint">
+          <pointCoordinates>
+            <latitude>37-------</latitude>
+            <longitude>-122-------/longitude>
+          </pointCoordinates>
+          <name>
+            <descriptor>
+              <value>Mountain View, 94043, United States</value>
+            </descriptor>
+          </name>
+        </point>
+      </tpegPointLocation>
+    </groupOfLocations>
+    <weatherData></weatherData>
+    <trafficElement>
+      <abnormalTraffic>
+        <abnormalTrafficType>, Obstruction, Obstruction</abnormalTrafficType>
+      </abnormalTraffic>
+    </trafficElement>
+  </measurementSiteRecord>
+  <measurementSiteRecord>
+    <computationalMethod>low pass filter</computationalMethod>
+    <measurementEquipmentReference>The Android Open Source Project</measurementEquipmentReference>
+    <measurementSpecificCharacteristics>
+      <accuracy>1.0</accuracy>
+      <period>100</period>
+    </measurementSpecificCharacteristics>
+    <groupOfLocations>
+      <tpegPointLocation xsi:type="ns1:TPEGSimplePoint">
+        <point xsi:type="ns1:TPEGNonJunctionPoint">
+          <pointCoordinates>
+            <latitude>37-------</latitude>
+            <longitude>-122-------</longitude>
+          </pointCoordinates>
+          <name>
+            <descriptor>
+              <value>Mountain View, 94043, United States</value>
+            </descriptor>
+          </name>
+        </point>
+      </tpegPointLocation>
+    </groupOfLocations>
+    <weatherData></weatherData>
+    <trafficElement>
+      <abnormalTraffic>
+        <abnormalTrafficType>, Obstruction, Obstruction, Obstruction</abnormalTrafficType>
+      </abnormalTraffic>
+    </trafficElement>
+  </measurementSiteRecord>
+</d2LogicalModel>

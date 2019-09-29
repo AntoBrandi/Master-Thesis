@@ -1,0 +1,4 @@
+\chapter{Implementazione del Protocollo DATEX II}
+\label{app:a}
+In questo appendice sono mostrati  i diagrammi delle classi relativi all'implementazione del Protocollo DATEX II all'interno del sistema definito nel \autoref{chap:tre}.\\
+I diagrammi delle classi di seguito mostrati sono stati ricavati da quelli implementati dalla Commissione Europea per lo standard DATEX (\url{http://d2docs.ndwcloud.nu/_static/umlmodel/v3.0/index.htm})

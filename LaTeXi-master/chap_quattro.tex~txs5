@@ -1,0 +1,111 @@
+\chapter{Implementazione del Sistema}
+\label{chap:quattro}
+In questo modo è stata conclusa la fase di progettazione di tutte le componenti del sistema per lo sviluppo di una infrastruttura software che consenta a dispositivi IoT collegati alla rete di poter:
+\begin{itemize}
+	\item Effettuare delle letture con i sensori ed elaborare questi dati
+	\item Stabilire una comunicazione con una piattaforma Cloud opportunamente progettata
+	\item Scambiare i dati con la piattaforma Cloud seguendo un protocollo di comunicazione leggero (MQTT) ed uno standard di comunicazione noto (DATEX II)
+	\item Conservare automaticamente i dati all'interno di un Database Non Relazione 
+	\item Rendere i dati disponibili a query ed analisi dei dati
+\end{itemize}
+Questi step implementativi che si sono progettati, non sono esclusivi del sistema sviluppato in questo lavoro di tesi, ma sono comuni a moltissime applicazioni del mondo IoT che condividono questi step. Pertanto, nel \autoref{chap:tre}, si è cercato di mantenere un basso livello di dettaglio implementativo, proprio per consentire di riutillzare la fase di progettazione mostrata anche in molte altre applicazioni legate al mondo dell'IoT.\\
+In questo capitolo, sulla base della progettazione effettuata, si procederà all'implementazione di tutte le componenti e quindi si raggiungerà un maggiore livello di dettaglio attorno ad alcune tecnologie e linguaggi di programmazione. Nella fattispecie, saranno utilizzati:
+\begin{itemize}
+	\item Linguaggi di Programmazione
+	\begin{itemize}
+		\item Java
+		\item SQL
+		\item XML
+		\item JSON
+	\end{itemize}
+	\item Software
+	\begin{itemize}
+		\item Android Studio
+		\item Visual Studio Code
+	\end{itemize}
+	\item Tecnologie
+	\begin{itemize}
+		\item Smartphone Android
+		\item Amazon Web Services
+	\end{itemize}
+\end{itemize}
+Seguendo il processo logico utilizzato nel \autoref{chap:tre}, al fine di rendere più chiara l'implementazione del software, si continuerà ad utilizzare il Processo Unificato per la documentazione del Software in fase di sviluppo. Dopo aver visto la tabella dei requisiti nel \autoref{chap:tre} ed il diagramma delle classi relativo all'implementazione dello standard di comunicazione DATEX II nel \autoref{app:a}, viene ora realizzato anche il Diagramma dei Casi d'uso il cui scopo è quello di mostrare gli \textbf{Attori} ed i \textbf{Casi d'Uso} e le relazioni tra di essi. Per \textbf{Attore} si intende un qualsiasi utente o servizio esterno al software e per \textbf{Casi d'Uso} si indica una funzionalità del software.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1\columnwidth]{images/casiuso}
+	\end{center}
+	\caption{Diagramma dei casi d'uso elaborato sulla base dei requisiti funzionali del sistema \autoref{tabel:requisiti_software}}
+	\label{fig:casiuso}
+\end{figure}
+Si procederà quindi per step implementativi per le singole componenti del sistema e nella fattispecie, l'ordine implementativo che sarà seguito è:
+\begin{enumerate}
+	\item Sviluppo della applicazione Android che raccolga e mostri a schermo le letture dei sensori
+	\item Filtraggio delle letture dei sensori e valutazione dei parametri di qualità dei sensori
+	\item Implementazione dello Standard DATEX II per la formattazione dei dati
+	\item Set-up di AWS Cognito per fornire le chiavi di accesso alla applicazione Android
+	\item Connessione ed invio dei dati della applicazione Android con AWS IoT Core
+	\item Set-up della comunicazione automatica tra AWS IoT Core ed AWS DynamoDB
+	\item Query geo-referenziata al database DynamoDB da parte della applicazione Android
+\end{enumerate}
+
+\section{Applicazione Android}
+Per lo sviluppo della applicazione Android, si è scelto di utilizzare l'IDE Android Studio ed il linguaggio di programmazione JAVA. Di seguito, pertanto, utilizzando queste tecnologie saranno implementate le singole componenti della applicazione. Nella fattispecie, la struttura che si vuole dare alla Applicazione Andorid è mostrata in \autoref{android_app_schema}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1\columnwidth]{images/android_app_schema}
+	\end{center}
+	\caption{Schema delle Activity che compongono la applicazione Android}
+	\label{fig:android_app_schema}
+\end{figure}
+Dal momento che si è decsio di utilizzare l' IDE Android Studio, si proceda con la creazione di un nuovo progetto che quindi produrrà automaticamente lo schema della applicazione, producendo una directory del progetto come quella in \autoref{fig:android_app}.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.3\columnwidth]{images/android_app}
+	\end{center}
+	\caption{Overview della nuova directory creata da Android Studio}
+	\label{fig:android_app}
+\end{figure}
+
+\subsection{MapsActivity}
+Lo scopo di questa Activity è quello di mostrare a schermo una mappa e, sfruttando la localizzazione GPS dello smartphone, di mostrare la posizione in tempo reale dell'utente.\\
+Ulteriormente, l'utente è in grado di recuparare gli eventi conservati in una tabella di un Database DynamoDB attraverso una query geo-referenziata 1 e di mostrarli nella mappa attraverso dei marker 2. Inoltre, accedendo al menù 3, l'utente è in grado di modificare l'area degli eventi da recuperare dal Database.
+\begin{figure}%
+	\centering
+	\subfloat[Componenti della MapsActivity]{{\includegraphics[width=5cm]{images/maps_activity_1} }}%
+	\qquad
+	\subfloat[Dettaglio del menù a tendina mostrato al click sul pulsante 3]{{\includegraphics[width=5cm]{images/maps_activity_2} }}%
+	\caption{Layout della Activity inziale nell'applicazione Android}%
+	\label{fig:maps_activity}%
+\end{figure}
+In dettaglio, ad un click sul pulsante 3, viene mostrato il menù a tendina che consente all'untente di selezionare la dimensione della query da inoltrare al Database.\\
+Un click invece sul pulsante 4 consentirà all'utente di navigare verso le altre Activities che compongono la applicazione Android e nella fattispecie verso la FirstSensorActivity che mostrerà a schermo le letture dei sensori dei quali lo smartphone è provvisto in real-time.\\
+Di seguito, trascurando il layout della applicazione, sono mostrate le implementazioni di ciascuna delle componenti che compongono la MapsActivity nella Applicazione Android.
+
+\subsubsection{Option Menu}
+Per la creazione di un menù a tendina e per la conseguente gestione dei click sullo stesso è necessario:
+\begin{enumerate}
+	\item \textit{Creare un nuovo layout del menu:} nella cartella \textbf{res} si crei una nuova cartella \textbf{menu} ed un nuovo file XML al suo interno configurato come segue:
+	\lstinputlisting[caption=Codice XML relativo al layout del menu a tendina]{code/main_menu.xml}
+	\item \textit{Creare la MapsActivity.java ed associare i layout:} nella cartella \textbf{java/com.example.myapplication} e si crei una nuova Activity che mostri a schermo il layout della mappa e quello del menu.
+	\lstinputlisting[caption=Layout della MapsActivity]{code/maps_activity_layout.xml}
+	\lstinputlisting[caption=Mostro a schermo il layout che ospiterà la mappa]{code/maps_activity_1.java}
+	\item \textit{Utilizzo del GPS e delle API di Google Maps:} Sfruttando la localizzazione GPS dello smartphone, si intende identificare la posizione attuale del dispositivo e mostrarla in una mappa attraverso l'uso delle API messe a disposizione da Google Maps.
+	\lstinputlisting[caption=Richiesta all'utente del permesso di accedere alla Posizione GPS e connessione ad Internet dello smartphone]{code/permission.java}
+
+	
+\end{enumerate}
+
+
+\section{Filtraggio e Qualità dei Sensori}
+
+\section{Implementazione di DATEX II nella Applicazione}
+
+\section{AWS Cognito e le Chiavi di Autenticazione}
+
+\section{Connessione tra Applicazione ed AWS IoT Core}
+
+\section{Connessione tra AWS IoT Core ed AWS DynamoDB}
+
+\section{Query geo-referenziate di AWS DynamoDB}
+
+

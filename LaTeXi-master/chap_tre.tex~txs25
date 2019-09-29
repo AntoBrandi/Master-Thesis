@@ -1,0 +1,222 @@
+\chapter{Progetto del Sistema}
+\label{chap:tre}
+Nei capitoli precedenti è stata offerta una panoramica sugli strumenti che il paradigma IoT mette a disposizione e su come alcune compagnie utilizzino piattaforme di Crowdsourcing per fornire risorse e servizi altrimenti impensabili.\\
+In questo capitolo, saranno trattate la progettazione e le scelte architetturali che hanno portato alla prototipazione di un Software che sfrutti il paradigma IoT e tecniche di Crowdsourcing per offrire un servizio legato al mondo dell'Automotive. In questo capitolo, tuttavia, piuttosto che alla realizzazione di un prodotto finito, ci si focalizzerà sulle motivazioni che hanno portato ad alcune scelte progettuali piuttosto che ad altre. Tale fase di progettazione, essendo di carattere completamente generale, potrà essere utilizzata anche per lo sviluppo di altri sistemi in altri campi applicativi che facciano uso di tecniche di Crowdsourcing applicate a dispositivi IoT.\\
+
+\section{General Idea}
+\label{sec:general_idea}
+Recentemente, notevole importanza viene posta ai cosiddetti Intelligent Transportation System (ITS) sia da parte delle amministrazioni pubbliche ed europee (2019/40/EU \cite{famous:paper_europe}) che nel mondo della ricerca. \cite{famous:paper_bonvoyage}
+In \cite{famous:paper_europe}, infatti, viene definito un framework per le specifiche di sviluppo che rendano interoperabili le piattaforme ITS anche attraverso differenti organizzazioni. La necessità è quella di fornire informazioni sul traffico in real-time per il territorio Europeo.\\
+Avendo a mente questa necessità, in questo lavoro di tesi si intende progettare e sviluppare un Software che, raccogliendo dati sulla navigazione da dispositivi eterogenei e, raggruppando questi dati in una piattaforma di Crowdsourcing, possa sottoporli ad analisi e ricavare così delle informazioni sul livello del traffico in una data area geografica.
+I dati raccolti possono essere di diversa natura, proprio perchè diversa è la natura dei dispositivi che possono raccogliere ed inviare questi dati. Alcune informazioni possono riguardare:
+\begin{itemize}
+	\item Dati legati alle condizioni del traffico
+	\item Dati provenienti da vari sensori disposti sulla rete stradale (es. stazioni meteo)
+	\item Dati provenienti da dispositivi che transitano temporaneamente sulle strade (Smartphone, Tablet, Sistemi di Infotainment nelle automobili)
+	\item Dati provenienti da videocamere a circuito chiuso (CCTV)
+\end{itemize} 
+Dunque, proprio data l'eterogeneità di dispositivi che parteciperanno alla fase di raccolta dati, sarà necessario anche anlizzare alcune tecniche e Protocolli che consentano ad una così eterogenea estrazione di dispositivi di poter raccogliere dati ed inviarli in un formato comune e quindi comprensibile.
+Infine, una volta creato e popolato in real time il dataset, questi dati saranno resi disponibili per delle query geo-referenziate, in modo tale che, una utenza privata o una organizzazione per il controllo del traffico, possa accedere ad i dati più recenti sul traffico di una certa area geografica.\\
+Nella fattispecie, la fase di progettazione riguarderà:
+\begin{itemize}
+	\item Raccolta dei Dati
+	\item Formattazione dei Dati in una Interfaccia condivisa tra dispositivi eterogenei
+	\item Geo-Referenziare i Dati
+	\item Invio dei dati Geo-Referenziati ad un Middleware IoT
+	\item Storing dei dati Geo-Referenziati in Database opportunamente progettati
+	\item Gestione delle query Geo-Referenziate al Database
+\end{itemize} 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/schema_fin}
+	\end{center}
+	\caption{Schema del prototipo. a) Raccolta dei dati attraverso un sistema eterogeneo di dispositivi. b) Condivisione dei dati in un Middleware IoT. c) Storing dei dati all'interno di Databases d) Analisi sui dati. d) Query Geo-Referenziata sulle condizioni di traffico. }
+	\label{fig:application_schema}
+\end{figure}
+
+\section{La Raccolta dei Dati}
+Il primo passo per l'implementazione di un sistema come quello proposto nella \autoref{sec:general_idea} è quello dello studio ed analisi dei dati necessari e la conseguente raccolta degli stessi. \\
+Lo sviluppo delle tecnologie legate al mondo dell'IoT ha prodotto tutto un movimento tecnologico per la creazione di nuovi dispositivi e per il miglioramento di quelli esistenti. Questo ha consentito lo sviluppo di competenze tecnologiche nella realizzazione di unità di calcolo, circuiti integrati, sensori e strumenti di comunicazione sempre più avanzati ed economici. Questo movimento ha consentito inoltre di incrementare la diffusione di componenti elettroniche la cui potenza e costo li rendono disponibili all'utilizzo in qualsiasi applicazione. \\
+In riferimento allo sviluppo di un sistema come quello ideato nella sezione \autoref{sec:general_idea}, si richiede che un numero molto elevato di sensori venga disposto sulla rete stradale in maniera capillare, così da poter avere dati affidabili ed in real-time sulla condizione del traffico in tutto il territorio. Alcuni di questi sensori sono già presenti ma sono in numero talmente basso che, con i dati da essi estratti, si potrebbero solamente ottenere informazioni parziali sul traffico su una porzione molto limitata del territorio.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.7\columnwidth]{images/traffic_sensor}
+	\end{center}
+	\caption{Principio di funzionamento dei sensori attualmente in uso per la misura del livello di traffico}
+	\label{fig:traffic_sensors}
+\end{figure}
+Le difficoltà principali nello sviluppo di una piattaforma per il controllo del traffico sono ovviamente quelle legate ai costi per la distribuzione di una rete di sensori che copra tutta la rete stradale.
+Pertanto, è necessario trovare altre soluzioni che possano risultare più sostenibili ed anche scalabili.
+Come evidenziato nel \autoref{chap:due}, uno dei principali vantaggi di una piattaforma di Crowdsourcing è proprio quello di garantire che, attraverso il contributo non organizzato dei singoli, si possa raggiungere un obiettivo comune riducendo di fatto i costi.\\
+Attualmente, infatti, la rete stradale è già ampiamente invasa da un numero estremamente elevato di sensori i quali sono diffusi in maniera capillare e senza costi aggiuntivi: gli Smartphone (o Tablet). \\
+Gli Smartphone sono il più evidente esempio della diffusione di componenti elettroniche  i quali, nelle loro evoluzioni hanno integrato al loro interno un numero sempre maggiore di sensori, diventando sempre più accurati e miniaturizzati.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/smartphone_sensors}
+	\end{center}
+	\caption{Crescita della disponibilità di sensori nell'equipaggiamento di uno smartphone fonte: CornerAlliance}
+	\label{fig:smartphone_sensors}
+\end{figure}
+Sebbene il mercato degli smartphone sia molto eterogeneo dal punto di vista della dotazione hardware e del sistema operativo, generalmente si avranno sempre a disposizione alcune tipologie di sensori che possiamo classificare in funzione della grandezza fisica che essi misurano:
+\begin{itemize}
+	\item Termometro
+	\item Accelerometro
+	\item Giroscopio
+	\item Microfono
+	\item Camera
+	\item GPS
+\end{itemize}
+Con l'aggiunta, in dispositivi più avanzati di:
+\begin{itemize}
+	\item[$\blacksquare$] Pedometro
+	\item[$\blacksquare$] Prossimità
+	\item[$\blacksquare$] Impronte Digitali
+	\item[$\blacksquare$] Magnetometro
+\end{itemize}
+Effettivamente, la sensoristica di cui è dotato un singolo smartphone non sarebbe in nessun modo in grado di stimare autonomamente il livello del traffico o l'eventuale presenza di incidenti. Tuttavia, una piattaforma che raccolga i dati di un gran numero di dispositivi e che utilizzi degli algoritmi di analisi dei dati, sarebbe in grado di effettuare delle stime sul livello del traffico in un' area geografica. Questo è quello che viene proposto in \cite{famous:paper_smartphone_traffic_detection} dove viene analizzata una piattaforma per la raccolta dei dati relativi al traffico proveniente da un gran numero di smartphone e ne viene anche analizzato il rischio per la sicurezza di un utente che contribuisca ad una simile piattaforma dovendo condividere, tra gli altri, anche i dati relativi alla propria posizione.\\
+Nel caso del prototipo ideato nella \autoref{sec:general_idea}, non si vuole soltanto realizzare una piattaforma che raccolga dati provenienti da smartphone, ma si vuole fare in modo che questa piattaforma sia adatta anche a raccogliere dati provenienti da infrastrutture stradali ed autostradali per il monitoraggio del traffico e per la comunicazione del livello di traffico. Si vuole cioè raccogliere in un'unica piattaforma i dati provenienti dai sensori stradali per il traffico come quello mostrato in \autoref{fig:traffic_sensors}, quelli provenienti da stazioni meteo, smartphone, tablet, computer di bordo di automobili, stazioni di monitoraggio del traffico e così via. Sebbene nella fase di prototipazione ci si focalizzerà principalmente sulla raccolta dati da smartphone e della conseguente trasmissione degli stessi secondo un predefinito formato, tutte le scelte progettuali sono pensate per essere compatibili anche per la raccolta dati dai diversi dispositivi precedentemente elencati.
+
+
+
+\subsection{Accesso ai Sensori di uno Smartphone}
+L'aumento del numero dei sensori, l'aumento della loro accuratezza ed affidabilità, ha portato alla nascita di servizi che utilizzassero tutte o alcune delle letture fornite dai sensori per offrire dei servizi all'utenza.\\
+Alcuni di questi servizi consentono ad esempio di monitorare la qualità del proprio sonno, il numero di Kcal bruciate ogni giorno, regolare in modo automatico la luminosità e la gamma di colori del proprio schermo per salvaguardare gli occhi dell'utilizzatore ed una serie di altri infiniti servizi, tutti possibili sulla base dei dati provenienti da uno o più sensori.\\
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/attivissimo}
+	\end{center}
+	\caption{Schema generale di un sistema di misura}
+	\label{fig:attivissimo}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.55\columnwidth]{images/android_sensors}
+	\end{center}
+	\caption{Estratto dello stack utilizzato nel sistema operativo Android per rendere disponibili le letture dei sensori ad applicazioni e servizi}
+	\label{fig:android_sensors}
+\end{figure}
+Questi servizi o applicazioni non sono altro che l'ultimo step di una struttura verticale nella quale, ai primi livelli si trovano effettivamente le componenti hardware del sensore che producono una uscita elettrica. Si rende necessario poi filtrare, amplificare e condizionare questo segnale elettrico al fine di renderlo comprensibile e trasmissibile come in \autoref{fig:attivissimo}. La variabile fisica o variabile di processo che si intende misurare viene quindi trasdotta o convertita in un'altra forma (generalmente elettrica) che è più semplice da trasmettere ed elaborare. Questa variabile di uscita prodotta dal blocco sensore e trasduttore non è tuttavia ancora adatta ad essere utilizzata. Questa subirà quindi un nuovo processo di condizionamento nel quale verrà filtrata, amplificata e linearizzata. Di qui il sistema operativo si occupa di interpretare ed eventualmente tradurre in un diverso formato le letture dei sensori in modo da renderle disponibili attraverso una interfaccia alle applicazioni e servizi dei livelli superiori che ne fanno richiesta. Tali applicazioni o service provider saranno quindi solo i consumatori finali di questi dati dai quali estrarranno le informazioni da mostrare all'utente finale che usufruisce del servizio.
+Come evidente, nello stack utilizzato dal sistema operativo per smartphone Android \autoref{fig:android_sensors} viene offerto agli sviluppatori che realizzano servizi ed applicazioni una interfaccia diretta e standardizzata per l'utilizzo delle letture provenienti dai sensori. A prescindere dal sistema operativo utilizzato e dal tipo di sensori di cui è dotato lo smartphone, sarà offerto agli sviluppatori una interfaccia chiamata SDK ovvero Software Development Kit che indica un insieme di strumenti per lo sviluppo e la documentazione di software. In questo modo, coloro che si occupano di fornire servizi basati sulle letture di sensori, non dovranno preoccuparsi di elaborare, tradurre e condizionare l'uscita del sensore, ma solo di utilizzarla. \cite{developer:android} \cite{developer:apple}
+
+\subsection{Parametri di Qualità dei Sensori}
+Ai sensori è generalmente richiesto di funzionare in ambienti ostili all'uomo e spesso ostili anche all'elettronica. Inoltre, un sensore sarà ritenuto tanto migliore quanto più esso riuscirà ad essere sensibile ad una sola grandezza ed insensibile a tutte le altre grandezze o rumore che possono disturbarne la misura. \cite{book:slide_Attivissimo} \cite{book:sensori_trasduttori} \\
+Si può quindi sintetizzare che la \textbf{qualità di un sensore} sia determinata dalla sua sensibilità alla grandezza che si vuole misurare e dalla sua insensibilità a tutte le altre grandezze fisiche ambientali.
+Essendo interessati alla valutazione delle prestazioni di un sensore in modo da poterne valutare la sua affidabilità e la qualità delle sue letture, va considerato che l'accurateza del dispositivo può variare con altre grandezze di influenza (temperatura, umidità, ecc.) e che spesso, si perviene alla misura di una grandezza fisica di interesse in maniera indiretta, introducendo così una propagazione del'errore.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/accuracy_precision}
+	\end{center}
+	\caption{Differenza tra la definizione di Precisione e quella di Accuratezza di una misura}
+	\label{fig:accuracy_precision}
+\end{figure}
+Una prima valutazione sulla qualità di un sensore può essere effettuata attraverso due indici: \textbf{responsivity} e \textbf{detectivity}.\\
+La \textbf{responsivity} o \textbf{sensitivity} rappresenta l'efficienza di trasduzione del sensore ed è normalmente espressa come il rapporto di due unità di misura, in genere differenti.
+\begin{center}
+	\begin{equation}
+		r = \frac{\partial S\textsubscript{o}}{\partial S\textsubscript{i}} \quad \big[S\textsubscript{o} \textbackslash S\textsubscript{i}\big]
+	\end{equation}
+\end{center}
+La \textbf{detectivity} rappresenta la capacità di un sensore di rendere disponibile un segnale dipendente dalla grandezza di ingresso e di tenerlo distinto dal rumore da esso stesso prodotto. Il suo valore dipende dal \textit{noise floor} ed è legato alla soglia o minimo segnale rilevabile. Si misura come il reciproco dell'unità di misura dell'ingresso.
+\begin{center}
+	\begin{equation}
+	d = \frac{S\textsubscript{o}\textbackslash N\textsubscript{o}}{S\textsubscript{i}} = \frac{r}{N\textsubscript{o}} \quad \big[S\textsubscript{i} ^{-1}\big]
+	\end{equation}
+\end{center}
+Queste informazioni, saranno utili al fine dello sviluppo del prototipo in quanto, dal momento che la piattaforma ideata nel \autoref{sec:general_idea} si occuperà di raccogliere i dati provenienti da un numero molto elevato di dispositivi eterogenei, questo significa anche che le letture dei sensori provenienti dai diversi sensori saranno qualitativamente eterogenee.\\
+Pertanto, un primo requisito, sarà quello di valutare i parametri di qualità relativi alle letture dei sensori di ciascun dispositivo ed eseguire in questo modo un primo filtraggio dei dati in modo da escludere dall'analisi quelle letture affette da un grado di incertezza troppo elevato o non compatibile con l'analisi effettuata. Nel caso degli smartphone e tablet, queste informazioni sono messe a disposizione all'interno del SDK.
+
+\subsection{Filtraggio delle Letture dei Sensori}
+Nella \autoref{fig:attivissimo} è possibile notare come nel sistema di misura sia presente una componente che si occupi di filtrare, amplificare e linearizzare l'uscita fisica del sensore: il Blocco di Condizionamento. Questo blocco è generalmente di tipo software ed è realizzato ad-hoc per il particolare sensore e per il particolare utilizzo. Il suo scopo è quello di portare il segnale in uscita dal sensore in un formato compatibile con il dispositivo di elaborazione che lo segue riducendo al massimo gli effetti negativi di carico. \cite{book:slide_Attivissimo} Allo stesso modo, anche per quanto riguarda i sensori di cui sono dotati gli Smartphone, è necessario che le relative uscite vengano condizionate in maniera opportuna in funzione della particolare applicazione.\\
+Prima però è necessario effettuare un approfondimento sui sensori che possono equipaggiare uno smartphone (e che sono necessari alla predizione delle condizioni stradali). All'interno degli smartphone, infatti, è possibile incontrare due diverse tipologie di sensori:
+\begin{itemize}
+	\item Sensori Hardware
+	\item Sensori Software
+\end{itemize}
+Questa distinzione, sebbene non evidente all'utente finale, produrrà diverse tipologie di dati che dovranno quindi essere trattati diversamente.\\
+I \textbf{Sensori Hardware} sono componenti fisiche che sono effettivamente montate all'interno di uno smartphone. Pertanto, le letture di questi sensori provengono dalla misura di una certa grandezza fisica attraverso un sistema di misura come quello mostrato in \autoref{fig:attivissimo}. Un esempio ne sono l'accelerometro, il magnetometro ed il sensore per l'intensità luminosa.\\
+I \textbf{Sensori Software} non sono sensori fisici composti cioè da componenti elettroniche che trasducano una certa grandezza fisica. Questi sensori, emulano il comportamento di un sensore hardware ma le loro uscite sono spesso derivate da uno o più sensori hardware, opportunamente rielaborate via software. Un esempio ne sono sensore di orientamento, vettore di rotazione, pedometro.\\
+Sebbene questa distinzione sia completamente invisibile a coloro che utilizzano questi dati e sia anche invisibile a coloro che sviluppano applicazioni e servizi sfruttando l' SDK messo a disposizione dal sistema operativo, è necessario tenerla a mente perchè i dati in uscita dalle diverse tipologie di sensori dovranno essere trattati diversamente. 
+I dati in uscita dai sensori software sarnno infatti direttamente utilizzabili in quanto hanno già subito un processo di condizionamento proprio perchè, per definizione, sono derivati da altri sensori hardware.
+Si rende invece necessario sviluppare un sistema di filtraggio ed eventualmente linearizzazione per le letture dei sensori hardware.\\
+Il problema dei sensori hardware è che la frequenza con la quale le  uscite variano il loro valore è così elevata che, se mappassimo tutte queste piccole variazioni (Rumore), i valori oscillerebbero notevolmente. Più in generale, le letture provenienti dai sensori sono ricevute con una diversa frequenza ma, i picchi da essa raggiunti, sono troppo elevati.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.9\columnwidth]{images/sensor_listener}
+	\end{center}
+	\caption{Principio con il quale nel sistema operativo Android è possibile recuperare le letture di un sensore ed utilizzarle in una applicazione. \cite{developer:android}}
+	\label{fig:sensor_listener}
+\end{figure}
+Il processo che viene seguito nel sistema operativo Android per rendere disponibile la lettura di un sensore ad una applicazione o servizio che ne faccia richiesta è quello di instanziare un SensorListener il cui ruolo è appunto quello di restare in ascolto sull'uscita di un dato sensore e di notificare la applicazione nonappena venga rilevata una variazione del valore misurato dal sensore. La frequenza con la quale questo processo avviene dipende dalla velocità del sistema operativo e dalla capacità computazionale del dispositivo. Questo significa che dispositivi con una maggiore capacità di calcolo interrogheranno un numero maggiore di volte il sensore e riceveranno un numero maggiore di risposte affette, inevitabilmente, da rumore. Questo significa che è necessario utilizzare i soli valori necessari ed utili e filtrare il rumore.\\
+La soluzione è l'applicazione di un filtro passa-basso sulle letture provenienti dai sensori in modo che esso consenta il passaggio alle sole basse frequenze del segnale e ne attenui il valore alle frequenze superiori a quella di taglio.\\
+Si prenda ad esempio l'accelerometro di uno smartphone le cui letture indicano l'accelerazione del dispositivo rilevanta in un predefinito sistema di riferimento.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.3\columnwidth]{images/accelerometer}
+	\end{center}
+	\caption{Sensore di accelerazione a bordo di uno smartphone}
+	\label{fig:accelerometer}
+\end{figure}
+A causa di un disturbo esterno come fattori ambientali o jerks o vibrazioni, viene aggiunto alla lettura del sensore una gran quantità di rumore. Queste componenti ad alta frequenza del segnale, provocano un'ampia oscillazione dei valori letti dal sensore. Questi disturbi, potrebbero essere tollerabili nella maggior parte delle applicazioni ma se si vogliono ottenere delle migliori letture è necessario progettare e sviluppare un filtro passa-basso che filtri a livello software le uscite di sensori hardware. In questo modo, è possibile filtrare le componenti di rumore ad alta frequenza utilizzando un opportuno valore di soglia.\\
+\begin{lstlisting}[language=Java, label= code:low_pass_filter, caption=Pseudo-codice relativo all'implementazione di un filtro passa-basso]
+for i from 1 to n
+	y[i] :=y [i-1] + a*(x[i] - y[i-1])
+end
+\end{lstlisting}
+Il \autoref{code:low_pass_filter} corrisponde ad una implementazione di un filtro passa-basso che prenda l'uscita \textit{y} di un sensore e la filtri con un filtro passa-basso avente \textit{a} come coefficiente di soglia.
+La scelta del parametro \textit{a} dipende da quanto si intende dimensionare la frequenza di taglio del filtro. Quanto più essa sarà alta, tanto più rumore entrerà nel filtro viceversa, quanto più sarà bassa tanto più lento sarà il segnale. In \cite{developer:android} viene proposta una soluzione intermedia con la scelta del parametro \textit{a = 0.25}.
+
+\section{Il Protocollo DATEX}
+La raccolta dei dati è solo una piccola porzione del problema. Per ottenere il massimo da questi dati è necessario condividerli in modo da sfruttare le potenzialità delle piattaforme di Crowdsourcing nelle quali, le analisi effettuate su un gran numero di dati potrebbero fornire delle deduzioni e previsioni molto più accurate e significative.
+Si rende quindi necessaria una comunicazione tra i dispositivi che si occupano della raccolta dati.\\
+Diventa quindi necessario abilitare la comunicazione tra tutti i diversi dispositivi che si occupano della raccolta dati considerando la loro eterogeneità in termini di:
+\begin{itemize}
+	\item Capacità computazionale
+	\item Sensoristica a disposizione
+	\item Grandezze fisiche misurate
+	\item Qualità delle letture dei sensori
+	\item Costruttore del dispositivo
+\end{itemize}
+DATEX (da Data Exchange) è il protocollo che abilita la comunicazione tra dispositivi eterogenei per la condivisione di dati legati al traffico stradale ed autostradale. Questo protocollo fa in modo che differenti dispositivi possano comunicare tra loro e con un Middleware, definendo cioè uno Standard per la comunicazione condiviso tra tutti i partecipanti alla comunicazione.\\
+Nella fattispecie, DATEX è il linguaggio utilizzato nella Comunità Europea per lo scambio di informazioni legate al traffico in modo da consegnare informazioni comprensibili all'utenza finale. DATEX è infatti stato progettato e sviluppato come un sistema per lo scambio di dati dalla Comunità Europea per la standardizzazione dell'interfaccia di comunicazione tra i gestori di strade ed autostrade, i produttori dei dati in strade ed autostrade e gli utilizzatori dei servizi sul traffico. \cite{famous:paper_datexii}\\
+Una prima versione del Protocollo DATEX I è stata iniziata già nel 1990 mossa dalla necessità di un meccanismo per lo scambio di dati tra centri per il monitoraggio del traffico e gli operatori stradali. Ben presto, tuttavia, dato lo sviluppo tecnologico del XXI secolo, è sorta la necessità di integrare in questo standard anche i fornitori di servizi. Per questo motivo, viene sviluppato lo standard DATEX II con lo scopo di distribuire le informazioni sul traffico indipendentemente dalla lingua e dall'aspetto. In questo modo, viene eliminata la probabilità che nascano delle incomprensioni o errori di traduzione.\\
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=0.8\columnwidth]{images/datexii}
+	\end{center}
+	\caption{Panoramica del Mondo ITS e le relative sfide tecnologiche}
+	\label{fig:datexii}
+\end{figure}
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{Type} & \textbf{Remarks} \\
+			\hline
+			\pbox{20cm}{Accidents \\ Obstruction \\ Activities \\} & public events, police operations etc.  \\
+			\hline
+			\pbox{20cm}{Abnormal Traffic \\ Driving conditions \\ Poor road infrastructure \\ Network Management \\ Sign information \\ Roadside Assistance \\ Car parking information \\ Transit information \\ Service disruption \\} & \pbox{20cm}{Queues \\ Weather, Road surface \\ Closures, Restrictions \\ VMS settings \\ Number of vacant spaces \\ Rail and Ferry connections \\ Motorway service area} \\
+			\hline
+			\pbox{20cm}{Measured Traffic Data \\ Measured weather/pollution  \\} & \pbox{20cm}{Travel times, Flow data \\ Wind, precipitation, visibility, air quality} \\
+			\hline
+			\pbox{20cm}{Traffic View  \\} & \pbox{20cm}{Combination of event informations and URLs for CCTV cameras} \\
+			\hline
+		\end{tabular}
+		\caption{Le metodologie di comunicazione \cite{famous:paper_datexii_research}}
+		\label{tabel:datexii_data}
+	\end{center}
+\end{table}
+Lo Standard DATEX II non è stato pensato per fornire delle rigide specifiche di comunicazione ma piuttosto come un Protocollo che ammettesse una certa libertà di scelta e che fosse in grado di evolversi per consentire, in futuro, lo scambio di informazioni aggiuntive.\\
+Il dominio di dati che possono essere scambiati attraverso DATEX II riguarda tutti i dati relativi al trffico ed alle informazioni sul viaggio per strade urbane ed inter-urbane. Spaziando tra eventi legati al trffico come incidenti e lavori stradali ad eventi legati al flusso di traffico come permanenza sulle strade e durata del viaggio. \\
+Risultano quindi evidenti le motivazioni che hanno portato alla scelta dello standard DATEX II nella progettazione del prototipo ideato in \autoref{sec:general_idea}. Rispetto ad altri protocolli di comunicazione, infatti, DATEX II presenta delle caratteristiche che ben si adattano allo scopo:
+\begin{enumerate}
+	\item Sviluppato, Supportato ed Utilizzato dalla Comunità Europea
+	\item Progettato per lo scambio di dati relativi al traffico
+	\item Supporta lo scambio dati tra dispositivi eterogenei
+	\item Flessibile per adattarsi a nuove necessità e dati da scambiare
+	\item Geo-Referenzia i dati scambiati tra i vari dispositivi
+	\item Documentazione completa per gli sviluppatori che vogliano integrare il protocollo nelle loro applicazioni
+	\item Documentazione completa per gli sviluppatori che vogliano ampliare il protocollo in funzione di nuove necessità
+	
+\end{enumerate}
+\subsection{DATEX II Data Model}
+

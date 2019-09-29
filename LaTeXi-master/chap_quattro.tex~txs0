@@ -1,0 +1,32 @@
+\chapter{Implementazione del Sistema}
+\label{chap:quattro}
+In questo modo è stata conclusa la fase di progettazione di tutte le componenti del sistema in modo da consentire lo sviluppo di una infrastruttura software che consenta a dispositivi IoT collegati alla rete di poter:
+\begin{itemize}
+	\item Effettuare delle letture con i sensori ed elaborare questi dati
+	\item Stabilire una comunicazione con una piattaforma Cloud opportunamente progettata
+	\item Scambiare i dati con la piattaforma Cloud seguendo un protocollo di comunicazione leggero (MQTT) ed uno standard di comunicazione noto (DATEX II)
+	\item Conservare automaticamente i dati all'interno di un Database Non Relazione 
+	\item Rendere i dati disponibili a query ed analisi dei dati
+\end{itemize}
+Questi step implementativi che si sono progettati, non sono esclusivi del sistema sviluppato in questo lavoro di tesi, ma sono comuni a moltissime applicazioni del mondo IoT che condividono questi step. Pertanto, nel \autoref{chap:tre}, si è cercato di mantenere un basso livello di dettaglio implementativo, proprio per consentire di riutillzare la fase di progettazione mostrata anche in molte altre applicazioni legate al mondo dell'IoT.\\
+In questo capitolo, sulla base della progettazione effettuata, si procederà all'implementazione di tutte le componenti e quindi si raggiungerà un maggiore livello di dettaglio attorno ad alcune tecnologie e linguaggi di programmazione. Nella fattispecie, saranno utilizzati:
+\begin{itemize}
+	\item Linguaggi di Programmazione
+	\begin{itemize}
+		\item Java
+		\item SQL
+		\item XML
+		\item JSON
+	\end{itemize}
+	\item Software
+	\begin{itemize}
+		\item Android Studio
+		\item Visual Studio Code
+	\end{itemize}
+	\item Tecnologie
+	\begin{itemize}
+		\item Smartphone Android
+		\item Amazon Web Services
+	\end{itemize}
+\end{itemize}
+

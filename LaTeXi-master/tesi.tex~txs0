@@ -1,0 +1,269 @@
+%CLASSE DOCUMENTO - LINGUA E DIMENSIONE FONT
+\documentclass[11pt]{toptesi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INCLUSIONE PACCHETTI
+\usepackage[utf8]{inputenc} %utf8
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{blindtext}
+\usepackage{graphicx,wrapfig}
+\usepackage{booktabs}
+\usepackage{lmodern}
+\usepackage{varioref}
+\usepackage{url}
+\usepackage{array}
+\usepackage{paralist}{\obeyspaces\global\let =\space}
+\usepackage{verbatim} 
+\usepackage{subfig}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage[pass]{geometry}
+\usepackage[figuresright]{rotating}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+\usepackage[babel]{csquotes}
+\usepackage{hyperref}
+\usepackage[backend=bibtex]{biblatex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% CONFIGURAZIONE LINK E RIFERIMENTI
+\hypersetup{%
+    pdfpagemode={UseOutlines},
+    bookmarksopen,
+    pdfstartview={FitH},
+    colorlinks,
+    linkcolor={black}, %COLORE DEI RIFERIMENTI AL TESTO
+    citecolor={blue}, %COLORE DEI RIFERIMENTI ALLE CITAZIONI
+    urlcolor={blue} %COLORI DEGLI URL
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% CONFIGURAZIONE LISTATI/CODICE - CANCELLARE SE NON NECESSARIO
+% PYTHON - BIANCO E NERO
+\lstset{%
+	captionpos=b,
+	language=Python,
+	basicstyle =\small\ttfamily,
+	keywordstyle=\color{black}\bfseries,
+	breaklines=true,
+	breakatwhitespace=true,
+	frame=lines,
+	numbers=left,
+	numberstyle=\footnotesize,
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% FRENCHSPACING VA _SEMPRE_ ABILITATO PER DOCUMENTI IN ITALIANO
+\frenchspacing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%DEFINIZIONE SEZIONI IN NUMERAZIONE ROMANA
+%ELENCO DEI LISTATI/CODICI
+\makeatletter
+\newcommand\listofcodes{%
+ \iffrontmatter\else\frontmattertrue\fi
+ \if@openright\cleardoublepage\else\clearpage\fi
+ % change the meaning of \chapter in a group
+ \begingroup\def\chapter##1{\@schapter}
+ \phantomsection % for the hyperlink
+ \lstlistoflistings 
+ \endgroup
+} 
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INFORMAZIONI PDF - PERSONALIZZARE
+\pdfinfo{%
+  /Title    (Senza carta igienica)
+  /Author   (Tinaso de Tinasis)
+  /Subject  (Un trattato di toccante urgenza)
+  /Keywords (LaTeXi carta igienica urgenza Politecnico Presicce)
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% FRONTESPIZIO - PERSONALIZZARE
+% ELIMINATE LE VOCI CHE NON VI SERVONO
+
+% UNIVERSITA - NOME
+\ateneo{Politecnico di Bari}
+
+% FACOLTA - DICITURA - CANCELLARE O DECOMMENTARE
+%\FacoltaDi{Faculty of}
+% FACOLTA - NOME
+\facolta{Ingegneria}
+
+
+% CORSO DI LAUREA - DICITURA (MANTENERE LO SPAZIO) - CANCELLARE O DECOMMENTARE
+%\CorsoDiLaureaIn{Master of Science in }
+% CORSO DI LAUREA - NOME
+\corsodilaurea{Ingegneria dell'Automazione}
+
+
+% TIPOLOGIA TESI
+\TesiDiLaurea{Tesi di Laurea Magistrale in Internet of Things}
+
+% TITOLO
+\titolo{Piattaforme di Crowdsourcing in sistemi IoT eterogenei}
+
+% SOTTOTITOLO
+\sottotitolo{Dipartimento di Ingegneria Elettrica e dell'Informazione}
+
+% RELATORE/I - DICITURA - CANCELLARE SE UN SOLO RELATORE
+%\AdvisorName{Relatori}
+% RELATORE - PROF. NOME E COGNOME
+\relatore{prof.\ Luigi Alfredo Grieco}
+% RELATORE AGGIUNTIVO - PROF NOME E COGNOME
+% SE SI HA SOLO UN RELATORE ELIMINARE INSIEME AD AdvisorName
+\secondorelatore{prof.\ Giuseppe Piro}
+
+% TUTORE AZIENDALE - TITOLO NOME E COGNOME
+% \tutoreaziendale{Ing. Carlino Cane}
+% TUTORE AZIENDALE - DICITURA//AZIENDA
+% \NomeTutoreAziendale{Tutore Aziendale\\FeelGood Inc}
+
+
+% CANDIDATO - NOME E COGNOME
+\candidato{Antonio Brandi}
+
+
+% LOGO UNIVERSITA
+\logosede{images/logo_poliba}
+
+% DATA - MESE ANNO
+\sedutadilaurea{25 Luglio 2019}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% LISTA DEI CAPITOLI DA INCLUDERE - PERSONALIZZARE
+\includeonly{%
+chap_introduzione,%
+chap_due,%
+chap_tre,%
+chap_quattro,%
+chap_conclusioni,%
+app_a,%
+}
+
+% FILE DI BIBLIOGRAFIA
+\bibliography{bibliography} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INIZIO DOCUMENTO
+\begin{document}
+
+\frontespizio
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%INTERLINEA - DEFAULT 1 - NON ESAGERATE, NON SUPERATE MAI 1.3 ;)
+%\interlinea{1.2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+% DEDICA - PERSONALIZZARE
+ %VSPACE - PROPORZIONE USATA PER CENTRATURA VERTICALE DEL TESTO
+ %FLUSHRIGHT - ALLINEAMENTO ORIZZONTALE A DESTRA
+ \vspace*{\stretch{1}}
+ \begin{flushright}
+ \noindent
+  
+ \end{flushright}
+ \vspace*{\stretch{6}}
+\cleardoublepage
+
+
+% CITAZIONE - PERSONALIZZARE
+% VSPACE - PROPORZIONE USATA PER CENTRATURA VERTICALE DEL TESTO
+% FLUSHRIGHT - ALLINEAMENTO ORIZZONTALE A DESTRA
+\vspace*{\stretch{1}}
+\begin{flushright}
+\noindent
+Solo coloro che sono abbastanza folli da pensare di cambiare il mondo,\\ alla fine lo cambiano per davvero
+
+\textit{}
+\end{flushright}
+\vspace*{\stretch{6}}
+\cleardoublepage
+\vspace*{\stretch{1}}
+\begin{flushright}
+	\noindent
+	\textit{}
+\end{flushright}
+\vspace*{\stretch{6}}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% RINGRAZIAMENTI - PERSONALIZZARE
+% \ringraziamenti
+% Grazie a Grazia, Graziella e la sorella.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ABSTRACT - PERSONALIZZARE
+\sommario
+In questo lavoro di tesi si intende esplorare le funzionalità e potenzialità offerte dalla rapida ascesa delle tecnologie disponibili nel mondo dell' Internet of Things. \\
+A seguito di una dettagliata analisi dello stato dell'arte e dei campi di applicazione che maggiormente potrebbero beneficiare del rapido sviluppo delle tecnologie IoT, ci si concentrerà maggiormente sul settore della mobilità, con il fine ultimo di sviluppare un prototipo dimostrativo delle potenzialità offerte da una piattaforma di Crowdsourcing.\\
+Nella fattispecie, l'intento della fase di prototipazione non sarà quello di descrivere dettagliatamente un prodotto finito o valido in tutte le circostanze, ma sarà piuttosto quello di mostrare quanto ampio può essere il mondo legato all'IoT e quanto semplice sia la scalabilità di un simile prototipo ad un mercato di massa, che non si limiti al solo settore della mobilità. \\
+In ultima analisi, con riferimento al prototipo in output a questo lavoro di tesi, ne saranno mostrate le caratteristiche implementative, basate sullo standard Datex II. Il fine ultimo di questa fase sarà quello di mostrare la struttura implementativa del prototipo in funzione della quale poter fornire delle linee guida implementative e possibili sviluppi futuri.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INDICI - ELIMINARE GLI INDICI NON NECESSARI
+
+% INDICE GENERALE
+\tableofcontents
+
+% INDICE DELLE FIGURE
+\listoffigures
+
+% INDICE DELLE TABELLE
+\listoftables
+
+% INDICE DEI CODICI
+\listofcodes
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+% INCLUSIONE FILE CAPITOLI - PERSONALIZZARE - TENERE COERENTE CON LISTA IN ALTO
+\include{chap_introduzione}
+\include{chap_due}
+\include{chap_tre}
+\include {chap_quattro}
+\include{chap_conclusioni}
+
+\appendix
+% INCLUSIONE APPENDICI - - PERSONALIZZARE - TENERE COERENTE CON LISTA IN ALTO
+\include{app_a}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% BIBLIOGRAFIA
+\phantomsection
+\addcontentsline{toc}{chapter}{\refname}
+\nocite{*}
+\printbibliography
+
+\end{document}

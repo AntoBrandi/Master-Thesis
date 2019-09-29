@@ -1,0 +1,9 @@
+\chapter{Implementazione del Protocollo DATEX II}
+\label{app:b}
+In questo appendice sono mostrati i dettagli implementativi del protocollo DATEX II all'interno della Applicazione Android sviluppata. Nella fattispecie, in riferimento ai diagrammi delle classi mostrati nell' \autoref{app:a}, si mostri ora l'implementazione delle classi ed il loro utilizzo all'interno della applicazione al fine di ottenere una formattazione dei dati in linea con il protocollo DATEX II. L'implementazione dei diagrammi delle classi mostrate nel \autoref{app:a} seguirà un processo analogo per l'implementazione di ogni classe. Nella fattispecie, sarà solo necessario tradurre ogni diagramma in una classe ed ogni collegamento tra i diagrammi in un collegamento tra le classi.
+\lstinputlisting[caption=Implementazione della classe Publication che sarà il contenitore di tutto il pacchetto trasmesso. ]{code/datex_1.java}
+\lstinputlisting[caption=Implementazione della classe Exchange che conterrà informazioni utili alla comunicazione]{code/datex_2.java}
+\lstinputlisting[caption=Implementazione della classe PayloadPublication che conterrà tutti i dati prodotti dalla applicazione ]{code/datex_3.java}
+In questo modo si sono visti gli esempi implementativi della \autoref{fig:app_uml_1} dell' \autoref{app:a}. Allo stesso modo, sono state implementate tutte le altre classi appartenenti al diagramma delle classi dello Standard DATEX II e che quindi sono omesse.\\
+Nella creazione del messaggio seguendo lo standard DATEX II, si sono quindi compilati tutti i campi della classe Payload, con i dati raccolti dalla applicazione e sarà quindi proprio la classe Payload ad essere serializzata e quindi convertita in formato JSON ed XML. Nella fattispecie, viene di seguito mostrato l'output della serializzazione della classe Publication in formato XML. 
+\lstinputlisting[caption=Esempio di output della applicazione in formato XML in rispetto dello standard DATEX II]{code/output.xml}
